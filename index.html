@@ -1,438 +1,478 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RCM बचत कॅल्क्युलेटर</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RCM बचत कॅल्क्युलेटर — DS WORLD</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --primary:#0a5b99;
-  --secondary:#138808;
-  --purple:#8A56FF;
-  --card:#ffffff;
-  --text:#333;
-  --muted:#666;
-  --border:#e0e0e0;
+  --primary: #0a5b99;
+  --primary-2:#003d80;
+  --accent: #138808;
+  --purple: #8A56FF;
+  --card: #ffffff;
+  --text: #222;
+  --muted: #666;
+  --border: #e0e0e0;
+  --shadow: 0 10px 30px rgba(15,40,80,0.12);
 }
 
-/* ====== BACKGROUND CHANGED TO ROYAL BLUE GRADIENT ====== */
+/* Background */
 body{
   margin:0;
   font-family:"Poppins",sans-serif;
-  background: linear-gradient(135deg, #0a5b99, #004f88);
+  background: linear-gradient(135deg, #0a5b99 0%, #004f88 50%, #003d80 100%);
   color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-/* Container */
-.wrap{
-  max-width:900px;
-  margin:12px auto;
-  background:var(--card);
+/* Center container */
+.container{
+  max-width:980px;
+  margin:18px auto;
   padding:18px;
+}
+
+/* Card wrap */
+.wrap{
+  background:rgba(255,255,255,0.98);
   border-radius:14px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.12);
+  padding:18px;
+  box-shadow:var(--shadow);
   border-top:6px solid var(--primary);
 }
 
-/* Header */
-h1{margin:0;font-family:"Baloo 2",sans-serif;color:var(--primary);font-size:24px;}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:15px;}
-.small{color:var(--muted);font-size:13px}
+/* PRO Header */
+.pro-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border-radius:10px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  margin-bottom:6px;
+}
+.pro-title{
+  display:flex;
+  flex-direction:column;
+}
+.pro-title h1{
+  margin:0;
+  font-family:"Baloo 2",sans-serif;
+  color:#fff;
+  font-size:22px;
+}
+.pro-title .sub{color:rgba(255,255,255,0.85);font-size:13px;margin-top:4px;}
+.ds-badge{
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  padding:8px 14px;
+  border-radius:30px;
+  font-weight:700;
+  font-size:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  border:1px solid rgba(255,255,255,0.06);
+}
+
+/* small date text on white card */
+.small{
+  color:var(--muted);
+  font-size:13px;
+}
 
 /* Customer Info */
-.customer-info{display:flex;flex-wrap:wrap;gap:15px;margin-top:20px;}
+.customer-info{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
 .cust-field{flex:1;min-width:200px;}
-.cust-field label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:5px;}
+.cust-field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
 .cust-field input{width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);font-size:14px;}
 
 /* Sections */
-.section{background:var(--card);border:1px solid #eaf1f8;padding:18px;border-radius:12px;margin-top:20px;box-shadow:0 6px 18px rgba(0,80,150,0.04);}
-h2{font-family:"Baloo 2",sans-serif;margin:0 0 15px 0;color:var(--primary);border-bottom:2px solid #f0f0f0;padding-bottom:8px;}
+.section{background:var(--card);border:1px solid #eaf1f8;padding:16px;border-radius:12px;margin-top:14px;box-shadow:0 6px 18px rgba(0,80,150,0.03);}
+.section h2{margin:0;font-family:"Baloo 2",sans-serif;color:var(--primary);font-size:18px;padding-bottom:8px;border-bottom:1px solid #f4f8fb;}
 
 /* Controls */
-.controls{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;}
+.controls{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-top:12px;}
 .control-group{flex:1;}
-.control-group.qty{flex:0 1 100px;}
-.control-group label{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:5px;display:block;}
-select,input[type="number"]{width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:14px;}
-.btn{padding:12px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,0.05);font-family:"Poppins",sans-serif;}
-.btn.add{background:var(--primary);color:white;width:100%;font-size:15px}
+.control-group.qty{flex:0 1 110px;}
+.control-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
+select,input[type="number"],input[type="text"],input[type="date"]{
+  width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);font-size:14px;background:#fff;
+}
+.btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,0.06);font-family:"Poppins",sans-serif;}
+.btn.add{background:linear-gradient(90deg,var(--primary),var(--primary-2));color:#fff;width:100%;}
 
 /* Product list */
-#productList{margin-top:20px;}
+#productList{margin-top:18px;}
 .empty-msg{text-align:center;color:var(--muted);padding:20px 0}
-.product-item{display:flex;flex-direction:column;padding:12px;border:1px solid var(--border);border-radius:10px;background:#f7fbff;margin-bottom:10px;animation:fadeIn .28s ease;}
-@keyframes fadeIn{from{opacity:0;transform:scale(.98);}to{opacity:1;transform:scale(1);}}
-
-/* product header/body */
+.product-item{
+  display:flex;flex-direction:column;padding:12px;border:1px solid var(--border);border-radius:10px;background:#fbfdff;margin-bottom:12px;animation:cardIn .26s ease;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(6px) scale(.997);}to{opacity:1;transform:none}}
 .product-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.product-name{font-weight:700;color:var(--primary);font-size:15px;flex:1;padding-right:10px;}
-.btn-remove{background:#fee;color:#d72626;border:1px solid #fdd;border-radius:50%;width:30px;height:30px;font-weight:700;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0;}
+.product-name{font-weight:700;color:var(--primary);font-size:15px;}
+.btn-remove{background:#fff;border:1px solid #ffdede;color:#c62828;border-radius:8px;padding:6px 8px;cursor:pointer;}
 .product-body{display:flex;flex-wrap:wrap;align-items:center;gap:12px;}
-.qty-box{display:flex;align-items:center;gap:8px;flex-basis:120px;}
-.qty-box label{font-size:14px;color:var(--muted);flex-shrink:0;}
+.qty-box{display:flex;align-items:center;gap:8px;flex-basis:140px;}
+.qty-box label{font-size:14px;color:var(--muted);}
 .inline-qty{width:100%;padding:8px;border-radius:6px;border:1px solid var(--border);text-align:center;}
-.product-pricing{flex:1;display:flex;flex-direction:column;gap:5px;min-width:150px;}
+.product-pricing{flex:1;display:flex;flex-direction:column;gap:6px;min-width:160px;}
 .product-pricing span{font-size:13px;color:var(--muted);}
-.product-saving{font-weight:700;font-size:16px;color:var(--secondary);}
+.product-saving{font-weight:800;font-size:15px;color:var(--accent);}
 
 /* Totals */
-.totals-summary{margin-top:15px;padding-top:15px;border-top:2px solid var(--primary);}
-.total-row{display:flex;justify-content:space-between;padding:8px 10px;border-radius:6px;}
-.total-row:nth-child(even){background-color:#fafdff;}
-.total-row span{color:var(--muted);}
-.total-row strong{color:var(--text);font-size:16px;}
-.total-row.highlight{background:#e6f7ff;margin-top:10px;}
-.total-row.highlight span{color:var(--primary);font-weight:700;}
-.total-row.highlight strong{color:var(--primary);font-size:18px;}
+.totals-summary{margin-top:16px;padding-top:12px;border-top:2px solid var(--primary);}
+.total-row{display:flex;justify-content:space-between;padding:10px;border-radius:8px;}
+.total-row:nth-child(even){background:#fbffff;}
+.total-row span{color:var(--muted);font-size:14px;}
+.total-row strong{font-size:16px;color:var(--text);}
+
+/* Highlight total */
+.total-row.highlight{background:#eef8ff;margin-top:8px;border-left:4px solid var(--primary);padding-left:12px;}
 
 /* Cards */
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px;}
-.card{border-radius:10px;padding:18px;color:#fff;font-weight:700;text-align:center;background:linear-gradient(135deg,var(--primary),#007dc9);box-shadow:0 6px 18px rgba(0,0,0,0.06);}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:12px;}
+.card{border-radius:12px;padding:16px;color:#fff;font-weight:800;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.08);}
 .card.saving{background:linear-gradient(135deg,#ff9933,#ff7b07);}
 .card.cons{background:linear-gradient(135deg,var(--purple),#6a3dcc);}
-.card.total{grid-column:1/-1;background:linear-gradient(135deg,var(--secondary),#10a606);font-size:1.05rem;}
+.card.total{background:linear-gradient(135deg,var(--accent),#0a8a06);grid-column:1/-1;font-size:1.05rem;}
 .card.secondary{background:linear-gradient(135deg,#00796B,#004D40);}
 
-/* Bottom actions */
-.bottom-actions{display:flex;gap:12px;justify-content:center;margin-top:25px;flex-wrap:wrap;}
-.btn.wa{background:#25D366;color:#fff}
-.btn.pdf{background:#ff7043;color:#fff}
-.btn.print{background:var(--muted);color:#fff}
-.btn.clear{background:#d72626;color:#fff}
+/* Footer */
+.footer{
+  width:100%;
+  padding:16px 12px;
+  background:rgba(255,255,255,0.96);
+  border-top:3px solid var(--primary);
+  text-align:center;
+  font-family:'Poppins',sans-serif;
+  font-size:15px;
+  color:#222;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  border-radius:10px;
+  margin-top:18px;
+}
 
-/* popup & confetti */
-.overlay{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.22);display:none;align-items:center;justify-content:center;z-index:1200}
-.popup{width:360px;max-width:92%;border-radius:12px;padding:22px;text-align:center;background:var(--card);box-shadow:0 16px 40px rgba(0,0,0,0.18);}
-.popup h4{margin:0;font-size:20px;color:var(--primary);font-family:"Baloo 2",sans-serif;}
+/* Popup & Confetti */
+.overlay{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.26);display:none;align-items:center;justify-content:center;z-index:1200}
+.popup{width:360px;max-width:92%;border-radius:12px;padding:22px;text-align:center;background:var(--card);box-shadow:0 20px 50px rgba(0,0,0,0.18);}
+.popup h4{margin:0;font-size:20px;color:var(--primary); font-family: "Baloo 2",sans-serif;}
 .popup p{margin:8px 0 0 0;color:var(--text)}
 .confetti{position:fixed;z-index:1250;pointer-events:none;font-size:24px;opacity:0;transform:translateY(0) scale(0.9);transition:transform 1.2s,opacity 1.2s}
 
-/* responsive */
-@media(max-width:600px){
-  .wrap{padding:12px;margin:6px;}
-  h1{font-size:20px;}
-  .controls{flex-direction:column;align-items:stretch;}
+/* Responsive tweaks */
+@media(max-width:700px){
+  .pro-header{flex-direction:column;align-items:flex-start;gap:8px;}
+  .ds-badge{align-self:flex-end;}
+  .customer-info{flex-direction:column;}
   .control-group.qty{flex:1;}
+  .card.total{font-size:1rem;}
+  .footer{padding:14px 10px;}
 }
-
 </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>RCM बचत कॅल्क्युलेटर</h1>
-        <div class="small" id="nowDate"></div>
-      </div>
-    </header>
-
-    <div class="customer-info">
-      <div class="cust-field">
-        <label for="custName">ग्राहकाचे नाव</label>
-        <input type="text" id="custName" placeholder="असोसिएट बायरचे नाव" />
-      </div>
-      <div class="cust-field">
-        <label for="rcmId">RCM ID</label>
-        <input type="text" id="rcmId" placeholder="RCM ID" />
-      </div>
-      <div class="cust-field">
-        <label for="orderDate">ऑर्डर तारीख</label>
-        <input type="date" id="orderDate" />
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>प्रॉडक्ट ऍड करा</h2>
-      <div class="controls">
-        <div class="control-group">
-          <label for="productSelect">प्रॉडक्ट निवडा</label>
-          <select id="productSelect"><option value="">-- प्रॉडक्ट निवडा --</option></select>
-        </div>
-        <div class="control-group qty">
-          <label for="qtyInput">Quantity</label>
-          <input type="number" id="qtyInput" min="1" value="1" />
-        </div>
-        <button class="btn add" id="addBtn">+ ऍड करा</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>तुमची ऑर्डर</h2>
-      <div id="productList"></div>
-      
-      <div class="totals-summary">
-        <div class="total-row">
-          <span>एकूण नग (Qty):</span>
-          <strong id="totalQty">0</strong>
-        </div>
-        <div class="total-row">
-          <span>एकूण मार्केट किंमत:</span>
-          <strong id="totalMarket">₹0</strong>
-        </div>
-        <div class="total-row">
-          <span>एकूण RCM किंमत:</span>
-          <strong id="totalRCM">₹0</strong>
-        </div>
-        <div class="total-row">
-          <span>एकूण PV:</span>
-          <strong id="totalPV">0</strong>
-        </div>
-        <div class="total-row highlight">
-          <span>तुमची एकूण बचत (मासिक):</span>
-          <strong id="totalSaving">₹0</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>तुमचा फायदा</h2>
-      <div class="cards-grid">
-        <div class="card saving">
-          <div class="label">एकूण मासिक फायदा</div>
-          <div id="cardMonthly" class="val">₹0</div>
-        </div>
-        <div class="card cons">
-          <div class="label">Consistency Reward</div>
-          <div id="cardCons" class="val">₹0</div>
-        </div>
-        
-        <div class="card total">
-          <div class="label">एकूण फायदा (बचत + Consistency)</div>
-          <div id="cardTotal" class="val">₹0</div>
-        </div>
-
-        <div class="card secondary">
-          <div class="label">वार्षिक बचत (12 महिने)</div>
-          <div id="cardAnnual" class="val">₹0</div>
-        </div>
-        <div class="card secondary">
-          <div class="label">40 वर्षांची बचत</div>
-          <div id="cardForty" class="val">₹0</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bottom-actions">
-      <button class="btn wa" id="waBtn">WhatsApp वर पाठवा</button>
-      <button class="btn pdf" id="pdfBtn">PDF डाउनलोड करा</button>
-      <button class="btn print" id="printBtn">प्रिंट करा</button>
-      <button class="btn clear" id="clearBtn">ऑर्डर क्लियर करा</button>
-    </div>
-  </div>
-  
-  <div id="overlay" class="overlay" aria-hidden="true">
-    <div class="popup" role="dialog" aria-modal="true">
-      <h4 id="popTitle">✔️ प्रॉडक्ट जोडले!</h4>
-      <p id="popSub">तुमची बचत: ₹0</p>
-    </div>
-  </div>
-
-  <div id="confetti"></div>
-
-  <!-- Footer (Design by Deepak 27 + Contact) -->
-  <div style="
-    width:100%;
-    padding:15px 10px;
-    background:#ffffffee;
-    border-top:3px solid #0a5b99;
-    text-align:center;
-    font-family:'Poppins',sans-serif;
-    font-size:15px;
-    color:#222;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:4px;
-  ">
-    <div><strong>Design By Deepak 27</strong></div>
-    <div>📞 कॉन्टॅक्ट: <strong>7020970727</strong></div>
-  </div>
-
-  <script>
-    // initial setup
-    document.getElementById('orderDate').valueAsDate = new Date();
-    document.getElementById('nowDate').innerText = new Date().toLocaleDateString('mr-IN',{day:'2-digit',month:'short',year:'numeric'});
-
-    // MAIN ARRAYS
-    let products = [];
-    let order = [];
-    const CUR = '₹';
-
-    // Load products from Google Sheet (public)
-    async function loadProductsFromSheet(){
-      const sheetURL = "https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json";
-      try{
-        const res = await fetch(sheetURL);
-        const text = await res.text();
-        const json = JSON.parse(text.substring(47, text.length - 2));
-        const rows = json.table.rows || [];
-
-        products.length = 0;
-        rows.forEach(r=>{
-          const name = r.c[0]?.v || "";
-          const market = Number(r.c[1]?.v || 0);
-          const rcm = Number(r.c[2]?.v || 0);
-          const pv = Number(r.c[3]?.v || 0);
-          if(name) products.push({name,market,rcm,pv});
-        });
-
-        const sel = document.getElementById('productSelect');
-        sel.innerHTML = "<option value=''>-- प्रॉडक्ट निवडा --</option>";
-        products.forEach((p,i)=>{ const o=document.createElement('option'); o.value=i; o.text=p.name; sel.appendChild(o); });
-
-      }catch(err){
-        console.error("Error loading sheet:", err);
-        const sel = document.getElementById('productSelect');
-        sel.innerHTML = "<option value=''>Sheet लोड करता आला नाही</option>";
-      }
-    }
-    loadProductsFromSheet();
-
-    // helpers
-    function num(v){ return Number(v||0); }
-    function fmt(v){ return num(v).toFixed(0); }
-
-    // recalc and render
-    function recalcAndRender(){
-      const list = document.getElementById('productList');
-      list.innerHTML = '';
-      let sumQty=0, tM=0, tR=0, tPV=0, tSave=0;
-
-      if(order.length === 0){
-        list.innerHTML = '<p class="empty-msg">तुमची ऑर्डर रिकामी आहे. कृपया प्रॉडक्ट ऍड करा.</p>';
-      }
-
-      order.forEach((it, idx)=>{
-        const marketSum = it.market * it.qty;
-        const rcmSum = it.rcm * it.qty;
-        const pvSum = it.pv * it.qty;
-        const saveSum = (it.market - it.rcm) * it.qty;
-        sumQty += it.qty; tM += marketSum; tR += rcmSum; tPV += pvSum; tSave += saveSum;
-        
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'product-item';
-        
-        itemDiv.innerHTML = `
-          <div class="product-header">
-            <span class="product-name">${idx + 1}. ${it.name}</span>
-            <button class="btn-remove" data-i="${idx}">×</button>
+  <div class="container">
+    <!-- PRO Header -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+      <div style="flex:1">
+        <div class="pro-header">
+          <div class="pro-title">
+            <h1 style="color:#fff">RCM बचत कॅल्क्युलेटर</h1>
+            <div class="sub" id="nowDate"> </div>
           </div>
-          <div class="product-body">
-            <div class="qty-box">
-              <label>Qty:</label>
-              <input class="inline-qty" type="number" min="1" value="${it.qty}" data-i="${idx}">
-            </div>
-            <div class="product-pricing">
-              <span>RCM: ${CUR}${fmt(it.rcm)} (मार्केट: ${CUR}${fmt(it.market)}) | PV: ${fmt(it.pv)}</span>
-              <strong class="product-saving">या प्रॉडक्टवर बचत: ${CUR}${fmt(saveSum)}</strong>
-            </div>
+          <div class="ds-badge">✨ DS WORLD</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <!-- Customer Info -->
+      <div class="customer-info">
+        <div class="cust-field">
+          <label for="custName">ग्राहकाचे नाव</label>
+          <input type="text" id="custName" placeholder="असोसिएट बायरचे नाव" />
+        </div>
+        <div class="cust-field">
+          <label for="rcmId">RCM ID</label>
+          <input type="text" id="rcmId" placeholder="RCM ID" />
+        </div>
+        <div class="cust-field">
+          <label for="orderDate">ऑर्डर तारीख</label>
+          <input type="date" id="orderDate" />
+        </div>
+      </div>
+
+      <!-- Product Add -->
+      <div class="section">
+        <h2>प्रॉडक्ट ऍड करा</h2>
+        <div class="controls">
+          <div class="control-group">
+            <label for="productSelect">प्रॉडक्ट निवडा</label>
+            <select id="productSelect"><option value="">-- प्रॉडक्ट निवडा --</option></select>
           </div>
-        `;
-        list.appendChild(itemDiv);
+          <div class="control-group qty">
+            <label for="qtyInput">Quantity</label>
+            <input type="number" id="qtyInput" min="1" value="1" />
+          </div>
+          <button class="btn add" id="addBtn">+ ऍड करा</button>
+        </div>
+      </div>
+
+      <!-- Order List -->
+      <div class="section">
+        <h2>तुमची ऑर्डर</h2>
+        <div id="productList"></div>
+
+        <div class="totals-summary">
+          <div class="total-row"><span>एकूण नग (Qty):</span><strong id="totalQty">0</strong></div>
+          <div class="total-row"><span>एकूण मार्केट किंमत:</span><strong id="totalMarket">₹0</strong></div>
+          <div class="total-row"><span>एकूण RCM किंमत:</span><strong id="totalRCM">₹0</strong></div>
+          <div class="total-row"><span>एकूण PV:</span><strong id="totalPV">0</strong></div>
+          <div class="total-row highlight"><span>तुमची एकूण बचत (मासिक):</span><strong id="totalSaving">₹0</strong></div>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div class="section">
+        <h2>तुमचा फायदा</h2>
+        <div class="cards-grid">
+          <div class="card saving">
+            <div class="label">एकूण मासिक फायदा</div>
+            <div id="cardMonthly" class="val">₹0</div>
+          </div>
+          <div class="card cons">
+            <div class="label">Consistency Reward</div>
+            <div id="cardCons" class="val">₹0</div>
+          </div>
+          <div class="card total">
+            <div class="label">एकूण फायदा (बचत + Consistency)</div>
+            <div id="cardTotal" class="val">₹0</div>
+          </div>
+          <div class="card secondary">
+            <div class="label">वार्षिक बचत (12 महिने)</div>
+            <div id="cardAnnual" class="val">₹0</div>
+          </div>
+          <div class="card secondary">
+            <div class="label">40 वर्षांची बचत</div>
+            <div id="cardForty" class="val">₹0</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;margin-top:16px;gap:10px;flex-wrap:wrap;">
+        <button class="btn clear" id="clearBtn" style="background:#d72626;color:#fff;padding:10px 16px;border-radius:10px;">ऑर्डर क्लियर करा</button>
+      </div>
+
+    </div> <!-- wrap end -->
+
+    <!-- Popup overlay -->
+    <div id="overlay" class="overlay" aria-hidden="true">
+      <div class="popup" role="dialog" aria-modal="true">
+        <h4 id="popTitle">✔️ प्रॉडक्ट जोडले!</h4>
+        <p id="popSub">तुमची बचत: ₹0</p>
+      </div>
+    </div>
+
+    <!-- confetti -->
+    <div id="confetti"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div style="font-weight:700;color:var(--primary);">Designed &amp; Powered By <span style="color:#000">DS WORLD</span></div>
+      <div>📞 Contact: <strong>7020970727</strong></div>
+    </div>
+
+  </div> <!-- container end -->
+
+<script>
+  // initial setup
+  document.getElementById('orderDate').valueAsDate = new Date();
+  document.getElementById('nowDate').innerText = new Date().toLocaleDateString('mr-IN',{day:'2-digit',month:'short',year:'numeric'});
+
+  // MAIN data
+  let products = [];
+  let order = [];
+  const CUR = '₹';
+
+  // Load products from Google Sheet (public)
+  async function loadProductsFromSheet(){
+    const sheetURL = "https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json";
+    try{
+      const res = await fetch(sheetURL);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
+      const rows = json.table.rows || [];
+
+      products.length = 0;
+      rows.forEach(r=>{
+        const name = r.c[0]?.v || "";
+        const market = Number(r.c[1]?.v || 0);
+        const rcm = Number(r.c[2]?.v || 0);
+        const pv = Number(r.c[3]?.v || 0);
+        if(name) products.push({name,market,rcm,pv});
       });
 
-      // attach handlers for qty & remove
-      document.querySelectorAll('input.inline-qty').forEach(inp=>{
-        inp.addEventListener('change', ()=> {
-          const i = Number(inp.dataset.i);
-          const v = Math.max(1, parseInt(inp.value) || 1);
-          order[i].qty = v; recalcAndRender();
-        });
-      });
-      document.querySelectorAll('button.btn-remove').forEach(btn=>{
-        btn.addEventListener('click', ()=> {
-          const i = Number(btn.dataset.i);
-          order.splice(i,1); recalcAndRender();
-        });
-      });
-
-      // totals summary
-      document.getElementById('totalQty').innerText = sumQty;
-      document.getElementById('totalMarket').innerText = CUR + fmt(tM);
-      document.getElementById('totalRCM').innerText = CUR + fmt(tR);
-      document.getElementById('totalPV').innerText = fmt(tPV);
-      document.getElementById('totalSaving').innerText = CUR + fmt(tSave);
-
-      // consistency reward logic (kept same)
-      let cons = 0;
-      if(tPV < 1500){
-        cons = tPV * 0.12;
-      } else if(tPV >= 1500 && tPV < 2500){
-        cons = 1500 * 0.1667;
-      } else if(tPV >= 2500 && tPV < 5000){
-        cons = 5000 * 0.1667;
-      } else {
-        cons = 5000 * 0.1667;
-      }
-      document.getElementById('cardCons').innerText = CUR + fmt(cons);
-      
-      const combined = tSave + cons;
-      document.getElementById('cardMonthly').innerText = CUR + fmt(combined);
-      const annual = combined * 12;
-      document.getElementById('cardAnnual').innerText = CUR + fmt(annual);
-      const forty = annual * 40;
-      document.getElementById('cardForty').innerText = CUR + fmt(forty);
-      document.getElementById('cardTotal').innerText = CUR + fmt(combined);
-    }
-
-    // add product
-    document.getElementById('addBtn').addEventListener('click', ()=>{
       const sel = document.getElementById('productSelect');
-      const idx = sel.value;
-      if(idx === '' || idx === null){ alert('कृपया प्रॉडक्ट निवडा'); return; }
-      const qty = Math.max(1, parseInt(document.getElementById('qtyInput').value) || 1);
-      const p = products[Number(idx)];
-      const existing = order.find(o => o.name === p.name);
-      if(existing) existing.qty += qty; else order.push({...p, qty});
-      recalcAndRender();
-      showPopup(p.name);
-      spawnConfetti();
-      sel.selectedIndex = 0;
-      document.getElementById('qtyInput').value = 1;
-    });
+      sel.innerHTML = "<option value=''>-- प्रॉडक्ट निवडा --</option>";
+      products.forEach((p,i)=>{ const o=document.createElement('option'); o.value=i; o.text=p.name; sel.appendChild(o); });
+    }catch(err){
+      console.error("Error loading sheet:", err);
+      const sel = document.getElementById('productSelect');
+      sel.innerHTML = "<option value=''>Sheet लोड करता आला नाही</option>";
+    }
+  }
+  loadProductsFromSheet();
 
-    // centered popup (updated to show total saving and visible 3s)
-    function showPopup(productName){
-      const overlay = document.getElementById('overlay');
-      const title = document.getElementById('popTitle');
-      const sub = document.getElementById('popSub');
-      title.innerText = `✔️ ${productName} जोडले!`;
-      // show the total saving value
-      sub.innerText = `एकूण बचत: ${document.getElementById('totalSaving').innerText}`;
-      overlay.style.display = 'flex';
-      spawnConfetti();
-      setTimeout(()=>{ overlay.style.display = 'none'; }, 3000); // 3 seconds
+  // helpers
+  function num(v){ return Number(v||0); }
+  function fmt(v){ return num(v).toFixed(0); }
+
+  // recalc and render
+  function recalcAndRender(){
+    const list = document.getElementById('productList');
+    list.innerHTML = '';
+    let sumQty=0, tM=0, tR=0, tPV=0, tSave=0;
+
+    if(order.length === 0){
+      list.innerHTML = '<p class="empty-msg">तुमची ऑर्डर रिकामी आहे. कृपया प्रॉडक्ट ऍड करा.</p>';
     }
 
-    // confetti
-    function spawnConfetti(){
-      const emojis = ["🎉","🎊","✨","✔️","💰"];
-      const cont = document.getElementById('confetti');
-      for(let i=0;i<14;i++){
-        const d = document.createElement('div');
-        d.className = 'confetti';
-        d.style.left = (Math.random() * window.innerWidth) + 'px';
-        d.style.top = (window.innerHeight * 0.6 + (Math.random()*120)) + 'px';
-        d.style.color = ["#ff5f5f","#5f9bff","#55ff90","#ffcf4b"][Math.floor(Math.random()*4)];
-        d.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-        cont.appendChild(d);
-        // trigger animation by forcing reflow then animating
-        setTimeout(()=>{ d.style.opacity='1'; d.style.transform = `translateY(-220px) rotate(${(Math.random()*720-360)}deg) scale(1)`; }, 50);
-        setTimeout(()=>{ d.remove(); }, 1500);
-      }
-    }
+    order.forEach((it, idx)=>{
+      const marketSum = it.market * it.qty;
+      const rcmSum = it.rcm * it.qty;
+      const pvSum = it.pv * it.qty;
+      const saveSum = (it.market - it.rcm) * it.qty;
+      sumQty += it.qty; tM += marketSum; tR += rcmSum; tPV += pvSum; tSave += saveSum;
 
-    // clear order
-    document.getElementById('clearBtn').addEventListener('click', ()=>{
-      order = [];
-      recalcAndRender();
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'product-item';
+      itemDiv.innerHTML = `
+        <div class="product-header">
+          <span class="product-name">${idx + 1}. ${it.name}</span>
+          <button class="btn-remove" data-i="${idx}">Remove</button>
+        </div>
+        <div class="product-body">
+          <div class="qty-box">
+            <label>Qty:</label>
+            <input class="inline-qty" type="number" min="1" value="${it.qty}" data-i="${idx}">
+          </div>
+          <div class="product-pricing">
+            <span>RCM: ${CUR}${fmt(it.rcm)} (मार्केट: ${CUR}${fmt(it.market)}) | PV: ${fmt(it.pv)}</span>
+            <div class="product-saving">या प्रॉडक्टवर बचत: ${CUR}${fmt(saveSum)}</div>
+          </div>
+        </div>
+      `;
+      list.appendChild(itemDiv);
     });
 
-  </script>
+    // attach handlers
+    document.querySelectorAll('input.inline-qty').forEach(inp=>{
+      inp.addEventListener('change', ()=> {
+        const i = Number(inp.dataset.i);
+        const v = Math.max(1, parseInt(inp.value) || 1);
+        order[i].qty = v; recalcAndRender();
+      });
+    });
+    document.querySelectorAll('button.btn-remove').forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        const i = Number(btn.dataset.i);
+        order.splice(i,1); recalcAndRender();
+      });
+    });
+
+    // totals summary update
+    document.getElementById('totalQty').innerText = sumQty;
+    document.getElementById('totalMarket').innerText = CUR + fmt(tM);
+    document.getElementById('totalRCM').innerText = CUR + fmt(tR);
+    document.getElementById('totalPV').innerText = fmt(tPV);
+    document.getElementById('totalSaving').innerText = CUR + fmt(tSave);
+
+    // consistency reward logic
+    let cons = 0;
+    if(tPV < 1500){
+      cons = tPV * 0.12;
+    } else if(tPV >= 1500 && tPV < 2500){
+      cons = 1500 * 0.1667;
+    } else if(tPV >= 2500 && tPV < 5000){
+      cons = 5000 * 0.1667;
+    } else {
+      cons = 5000 * 0.1667;
+    }
+    document.getElementById('cardCons').innerText = CUR + fmt(cons);
+
+    const combined = tSave + cons;
+    document.getElementById('cardMonthly').innerText = CUR + fmt(combined);
+    const annual = combined * 12;
+    document.getElementById('cardAnnual').innerText = CUR + fmt(annual);
+    const forty = annual * 40;
+    document.getElementById('cardForty').innerText = CUR + fmt(forty);
+    document.getElementById('cardTotal').innerText = CUR + fmt(combined);
+  }
+
+  // add product
+  document.getElementById('addBtn').addEventListener('click', ()=>{
+    const sel = document.getElementById('productSelect');
+    const idx = sel.value;
+    if(idx === '' || idx === null){ alert('कृपया प्रॉडक्ट निवडा'); return; }
+    const qty = Math.max(1, parseInt(document.getElementById('qtyInput').value) || 1);
+    const p = products[Number(idx)];
+    const existing = order.find(o => o.name === p.name);
+    if(existing) existing.qty += qty; else order.push({...p, qty});
+    recalcAndRender();
+    showPopup(p.name);
+    spawnConfetti();
+    sel.selectedIndex = 0;
+    document.getElementById('qtyInput').value = 1;
+  });
+
+  // popup show (3s) with total saving
+  function showPopup(productName){
+    const overlay = document.getElementById('overlay');
+    const title = document.getElementById('popTitle');
+    const sub = document.getElementById('popSub');
+    title.innerText = `✔️ ${productName} जोडले!`;
+    sub.innerText = `एकूण बचत: ${document.getElementById('totalSaving').innerText}`;
+    overlay.style.display = 'flex';
+    setTimeout(()=>{ overlay.style.display = 'none'; }, 3000);
+  }
+
+  // confetti
+  function spawnConfetti(){
+    const emojis = ["🎉","🎊","✨","💰"];
+    const cont = document.getElementById('confetti');
+    for(let i=0;i<14;i++){
+      const d = document.createElement('div');
+      d.className = 'confetti';
+      d.style.left = (Math.random() * window.innerWidth) + 'px';
+      d.style.top = (window.innerHeight * 0.6 + (Math.random()*120)) + 'px';
+      d.style.color = ["#ff5f5f","#5f9bff","#55ff90","#ffcf4b"][Math.floor(Math.random()*4)];
+      d.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+      cont.appendChild(d);
+      // animate
+      setTimeout(()=>{ d.style.opacity='1'; d.style.transform = `translateY(-240px) rotate(${(Math.random()*720-360)}deg) scale(1)`; }, 40 + i*30);
+      setTimeout(()=>{ d.remove(); }, 1600 + i*20);
+    }
+  }
+
+  // clear
+  document.getElementById('clearBtn').addEventListener('click', ()=>{
+    order = []; recalcAndRender();
+  });
+
+</script>
 </body>
-</html>
+          </html>
