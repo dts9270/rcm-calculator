@@ -75,14 +75,6 @@
     }
     input.inline-qty{width:80px;text-align:center;}
 
-    button{
-      cursor:pointer;font-weight:700;border-radius:10px;border:none;
-      padding:10px 14px;
-    }
-    .btn-add{background:linear-gradient(90deg,var(--primary),var(--p2));color:#fff}
-    .btn-ghost{background:#f3f3f3;border:1px solid #eee}
-
-    /* PRODUCT LIST */
     #productList{margin-top:10px;max-height:350px;overflow:auto;padding-right:4px}
     .item{background:#fbfdff;border:1px solid #eaf2ff;border-radius:10px;padding:12px;margin-bottom:10px}
     .item .title{font-weight:700;color:var(--primary)}
@@ -97,12 +89,10 @@
     .card-purple{background:linear-gradient(135deg,#8A56FF,#6a3dcc)!important;color:#fff}
     .card-blue{background:linear-gradient(135deg,#0a5b99,#003d80)!important;color:#fff}
 
-    /* SHARE BUTTONS */
     .btn-green{background:#25D366;color:#fff;width:100%}
     .btn-orange{background:#ff7043;color:#fff;width:100%}
     .btn-red{background:#d72626;color:#fff;width:100%}
 
-    /* FLOAT ADD BUTTON */
     #floatAdd{
       position:fixed;bottom:20px;right:20px;z-index:999;
       width:60px;height:60px;border-radius:50%;
@@ -128,7 +118,6 @@
       transform:translateY(0);
     }
 
-    /* FOOTER */
     .footer{
       margin-top:16px;text-align:center;
       background:#fff;border-radius:12px;padding:14px;
@@ -157,7 +146,7 @@
   <!-- GRID -->
   <div class="grid">
 
-    <!-- LEFT -->
+    <!-- LEFT SIDE -->
     <div>
       <div class="card">
 
@@ -205,7 +194,7 @@
       </div>
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT SIDE -->
     <div class="side">
 
       <div class="card card-green">
@@ -228,12 +217,9 @@
       </div>
 
       <div class="card">
-        <button id="waBtn" class="btn-green">WhatsApp</button>
-        <br><br>
-        <button id="imgBtn" class="btn-add" style="width:100%">Share Image</button>
-        <br><br>
-        <button id="pdfBtn" class="btn-orange">Download PDF</button>
-        <br><br>
+        <button id="waBtn" class="btn-green">WhatsApp</button><br><br>
+        <button id="imgBtn" class="btn-add" style="width:100%">Share Image</button><br><br>
+        <button id="pdfBtn" class="btn-orange">Download PDF</button><br><br>
         <button id="clearBtn" class="btn-red">Clear</button>
       </div>
 
@@ -241,13 +227,12 @@
   </div>
 
   <div class="footer">
-    Designed by <b>DS WORLD 🌍</b>  
-    <br>📞 7020970727
+    Designed by <b>DS WORLD 🌍</b><br>
+    📞 7020970727
   </div>
 
 </div>
 
-<!-- POPUP -->
 <div id="overlay" class="overlay">
   <div class="popup">
     <h3 id="popTitle">✔ प्रॉडक्ट जोडले</h3>
@@ -256,7 +241,6 @@
 </div>
 
 <div id="confetti"></div>
-
 <!-- JS Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
@@ -271,7 +255,7 @@ const SHEET =
 let products = [];
 let order = [];
 
-// DOM
+// DOM REFERENCES
 const productSelect = document.getElementById("productSelect");
 const productList   = document.getElementById("productList");
 const qtyInput      = document.getElementById("qtyInput");
@@ -291,7 +275,7 @@ const cardAnnual   = document.getElementById("cardAnnual");
 const cardTwenty   = document.getElementById("cardTwenty");
 
 // ------------------------------------------------------------
-// CURRENT DATE
+// UPDATE CLOCK
 // ------------------------------------------------------------
 function updateTime() {
   document.getElementById("nowDate").innerText =
@@ -340,7 +324,7 @@ function populateDropdown(){
 }
 
 // ------------------------------------------------------------
-// SEARCH
+// SEARCH FILTER
 // ------------------------------------------------------------
 search.oninput = () => {
   let q = search.value.toLowerCase();
@@ -360,7 +344,6 @@ search.oninput = () => {
 // ADD PRODUCT
 // ------------------------------------------------------------
 document.getElementById("addBtn").onclick = addProduct;
-document.getElementById("floatAdd").onclick = addProduct;
 
 function addProduct(){
   let idx = productSelect.value;
@@ -380,11 +363,10 @@ function addProduct(){
 }
 
 // ------------------------------------------------------------
-// SAVE + LOAD ORDER
+// SAVE / LOAD ORDER FROM LOCAL STORAGE
 // ------------------------------------------------------------
 function saveOrder(){
   localStorage.setItem("order", JSON.stringify(order));
-  localStorage.setItem("order_prev", JSON.stringify(order));
 }
 
 function loadSavedOrder(){
@@ -456,7 +438,7 @@ function recalc(){
   totalPV.textContent = tPV;
   totalSaving.textContent = "₹"+tS;
 
-  // consistency
+  // consistency reward
   let cons=0;
   if(tPV <1500) cons = tPV*0.12;
   else if(tPV<2500) cons = 1500*0.1667;
@@ -480,7 +462,7 @@ function showPopup(name){
 
   let o = document.getElementById("overlay");
   o.style.display = "flex";
-  setTimeout(()=> o.style.display="none", 2000);
+  setTimeout(()=> o.style.display="none", 1800);
 }
 
 // ------------------------------------------------------------
@@ -551,4 +533,9 @@ document.getElementById("clearBtn").onclick = ()=>{
     recalc();
   }
 };
-             </script>
+</script>
+
+</body>
+</html>
+
+  
