@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RCM बचत कॅल्क्युलेटर</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#0a5b99;
+  --secondary:#138808;
+  --purple:#8A56FF;
+  --bg:#f4f4f4;
+  --card:#ffffff;
+  --text:#333;
+  --muted:#666;
+  --border:#e0e0e0;
+}
+body{margin:0;background:var(--bg);font-family:Poppins;color:var(--text);}
+.wrap{
+  max-width:900px;margin:12px auto;background:var(--card);
+  padding:18px;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  border-top:6px solid var(--primary);
+}
+h1{margin:0;font-family:"Baloo 2";color:var(--primary);}
+header{border-bottom:1px solid var(--border);padding-bottom:15px;}
+
+.customer-info{display:flex;flex-wrap:wrap;gap:15px;margin-top:20px;}
+.cust-field{flex:1;min-width:200px;}
+.cust-field label{font-size:13px;color:var(--muted);}
+.cust-field input{width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);}
+
+/* Sections */
+.section{
+  background:var(--card);border:1px solid #eaf1f8;padding:18px;
+  border-radius:12px;margin-top:20px;
+}
+h2{
+  font-family:"Baloo 2";color:var(--primary);
+  border-bottom:2px solid #eee;padding-bottom:8px;
+}
+
+.controls{display:flex;gap:12px;flex-wrap:wrap;}
+.controls select,.controls input{
+  padding:10px;border-radius:8px;border:1px solid var(--border);
+}
+.btn{
+  padding:12px;font-weight:700;border-radius:10px;border:none;
+  cursor:pointer;
+}
+.btn.add{background:var(--primary);color:white;width:100%;}
+
+/* Product list */
+#productList{margin-top:20px;}
+.product-item{
+  background:#f7fbff;border:1px solid var(--border);padding:12px;border-radius:10px;
+  margin-bottom:10px;animation:fadeIn .3s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+
+.product-header{
+  display:flex;justify-content:space-between;font-weight:700;color:var(--primary);
+}
+.inline-qty{
+  width:70px;padding:8px;border:1px solid var(--border);
+  border-radius:8px;margin-top:8px;
+}
+.product-saving{font-weight:700;color:var(--secondary);margin-top:6px;}
+
+/* Totals */
+.totals-summary{margin-top:15px;padding-top:15px;border-top:2px solid var(--primary);}
+.total-row{display:flex;justify-content:space-between;padding:8px;}
+.total-row.highlight{background:#e6f7ff;border-radius:6px;}
+
+/* Cards */
+.cards-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px;
+}
+.card{
+  padding:18px;border-radius:14px;color:white;text-align:center;font-weight:700;
+  animation:fadeIn .3s ease;
+}
+.card.saving{background:linear-gradient(135deg,#ff9933,#ff7b07);}
+.card.cons{background:linear-gradient(135deg,var(--purple),#6a3dcc);}
+.card.total{background:linear-gradient(135deg,var(--secondary),#0a8a06);grid-column:1/-1;}
+.card.secondary{background:linear-gradient(135deg,#00796B,#004D40);}
+
+/* Buttons */
+.bottom-actions{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:25px;
+}
+.btn.clear{background:#d72626;color:white;}
+
+/* Popup */
+.overlay{
+  position:fixed;left:0;top:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.3);display:none;align-items:center;justify-content:center;z-index:999;
+}
+.popup{
+  background:white;padding:25px;border-radius:14px;width:300px;text-align:center;
+  animation:pop .35s ease;
+}
+@keyframes pop{from{transform:scale(.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+/* Confetti */
+.confetti{
+  position:fixed;top:55%;font-size:26px;opacity:0;
+  animation:fly 1.3s forwards ease-out;
+}
+@keyframes fly{
+  from{transform:translateY(0) scale(.6);opacity:1;}
+  to{transform:translateY(-180px) scale(1.4);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header>
+  <h1>RCM बचत कॅल्क्युलेटर</h1>
+  <div id="nowDate" style="font-size:13px;color:#666"></div>
+</header>
+
+<div class="customer-info">
+  <div class="cust-field">
+    <label>ग्राहकाचे नाव</label>
+    <input id="custName">
+  </div>
+  <div class="cust-field">
+    <label>RCM ID</label>
+    <input id="rcmId">
+  </div>
+  <div class="cust-field">
+    <label>ऑर्डर तारीख</label>
+    <input type="date" id="orderDate">
+  </div>
+</div>
+
+<div class="section">
+<h2>प्रॉडक्ट ऍड करा</h2>
+<div class="controls">
+  <select id="productSelect"><option value="">-- प्रॉडक्ट निवडा --</option></select>
+  <input type="number" id="qtyInput" min="1" value="1">
+  <button class="btn add" id="addBtn">+ ऍड करा</button>
+</div>
+</div>
+
+<div class="section">
+<h2>तुमची ऑर्डर</h2>
+<div id="productList"></div>
+
+<div class="totals-summary">
+  <div class="total-row"><span>एकूण नग:</span><strong id="totalQty">0</strong></div>
+  <div class="total-row"><span>मार्केट किंमत:</span><strong id="totalMarket">₹0</strong></div>
+  <div class="total-row"><span>RCM किंमत:</span><strong id="totalRCM">₹0</strong></div>
+  <div class="total-row"><span>Total PV:</span><strong id="totalPV">0</strong></div>
+  <div class="total-row highlight"><span>एकूण बचत:</span><strong id="totalSaving">₹0</strong></div>
+</div>
+</div>
+
+<div class="section">
+<h2>तुमचा फायदा</h2>
+<div class="cards-grid">
+  <div class="card saving"><div>मासिक फायदा</div><div id="cardMonthly">₹0</div></div>
+  <div class="card cons"><div>Consistency Reward</div><div id="cardCons">₹0</div></div>
+  <div class="card total"><div>Total</div><div id="cardTotal">₹0</div></div>
+  <div class="card secondary"><div>Annual</div><div id="cardAnnual">₹0</div></div>
+  <div class="card secondary"><div>40 Years</div><div id="cardForty">₹0</div></div>
+</div>
+</div>
+
+<div class="bottom-actions">
+  <button class="btn clear" id="clearBtn">Clear</button>
+</div>
+
+</div>
+
+<!-- Popup -->
+<div class="overlay" id="popupOverlay">
+  <div class="popup">
+    <h3 id="popupTitle">✔️ Added</h3>
+    <p id="popupMsg"></p>
+  </div>
+</div>
+
+<div id="confetti"></div>
+
+<script>
+document.getElementById("orderDate").valueAsDate=new Date();
+document.getElementById("nowDate").innerText=new Date().toLocaleDateString("mr-IN");
+
+let products=[];
+let order=[];
+
+// Load Sheet
+async function loadProducts(){
+  const url="https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json";
+  const res=await fetch(url);
+  const text=await res.text();
+  const json=JSON.parse(text.substring(47,text.length-2));
+
+  products=[];
+  json.table.rows.forEach(r=>{
+    if(r.c[0]){
+      products.push({
+        name:r.c[0].v,
+        market:Number(r.c[1]?.v||0),
+        rcm:Number(r.c[2]?.v||0),
+        pv:Number(r.c[3]?.v||0)
+      });
+    }
+  });
+
+  const sel=document.getElementById("productSelect");
+  sel.innerHTML="<option value=''>-- प्रॉडक्ट निवडा --</option>";
+  products.forEach((p,i)=>{
+    const o=document.createElement("option");
+    o.value=i;o.textContent=p.name;
+    sel.appendChild(o);
+  });
+}
+loadProducts();
+
+function fmt(v){return Number(v||0).toFixed(0);}
+
+function recalc(){
+  let qty=0,m=0,r=0,pv=0,s=0;
+  const list=document.getElementById("productList");
+  list.innerHTML="";
+
+  if(order.length==0){
+    list.innerHTML="<p style='text-align:center;color:#777'>ऑर्डर रिकामी आहे</p>";
+  }
+
+  order.forEach((it,i)=>{
+    const sm=(it.market-it.rcm)*it.qty;
+    qty+=it.qty;m+=it.market*it.qty;
+    r+=it.rcm*it.qty;pv+=it.pv*it.qty;s+=sm;
+
+    const div=document.createElement("div");
+    div.className="product-item";
+    div.innerHTML=`
+      <div class='product-header'>
+        <span>${it.name}</span>
+        <button onclick='removeItem(${i})' style='background:#fee;border:1px solid #fcc;color:#c00;padding:4px 10px;border-radius:6px;'>×</button>
+      </div>
+      Qty: <input type='number' class='inline-qty' value='${it.qty}' min='1' onchange='updateQty(${i},this.value)'>
+      <div class='product-saving'>बचत: ₹${fmt(sm)}</div>
+    `;
+    list.appendChild(div);
+  });
+
+  totalQty.innerText=qty;
+  totalMarket.innerText="₹"+fmt(m);
+  totalRCM.innerText="₹"+fmt(r);
+  totalPV.innerText=fmt(pv);
+  totalSaving.innerText="₹"+fmt(s);
+
+  // Consistency
+  let cons=0;
+  if(pv<1500) cons=pv*0.12; else cons=1500*0.1667;
+  cardCons.innerText="₹"+fmt(cons);
+
+  const monthly=s+cons;
+  cardMonthly.innerText="₹"+fmt(monthly);
+  cardTotal.innerText="₹"+fmt(monthly);
+  cardAnnual.innerText="₹"+fmt(monthly*12);
+  cardForty.innerText="₹"+fmt(monthly*12*40);
+}
+
+function updateQty(i,v){
+  order[i].qty=Math.max(1,parseInt(v)||1);
+  recalc();
+}
+function removeItem(i){
+  order.splice(i,1);
+  recalc();
+}
+
+addBtn.onclick=()=>{
+  const idx=document.getElementById("productSelect").value;
+  if(idx===""){alert("प्रॉडक्ट निवडा");return;}
+  const qty=parseInt(qtyInput.value)||1;
+  const p=products[idx];
+
+  const ex=order.find(o=>o.name==p.name);
+  if(ex) ex.qty+=qty;
+  else order.push({...p,qty});
+
+  showPopup(p.name);
+  makeConfetti();
+  recalc();
+};
+
+function showPopup(name){
+  document.getElementById("popupTitle").innerText="✔️ "+name+" ऍड झाले!";
+  document.getElementById("popupMsg").innerText="बचत अपडेट!";
+  const pop=document.getElementById("popupOverlay");
+  pop.style.display="flex";
+  setTimeout(()=>{pop.style.display="none";},1500);
+}
+
+function makeConfetti(){
+  const conf=document.getElementById("confetti");
+  for(let i=0;i<10;i++){
+    const e=document.createElement("div");
+    e.className="confetti";
+    e.style.left=(Math.random()*window.innerWidth)+"px";
+    e.style.color=["#ff5f5f","#5f9bff","#55ff90","#ffcf4b"][Math.floor(Math.random()*4)];
+    e.innerText=["🎉","✨","💰","🎊"][Math.floor(Math.random()*4)];
+    conf.appendChild(e);
+    setTimeout(()=>e.remove(),1400);
+  }
+}
+
+clearBtn.onclick=()=>{order=[];recalc();};
+</script>
+
+</body>
+</html>
