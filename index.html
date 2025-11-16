@@ -1,72 +1,231 @@
-<!doctype html><html lang="mr"><head>
+<!doctype html>
+<html lang="mr">
+<head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>RCM Calculator – DS WORLD (PRO MAX)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>RCM Calculator – DS WORLD PRO MAX v2</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
---p:#0a5b99;--p2:#003d80;--green:#138808;
---muted:#666;--card:#fff;--shadow:0 8px 22px rgba(0,0,0,.15);
+  --p:#0a5b99;
+  --p2:#003d80;
+  --green:#138808;
+  --muted:#666;
+  --card:#fff;
+  --shadow:0 8px 22px rgba(0,0,0,.15);
 }
-body{margin:0;font-family:"Poppins";background:linear-gradient(135deg,#063b73,#0a5b99,#003d80);color:#111;}
-.container{max-width:1000px;margin:auto;padding:14px;}
-.header{display:flex;justify-content:space-between;align-items:center;color:#fff;gap:12px;}
-.header-left{display:flex;align-items:center;gap:12px;}
-.logo{width:60px;height:60px;border-radius:10px;background:#fff;object-fit:contain;padding:5px;}
-.header h1{margin:0;font-family:"Baloo 2";font-size:22px;}
+
+/* GLOBAL FIX — No Horizontal Scroll */
+body{
+  margin:0;
+  font-family:"Poppins";
+  background:linear-gradient(135deg,#063b73,#0a5b99,#003d80);
+  color:#111;
+  overflow-x:hidden !important;
+}
+
+/* Prevent content overflow */
+*{
+  max-width:100% !important;
+  box-sizing:border-box;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:14px;
+}
+
+/******** HEADER ********/
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  color:#fff;
+  flex-wrap:wrap;
+}
+.header-left{display:flex;align-items:center;gap:12px}
+.logo{
+  width:60px;height:60px;border-radius:10px;background:#fff;padding:5px;
+  object-fit:contain;
+}
+.header h1{
+  margin:0;font-family:"Baloo 2";font-size:22px;color:#fff;
+}
 .now{font-size:13px;opacity:.9;}
-.badge{padding:8px 14px;border-radius:18px;background:linear-gradient(90deg,var(--p),var(--p2));color:#fff;font-weight:700;}
-.card{background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow);border-top:5px solid var(--p);}
-.section h2{margin:0;color:var(--p);font-family:"Baloo 2";font-size:18px;}
-.field label{font-size:13px;color:var(--muted);}
-.field input,.field select{width:100%;padding:10px;border:1px solid #e8e8e8;border-radius:8px;}
+.badge{
+  padding:8px 14px;
+  border-radius:18px;
+  background:linear-gradient(90deg,var(--p),var(--p2));
+  color:#fff;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+/******** GRID ********/
+.grid{
+  display:grid;
+  grid-template-columns:1fr 330px;
+  gap:14px;
+}
+
+/* MOBILE FIX */
+@media(max-width:900px){
+  .grid{
+    grid-template-columns:1fr !important;
+  }
+  .side{
+    width:100% !important;
+  }
+}
+
+/******** CARDS ********/
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:14px;
+  box-shadow:var(--shadow);
+  border-top:5px solid var(--p);
+}
+
+.section h2{
+  margin:0;
+  color:var(--p);
+  font-family:"Baloo 2";
+  font-size:18px;
+}
+
+.field label{
+  font-size:13px;color:var(--muted);
+}
+.field input,.field select{
+  width:100%;
+  padding:10px;
+  border:1px solid #e8e8e8;
+  border-radius:8px;
+}
+
+/******** CONTROLS ********/
 .row{display:flex;gap:10px;flex-wrap:wrap;}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
-.inline-qty{padding:8px;border-radius:6px;width:70px;text-align:center;border:1px solid #ddd;}
-.btn{padding:10px 14px;border:none;border-radius:8px;font-weight:700;cursor:pointer}
+.inline-qty{
+  padding:8px;
+  border-radius:6px;
+  width:70px;
+  text-align:center;
+  border:1px solid #ddd;
+}
+
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  font-weight:700;
+  cursor:pointer;
+  white-space:nowrap;
+}
 .btn-blue{background:linear-gradient(90deg,var(--p),var(--p2));color:#fff;}
 .btn-green{background:#25D366;color:#fff;}
 .btn-orange{background:#ff7043;color:#fff;}
 .btn-red{background:#d72626;color:#fff;}
-.search{padding:10px;border-radius:8px;border:1px solid #e8e8e8;width:100%;}
-#productList{margin-top:10px;max-height:350px;overflow:auto;}
-.item{background:#f9fcff;border:1px solid #eaf2ff;border-radius:10px;padding:10px;margin-bottom:10px;}
+.search{
+  padding:10px;border-radius:8px;border:1px solid #e8e8e8;width:100%;
+}
+
+/******** PRODUCT LIST ********/
+#productList{
+  margin-top:10px;
+  max-height:350px;
+  overflow:auto;
+  padding-right:4px;
+}
+
+.item{
+  background:#f9fcff;
+  border:1px solid #eaf2ff;
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:10px;
+}
 .item-title{font-weight:700;color:var(--p);}
 .highlight-green{border-left:4px solid #28a745;padding-left:8px;}
 .highlight-yellow{border-left:4px solid #ffc107;padding-left:8px;}
 .highlight-grey{border-left:4px solid #aaa;padding-left:8px;}
-.row-total{display:flex;justify-content:space-between;padding:8px;color:#000;}
-.side{margin-top:14px;}
-.card-secondary{background:linear-gradient(135deg,#00796B,#004D40);color:#fff !important;}
-.card-secondary div{color:#fff !important;text-shadow:0 1px 3px rgba(0,0,0,.45);}
-.progress-line{height:14px;background:#eaf3ff;border-radius:10px;overflow:hidden;margin-top:6px;}
-.progress-fill{height:100%;width:0%;background:#00c853;transition:.7s;}
-.footer{text-align:center;margin-top:14px;padding:12px;background:#fff;border-top:4px solid var(--p);font-weight:700;}
-.overlay{position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.3);}
-.popup{background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow);}
-.confetti{position:fixed;pointer-events:none;opacity:0;transition:1s;font-size:22px;}
-@media(max-width:900px){.grid{display:block}}
+
+/******** TOTALS ********/
+.row-total{
+  display:flex;
+  justify-content:space-between;
+  padding:8px;
+  color:#000;
+}
+
+/******** RIGHT CARDS ********/
+.card-secondary{
+  background:linear-gradient(135deg,#00796B,#004D40);
+  color:#fff !important;
+}
+.card-secondary div{
+  color:#fff !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.45);
+}
+
+/******** PV BAR ********/
+.progress-line{
+  height:14px;background:#eaf3ff;border-radius:10px;overflow:hidden;margin-top:6px;
+}
+.progress-fill{
+  height:100%;width:0%;background:#00c853;transition:.7s;
+}
+
+/******** FOOTER ********/
+.footer{
+  text-align:center;
+  margin-top:14px;
+  padding:12px;
+  background:#fff;
+  border-top:4px solid var(--p);
+  font-weight:700;
+}
+
+/******** POPUP ********/
+.overlay{
+  position:fixed;left:0;top:0;width:100%;height:100%;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.3);
+}
+.popup{
+  background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow);
+}
+.confetti{
+  position:fixed;pointer-events:none;opacity:0;transition:1s;font-size:22px;
+}
 </style>
-</head><body>
+</head>
+
+<body>
 
 <div class="container">
 
-<!---------------- HEADER ---------------->
+<!-- HEADER -->
 <div class="header">
   <div class="header-left">
     <img src="logo.png" class="logo" onerror="this.style.display='none'">
     <div>
       <h1>RCM बचत कॅल्क्युलेटर</h1>
-      <div class="now" id="nowDate"></div>
+      <div id="nowDate" class="now"></div>
     </div>
   </div>
+
   <div class="badge">DS WORLD 🌍</div>
 </div>
 
-<!---------------- LAYOUT ---------------->
-<div class="grid" style="display:grid;grid-template-columns:1fr 330px;gap:14px;">
+<!-- GRID -->
+<div class="grid">
 
-<!------------- LEFT PANEL ------------->
+<!-- LEFT -->
 <div>
 <div class="card">
 
@@ -88,12 +247,8 @@ body{margin:0;font-family:"Poppins";background:linear-gradient(135deg,#063b73,#0
 <input id="search" class="search" placeholder="शोधा...">
 
 <div class="controls">
-<select id="productSelect" style="flex:1">
-<option value="">-- प्रॉडक्ट निवडा --</option>
-</select>
-
+<select id="productSelect" style="flex:1"><option value="">-- प्रॉडक्ट निवडा --</option></select>
 <input id="qtyInput" class="inline-qty" type="number" min="1" value="1">
-
 <button id="addBtn" class="btn btn-blue">+ ऍड</button>
 <button id="repeatBtn" class="btn" style="background:#eee">Repeat</button>
 </div>
@@ -112,7 +267,7 @@ body{margin:0;font-family:"Poppins";background:linear-gradient(135deg,#063b73,#0
 </div>
 </div>
 
-<!------------- RIGHT PANEL ------------->
+<!-- RIGHT -->
 <div class="side">
 
 <div class="card card-secondary">
@@ -120,7 +275,7 @@ body{margin:0;font-family:"Poppins";background:linear-gradient(135deg,#063b73,#0
 <div id="cardCons" style="font-size:22px;margin-top:4px">₹0</div>
 </div>
 
-<div class="card" style="background:linear-gradient(135deg,#138808,#0b6a06);color:#fff">
+<div class="card" style="background:linear-gradient(135deg,#138808,#0b6a06);color:#fff;">
 <div>Total Monthly Benefit</div>
 <div id="cardTotal" style="font-size:24px;margin-top:6px">₹0</div>
 </div>
@@ -156,7 +311,7 @@ body{margin:0;font-family:"Poppins";background:linear-gradient(135deg,#063b73,#0
 </div>
 </div>
 
-<!---------------- FOOTER ---------------->
+<!-- FOOTER -->
 <div class="footer">
 Designed By <b>DS WORLD 🌍</b><br>
 📞 7020970727
@@ -164,12 +319,12 @@ Designed By <b>DS WORLD 🌍</b><br>
 
 </div>
 
-<!---------------- POPUP & CONFETTI ---------------->
+<!-- POPUP -->
 <div id="overlay" class="overlay">
-<div class="popup">
-<h3 id="popTitle">✔ जोडले</h3>
-<p id="popSub"></p>
-</div>
+  <div class="popup">
+    <h3 id="popTitle">✔ जोडले</h3>
+    <p id="popSub"></p>
+  </div>
 </div>
 <div id="confetti"></div>
 
@@ -178,77 +333,95 @@ Designed By <b>DS WORLD 🌍</b><br>
 <script>
 /* INIT */
 const SHEET="https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json";
-const CUR='₹';
 let products=[],order=[],pvGoal=1500;
 
 /* DOM */
-let nowDate=document.getElementById("nowDate");
-let orderDate=document.getElementById("orderDate");
-let productSelect=document.getElementById("productSelect");
-let productList=document.getElementById("productList");
-let search=document.getElementById("search");
-let qty=document.getElementById("qtyInput");
+const nowDate=document.getElementById("nowDate");
+const orderDate=document.getElementById("orderDate");
+const productSelect=document.getElementById("productSelect");
+const productList=document.getElementById("productList");
+const search=document.getElementById("search");
+const qty=document.getElementById("qtyInput");
 
-let totalQty=document.getElementById("totalQty");
-let totalMarket=document.getElementById("totalMarket");
-let totalRCM=document.getElementById("totalRCM");
-let totalPV=document.getElementById("totalPV");
-let totalSaving=document.getElementById("totalSaving");
+const totalQty=document.getElementById("totalQty");
+const totalMarket=document.getElementById("totalMarket");
+const totalRCM=document.getElementById("totalRCM");
+const totalPV=document.getElementById("totalPV");
+const totalSaving=document.getElementById("totalSaving");
 
-let cardCons=document.getElementById("cardCons");
-let cardMonthly=document.getElementById("cardMonthly");
-let cardTotal=document.getElementById("cardTotal");
-let cardAnnual=document.getElementById("cardAnnual");
-let cardTwenty=document.getElementById("cardTwenty");
-let progressFill=document.getElementById("progressFill");
+const cardCons=document.getElementById("cardCons");
+const cardMonthly=document.getElementById("cardMonthly");
+const cardTotal=document.getElementById("cardTotal");
+const cardAnnual=document.getElementById("cardAnnual");
+const cardTwenty=document.getElementById("cardTwenty");
+
+const progressFill=document.getElementById("progressFill");
 
 /* TIME */
 orderDate.valueAsDate=new Date();
-function updateTime(){ nowDate.innerText=new Date().toLocaleString("mr-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}
-updateTime(); setInterval(updateTime,30000);
+function time(){ nowDate.innerText=new Date().toLocaleString("mr-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}
+time();setInterval(time,30000);
 
 /* LOAD SHEET */
 async function loadProducts(){
  try{
-   let r=await fetch(SHEET); let t=await r.text();
-   let j=JSON.parse(t.substring(47,t.length-2));
-   products=j.table.rows.map(r=>({
-      name:r.c[0]?.v||"",market:+r.c[1]?.v||0,rcm:+r.c[2]?.v||0,pv:+r.c[3]?.v||0
-   })).filter(x=>x.name);
-   populateSelect(); loadStorage(); recalc();
- }catch(e){productSelect.innerHTML="<option>Sheet Error</option>";}
+  let r=await fetch(SHEET);
+  let t=await r.text();
+  let j=JSON.parse(t.substring(47,t.length-2));
+  products=j.table.rows.map(r=>({
+     name:r.c[0]?.v||"",
+     market:+r.c[1]?.v||0,
+     rcm:+r.c[2]?.v||0,
+     pv:+r.c[3]?.v||0
+  })).filter(x=>x.name);
+  populate(); loadStored(); recalc();
+ }catch(e){
+  productSelect.innerHTML="<option>Error</option>";
+ }
 }
-function populateSelect(){
+function populate(){
  productSelect.innerHTML="<option value=''>-- प्रॉडक्ट निवडा --</option>";
- products.forEach((p,i)=>{let o=document.createElement("option");o.value=i;o.text=p.name;productSelect.appendChild(o);});
+ products.forEach((p,i)=>{
+  let o=document.createElement("option");o.value=i;o.text=p.name;
+  productSelect.appendChild(o);
+ });
 }
 
 /* SEARCH */
-search.addEventListener("input",e=>{
+search.oninput=e=>{
  let q=e.target.value.toLowerCase();
  productSelect.innerHTML="<option value=''>-- प्रॉडक्ट निवडा --</option>";
- products.forEach((p,i)=>{if(!q||p.name.toLowerCase().includes(q)){let o=document.createElement("option");o.value=i;o.text=p.name;productSelect.appendChild(o);}});
-});
+ products.forEach((p,i)=>{
+   if(!q||p.name.toLowerCase().includes(q)){
+     let o=document.createElement("option");o.value=i;o.text=p.name;
+     productSelect.appendChild(o);
+   }
+ });
+};
 
 /* ADD */
 document.getElementById("addBtn").onclick=()=>{
- let i=productSelect.value; if(i==="") return alert("प्रॉडक्ट निवडा");
+ let i=productSelect.value;
+ if(i==="") return alert("प्रॉडक्ट निवडा");
  let q=Math.max(1,+qty.value||1);
  let p=products[i];
  let e=order.find(x=>x.name===p.name);
- if(e) e.qty+=q; else order.push({...p,qty:q});
- saveStorage(); recalc(); popup(p.name); confetti();
+ if(e) e.qty+=q;
+ else order.push({...p,qty:q});
+ save(); recalc(); popup(p.name); conf();
  productSelect.selectedIndex=0; qty.value=1;
 };
 
 /* STORAGE */
-function saveStorage(){localStorage.setItem("order",JSON.stringify(order));localStorage.setItem("prev",JSON.stringify(order));}
-function loadStorage(){let s=localStorage.getItem("order");if(s) order=JSON.parse(s);}
+function save(){localStorage.setItem("order",JSON.stringify(order));localStorage.setItem("prev",JSON.stringify(order));}
+function loadStored(){let s=localStorage.getItem("order");if(s) order=JSON.parse(s);}
 
 /* REPEAT */
 document.getElementById("repeatBtn").onclick=()=>{
- let p=localStorage.getItem("prev"); if(!p) return alert("No previous");
- order=JSON.parse(p); saveStorage(); recalc();
+ let p=localStorage.getItem("prev");
+ if(!p) return alert("No previous");
+ order=JSON.parse(p);
+ save(); recalc();
 };
 
 /* RENDER */
@@ -256,41 +429,47 @@ function recalc(){
  productList.innerHTML="";
  let sQ=0,sM=0,sR=0,sPV=0,sS=0;
 
- if(order.length===0) productList.innerHTML="<div style='color:#888'>रिकामी</div>";
+ if(!order.length) productList.innerHTML="<div style='color:#888'>रिकामी</div>";
 
  order.forEach((it,i)=>{
-  let ms=it.market*it.qty, rs=it.rcm*it.qty, pv=it.pv*it.qty, sv=(it.market-it.rcm)*it.qty;
+  let ms=it.market*it.qty,
+      rs=it.rcm*it.qty,
+      pv=it.pv*it.qty,
+      sv=(it.market-it.rcm)*it.qty;
+
   sQ+=it.qty; sM+=ms; sR+=rs; sPV+=pv; sS+=sv;
 
   let pct=((it.market-it.rcm)/it.market)*100;
-  let cls="highlight-grey"; if(pct>=35) cls="highlight-green"; else if(pct>=15) cls="highlight-yellow";
+  let cls="highlight-grey";
+  if(pct>=35) cls="highlight-green";
+  else if(pct>=15) cls="highlight-yellow";
 
   let d=document.createElement("div");
   d.className="item "+cls;
   d.innerHTML=`
    <div class="item-title">${i+1}. ${it.name}</div>
-   <div style="font-size:12px;color:#777">PV:${it.pv} | RCM:${CUR+it.rcm} | MKT:${CUR+it.market}</div>
+   <div style="font-size:12px;color:#777">PV:${it.pv} | RCM:${it.rcm} | MKT:${it.market}</div>
    <div style="margin-top:6px;display:flex;gap:10px;align-items:center">
      <input data-i="${i}" class="inline-qty" type="number" min="1" value="${it.qty}">
      <button data-i="${i}" class="btn" style="background:#eee">Remove</button>
    </div>
-   <div style="margin-top:6px;font-weight:700;color:var(--green)">Saving: ${CUR+sv}</div>
+   <div style="margin-top:6px;font-weight:700;color:var(--green)">Saving: ₹${sv}</div>
   `;
   productList.appendChild(d);
  });
 
  document.querySelectorAll(".inline-qty").forEach(x=>{
-   x.onchange=()=>{let i=x.dataset.i;order[i].qty=Math.max(1,+x.value||1);saveStorage();recalc();}
+   x.onchange=()=>{order[x.dataset.i].qty=Math.max(1,+x.value||1);save();recalc();}
  });
  document.querySelectorAll(".item button").forEach(x=>{
-   x.onclick=()=>{order.splice(x.dataset.i,1);saveStorage();recalc();}
+   x.onclick=()=>{order.splice(x.dataset.i,1);save();recalc();}
  });
 
  totalQty.innerText=sQ;
- totalMarket.innerText=CUR+sM;
- totalRCM.innerText=CUR+sR;
+ totalMarket.innerText="₹"+sM;
+ totalRCM.innerText="₹"+sR;
  totalPV.innerText=sPV;
- totalSaving.innerText=CUR+sS;
+ totalSaving.innerText="₹"+sS;
 
  /* consistency */
  let c=0;
@@ -298,13 +477,14 @@ function recalc(){
  else if(sPV<2500) c=1500*.1667;
  else c=5000*.1667;
 
- cardCons.innerText=CUR+c.toFixed(0);
+ cardCons.innerText="₹"+c.toFixed(0);
  let comb=sS+c;
- cardMonthly.innerText=CUR+comb.toFixed(0);
- cardTotal.innerText=CUR+comb.toFixed(0);
- cardAnnual.innerText=CUR+(comb*12).toFixed(0);
- cardTwenty.innerText=CUR+(comb*12*20).toFixed(0);
+ cardMonthly.innerText="₹"+comb.toFixed(0);
+ cardTotal.innerText="₹"+comb.toFixed(0);
+ cardAnnual.innerText="₹"+(comb*12).toFixed(0);
+ cardTwenty.innerText="₹"+(comb*12*20).toFixed(0);
 
+ /* progress */
  progressFill.style.width=Math.min(100,(sPV/pvGoal)*100)+"%";
 }
 
@@ -323,10 +503,11 @@ function popup(n){
 }
 
 /* CONFETTI */
-function confetti(){
+function conf(){
  let c=document.getElementById("confetti"), e=["🎉","✨","🎊","💰"];
  for(let i=0;i<10;i++){
-  let d=document.createElement("div"); d.className="confetti";
+  let d=document.createElement("div");
+  d.className="confetti";
   d.innerText=e[Math.floor(Math.random()*e.length)];
   d.style.left=Math.random()*window.innerWidth+"px";
   d.style.top=(window.innerHeight*.5)+"px";
@@ -336,7 +517,7 @@ function confetti(){
  }
 }
 
-/* WHATSAPP */
+/* WA SHARE */
 document.getElementById("waBtn").onclick=()=>{
  let msg=`RCM ORDER\n\n`;
  order.forEach((it,i)=> msg+=`${i+1}. ${it.name} - Qty:${it.qty}, PV:${it.pv}\n`);
@@ -352,11 +533,12 @@ document.getElementById("pdfBtn").onclick=()=>{
 
 /* CLEAR */
 document.getElementById("clearBtn").onclick=()=>{
- if(confirm("Clear?")){order=[];saveStorage();recalc();}
+ if(confirm("Clear?")){order=[];save();recalc();}
 };
 
-/* LOAD */
+/* START */
 loadProducts();
 </script>
 
-</body></html>
+</body>
+</html>
