@@ -15,7 +15,275 @@
   --card:#fff;
   --shadow:0 8px 22px rgba(0,0,0,.15);
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+<script>
+// ---------- BASIC SETUP ----------
+const SHEET = "https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json";
+
+let products = [];
+let order = [];
+
+const productSelect = document.getElementById("productSelect");
+const productList   = document.getElementById("productList");
+const search        = document.getElementById("search");
+const qtyInput      = document.getElementById("qtyInput");
+
+// Totals
+const totalQty     = document.getElementById("totalQty");
+const totalMarket  = document.getElementById("totalMarket");
+const totalRCM     = document.getElementById("totalRCM");
+const totalPV      = document.getElementById("totalPV");
+const totalSaving  = document.getElementById("totalSaving");
+
+const cardMonthly  = document.getElementById("cardMonthly");
+const cardCons     = document.getElementById("cardCons");
+const cardTotal    = document.getElementById("cardTotal");
+const cardAnnual   = document.getElementById("cardAnnual");
+const cardTwenty   = document.getElementById("cardTwenty");
+
+// Summary
+document.getElementById("sumQty").innerText    = 0;
+document.getElementById("sumSaving").innerText = "₹0";
+document.getElementById("sumCons").innerText   = "₹0";
+document.getElementById("sumFinal").innerText  = "₹0";
+
+// ---------- DATE ----------
+document.getElementById("orderDate").valueAsDate = new Date();
+setInterval(() => {
+  document.getElementById("nowDate").innerText =
+    new Date().toLocaleString("mr-IN", {hour:"2-digit",minute:"2-digit",day:"2-digit",month:"short",year:"numeric"});
+}, 1000);
+
+// ---------- LOAD GOOGLE SHEET ----------
+async function loadProducts(){
+  let r = await fetch(SHEET);
+  let t = await r.text();
+  let json = JSON.parse(t.substring(47,t.length-2));
+
+  products = json.table.rows.map(r => ({
+    name:   r.c[0]?.v || "",
+    market: +r.c[1]?.v || 0,
+    rcm:    +r.c[2]?.v || 0,
+    pv:     +r.c[3]?.v || 0
+  })).filter(p => p.name);
+
+  populateDropdown();
+  loadSavedOrder();
+  recalc();
+}
+loadProducts();
+
+// ---------- POPULATE DROPDOWN ----------
+function populateDropdown(){
+  productSelect.innerHTML = "<option value=''>-- प्रॉडक्ट निवडा --</option>";
+  products.forEach((p,i)=>{
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.innerText = p.name;
+    productSelect.appendChild(opt);
+  });
+}
+
+// ---------- SEARCH ----------
+search.oninput = () => {
+  let q = search.value.toLowerCase();
+  productSelect.innerHTML = "<option value=''>-- प्रॉडक्ट निवडा --</option>";
+
+  products.forEach((p,i)=>{
+    if(p.name.toLowerCase().includes(q)){
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.innerText = p.name;
+      productSelect.appendChild(opt);
+    }
+  });
+};
+
+// ---------- ADD PRODUCT ----------
+document.getElementById("addBtn").onclick = addProduct;
+document.getElementById("floatAdd").onclick = addProduct;
+
+function addProduct(){
+  let idx = productSelect.value;
+  if(idx === "") return alert("प्रॉडक्ट निवडा");
+
+  let q = Math.max(1, +qtyInput.value || 1);
+  let p = products[idx];
+
+  let existing = order.find(o => o.name === p.name);
+  if(existing) existing.qty += q;
+  else order.push({...p, qty:q});
+
+  saveOrder();
+  recalc();
+  popup(p.name);
+  confetti();
+}
+
+// ---------- SAVE / LOAD ----------
+function saveOrder(){
+  localStorage.setItem("order", JSON.stringify(order));
+  localStorage.setItem("order_prev", JSON.stringify(order));
+}
+function loadSavedOrder(){
+  let s = localStorage.getItem("order");
+  if(s) order = JSON.parse(s);
+}
+
+// ---------- REPEAT ORDER ----------
+document.getElementById("repeatBtn").onclick = () => {
+  let prev = localStorage.getItem("order_prev");
+  if(!prev) return alert("No previous order found");
+  order = JSON.parse(prev);
+  saveOrder();
+  recalc();
+};
+
+// ---------- RECALCULATE EVERYTHING ----------
+function recalc(){
+  productList.innerHTML = "";
+  let tQ=0, tM=0, tR=0, tPV=0, tS=0;
+
+  if(order.length===0){
+    productList.innerHTML = "<div style='color:#777'>ऑर्डर रिकामी आहे.</div>";
+  }
+
+  order.forEach((it,i)=>{
+    let m = it.market*it.qty;
+    let r = it.rcm*it.qty;
+    let p = it.pv*it.qty;
+    let s = (it.market-it.rcm)*it.qty;
+
+    tQ+=it.qty; tM+=m; tR+=r; tPV+=p; tS+=s;
+
+    let item = document.createElement("div");
+    item.className = "item";
+
+    item.innerHTML = `
+      <div class="title">${i+1}. ${it.name}</div>
+      <div class="meta">PV: ${it.pv} | RCM: ${it.rcm} | Market: ${it.market}</div>
+
+      <div style="display:flex;gap:10px;margin-top:8px;align-items:center">
+        <input data-i="${i}" type="number" class="inline-qty" min="1" value="${it.qty}">
+        <button data-i="${i}" class="btn btn-ghost">Remove</button>
+      </div>
+
+      <div style="margin-top:8px;font-weight:700;color:var(--accent)">Saving: ₹${s}</div>
+    `;
+    productList.appendChild(item);
+  });
+
+  // update qty / remove
+  document.querySelectorAll(".inline-qty").forEach(el=>{
+    el.onchange = () => {
+      let idx = el.dataset.i;
+      order[idx].qty = Math.max(1, +el.value || 1);
+      saveOrder();
+      recalc();
+    };
+  });
+  document.querySelectorAll(".item button").forEach(btn=>{
+    btn.onclick = () => {
+      order.splice(btn.dataset.i,1);
+      saveOrder();
+      recalc();
+    };
+  });
+
+  // totals
+  totalQty.innerText = tQ; 
+  totalMarket.innerText = "₹"+tM;
+  totalRCM.innerText = "₹"+tR;
+  totalPV.innerText = tPV;
+  totalSaving.innerText = "₹"+tS;
+
+  // consistency
+  let cons=0;
+  if(tPV<1500) cons=tPV*0.12;
+  else if(tPV<2500) cons=1500*0.1667;
+  else cons=5000*0.1667;
+
+  cardCons.innerText = "₹"+cons.toFixed(0);
+
+  let combined = tS + cons;
+  cardMonthly.innerText = "₹"+combined.toFixed(0);
+  cardTotal.innerText   = "₹"+combined.toFixed(0);
+  cardAnnual.innerText  = "₹"+(combined*12).toFixed(0);
+  cardTwenty.innerText  = "₹"+(combined*12*20).toFixed(0);
+
+  // summary
+  document.getElementById("sumQty").innerText = tQ;
+  document.getElementById("sumSaving").innerText = "₹"+tS;
+  document.getElementById("sumCons").innerText = "₹"+cons.toFixed(0);
+  document.getElementById("sumFinal").innerText = "₹"+combined.toFixed(0);
+}
+
+// ---------- POPUP ----------
+function popup(name){
+  document.getElementById("popTitle").innerText = "✔ "+name+" जोडले!";
+  document.getElementById("popSub").innerText = "Total Saving: "+totalSaving.innerText;
+
+  let o = document.getElementById("overlay");
+  o.style.display = "flex";
+  setTimeout(()=> o.style.display="none", 2200);
+}
+
+// ---------- CONFETTI ----------
+function confetti(){
+  let emojis = ["🎉","✨","🎊","💰","✔"];
+  for(let i=0;i<10;i++){
+    let c = document.createElement("div");
+    c.className="confetti";
+    c.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    c.style.left = Math.random()*window.innerWidth+"px";
+    c.style.top  = (window.innerHeight*0.6)+"px";
+    document.body.appendChild(c);
+
+    setTimeout(()=>{c.style.opacity=1;c.style.transform="translateY(-200px)";},10);
+    setTimeout(()=>c.remove(),1200);
+  }
+}
+
+// ---------- WHATSAPP SHARE ----------
+document.getElementById("waBtn").onclick = () => {
+  let msg = "RCM ORDER\n\n";
+  order.forEach((it,i)=>{
+    msg += `${i+1}. ${it.name} — Qty:${it.qty}, PV:${it.pv}\n`;
+  });
+  msg += `\nTotal PV: ${totalPV.innerText}\nSaving: ${totalSaving.innerText}`;
+  msg += `\nFinal Benefit: ${cardTotal.innerText}`;
+
+  window.open("https://wa.me/?text="+encodeURIComponent(msg));
+};
+
+// ---------- SHARE AS IMAGE ----------
+document.getElementById("imgBtn").onclick = () => {
+  html2canvas(document.body).then(canvas=>{
+    let link = document.createElement("a");
+    link.download = "RCM_Calculator.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+};
+
+// ---------- PDF ----------
+document.getElementById("pdfBtn").onclick = () => {
+  let opt = {margin:10, filename:"RCM.pdf", html2canvas:{scale:2}, jsPDF:{unit:"mm",format:"a4"}};
+  html2pdf().set(opt).from(document.body).save();
+};
+
+// ---------- CLEAR ----------
+document.getElementById("clearBtn").onclick = () => {
+  if(confirm("Clear all?")){
+    order=[];
+    saveOrder();
+    recalc();
+  }
+};
+
+</script>
 /* GLOBAL FIX — No Horizontal Scroll */
 body{
   margin:0;
