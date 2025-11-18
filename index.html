@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>DS WORLD - RCM PRO MAX (Live)</title>
+<title>DS WORLD - RCM PRO MAX</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -12,199 +12,412 @@
   --primary:#0a5b99;
   --accent:#0ea44a;
   --muted:#6b7280;
+
   --bg: linear-gradient(180deg,#dff1ff,#e7edff,#ece3ff);
   --text:#0f1724;
+
   --card-bg: rgba(255,255,255,0.55);
   --card-blur: blur(12px);
   --card-border: rgba(255,255,255,0.38);
-  --shadow: 0 10px 30px rgba(15,40,80,0.12);
+  --shadow: 0 10px 30px rgba(15,40,80,0.18);
 }
+
+/* DARK MODE */
 .dark{
   --bg: linear-gradient(180deg,#0c1016,#05060a);
   --text:#e7ebf2;
   --primary:#4fa7ff;
   --accent:#00ff99;
-  --card-bg: rgba(30,35,42,0.6);
+  --card-bg: rgba(30,35,42,0.55);
   --card-border: rgba(88,108,146,0.32);
 }
 
-*{box-sizing:border-box}
+/* BODY */
 body{
-  margin:0;font-family:"Poppins",sans-serif;
-  background:var(--bg);color:var(--text);transition:0.22s ease;
+  margin:0;
+  font-family:"Poppins",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:0.25s;
 }
 
-/* Layout */
-.wrap{max-width:1100px;margin:14px auto;padding:14px}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:56px;height:56px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,0.08)}
-.logo img{width:100%;height:100%;object-fit:contain}
-h1{margin:0;font-family:"Baloo 2";color:var(--primary)}
-.now{font-size:13px;color:var(--muted)}
-#themeToggle{padding:8px 12px;border-radius:999px;border:none;background:linear-gradient(90deg,var(--primary),#0078d1);color:#fff;font-weight:700;cursor:pointer}
+/* WRAPPER */
+.wrap{
+  max-width:1100px;
+  margin:16px auto;
+  padding:16px;
+}
 
-/* Grid */
-.grid{display:grid;grid-template-columns:1fr 360px;gap:14px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
 
-/* Card */
-.card{padding:14px;border-radius:12px;background:var(--card-bg);backdrop-filter:var(--card-blur);border:1px solid var(--card-border);box-shadow:var(--shadow)}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:60px;
+  height:60px;
+  background:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.12);
+}
+
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+h1{
+  margin:0;
+  font-family:"Baloo 2";
+  color:var(--primary);
+}
+
+.now{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.ds-badge{
+  background:linear-gradient(90deg,var(--primary),#0078d1);
+  padding:8px 14px;
+  border-radius:999px;
+  color:white;
+  font-weight:700;
+}
+
+#themeToggle{
+  padding:10px 16px;
+  border:none;
+  border-radius:30px;
+  font-weight:700;
+  background:linear-gradient(135deg,#0079d6,#0057ad);
+  color:white;
+  cursor:pointer;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:16px;
+}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* CARD */
+.card{
+  padding:16px;
+  backdrop-filter:var(--card-blur);
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+}
+
 .row{display:flex;gap:12px;flex-wrap:wrap}
 .field{flex:1}
-label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:rgba(255,255,255,0.7);color:var(--text)}
 
-#productList{max-height:360px;overflow:auto;margin-top:12px;padding-right:6px}
+label{
+  font-size:13px;
+  color:var(--muted);
+}
 
-/* Product item */
-.prod-item{display:flex;justify-content:space-between;gap:12px;padding:12px;border-radius:10px;margin-bottom:10px;background:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.5)}
+input,select{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.1);
+  background:rgba(255,255,255,0.65);
+  color:var(--text);
+}
+
+/* Product list */
+#productList{
+  max-height:360px;
+  overflow:auto;
+  margin-top:12px;
+}
+
+/* Product Item */
+.prod-item{
+  display:flex;
+  justify-content:space-between;
+  padding:14px;
+  background:rgba(255,255,255,0.6);
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.5);
+  margin-bottom:12px;
+}
+
 .title{font-weight:700;color:var(--primary)}
 .sub{font-size:13px;color:var(--muted)}
 .qty-controls{display:flex;gap:8px;align-items:center}
-.btn-ghost{padding:6px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:rgba(255,255,255,0.85);font-weight:700;color:var(--primary);cursor:pointer}
 
-/* Add */
-.btn-add{background:linear-gradient(90deg,var(--primary),#006fbd);color:#fff;padding:10px 14px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+.btn-ghost{
+  padding:6px 12px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.1);
+  background:rgba(255,255,255,0.85);
+  font-weight:700;
+  color:var(--primary);
+  cursor:pointer;
+}
 
-/* Summary */
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.sum-box{padding:12px;border-radius:10px;text-align:center;background:rgba(255,255,255,0.7);font-weight:700}
+/* Add Button */
+.btn-add{
+  padding:12px 16px;
+  background:linear-gradient(90deg,var(--primary),#006dc5);
+  border:none;
+  border-radius:12px;
+  color:white;
+  font-weight:800;
+}
 
-/* Cards */
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-@media(max-width:480px){.cards{grid-template-columns:1fr}}
-.big-card{padding:16px;border-radius:14px;color:#fff;min-height:100px}
+/* SUMMARY */
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+
+.sum-box{
+  padding:12px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.7);
+  font-weight:700;
+  text-align:center;
+}
+
+/* RESULT CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+@media(max-width:480px){
+  .cards{grid-template-columns:1fr}
+}
+
+.big-card{
+  padding:18px;
+  border-radius:14px;
+  color:white;
+}
+
 .card-saving{background:linear-gradient(135deg,#32cc7f,#0ea44a)}
 .card-cons{background:linear-gradient(135deg,#9f59ff,#6d3be8)}
 .card-year{background:linear-gradient(135deg,#3aa5ff,#006fbf)}
 .card-life{background:linear-gradient(135deg,#ffaf4b,#ff8a00)}
 
-.ios-btn{width:100%;padding:12px;border-radius:12px;border:none;color:#fff;font-weight:800;cursor:pointer;margin-bottom:8px}
+.big-card .label{font-size:13px}
+.big-card .val{font-size:30px;font-weight:800;margin-top:4px}
+
+/* iOS buttons */
+.ios-btn{
+  width:100%;padding:14px;margin-bottom:10px;
+  border:none;border-radius:12px;font-weight:800;color:white;
+}
 .ios-wa{background:#1bd741}
 .ios-img{background:#4890ff}
-.ios-pdf{background:#ff964f}
+.ios-pdf{background:#ff8d45}
 .ios-clear{background:#ff4a4a}
 
-/* Floating */
-#floatAdd{position:fixed;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#006fbd);color:#fff;font-size:34px;border:none;box-shadow:0 12px 28px rgba(0,0,0,0.22);z-index:1200;cursor:pointer}
+/* Floating Add Button */
+#floatAdd{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  border:none;
+  background:linear-gradient(135deg,var(--primary),#006fbd);
+  color:white;
+  font-size:36px;
+  box-shadow:0 12px 28px rgba(0,0,0,0.24);
+  cursor:pointer;
+  z-index:1200;
+}
 
-/* Popup & confetti */
-#popup{position:fixed;left:50%;top:18%;transform:translateX(-50%);background:#fff;padding:12px 18px;border-radius:12px;color:var(--primary);font-weight:800;display:none;z-index:2000;box-shadow:0 10px 30px rgba(0,0,0,0.16)}
-#confetti{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1500}
-.conf{position:absolute;font-size:26px;animation:fly 1.4s ease-out forwards}
-@keyframes fly{0%{transform:translateY(0) scale(.7);opacity:1}100%{transform:translateY(-220px) scale(1.4);opacity:0}}
+/* Popup */
+#popup{
+  position:fixed;
+  top:18%;
+  left:50%;
+  transform:translateX(-50%);
+  background:white;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:800;
+  color:var(--primary);
+  display:none;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  z-index:1800;
+}
 
+/* Confetti */
+#confetti{
+  position:fixed;
+  left:0;top:0;width:100%;height:100%;
+  pointer-events:none;z-index:1700;
+}
+.conf{
+  position:absolute;font-size:26px;
+  animation:fly 1.4s ease-out forwards;
+}
+
+@keyframes fly{
+  0%{transform:translateY(0) scale(.7);opacity:1}
+  100%{transform:translateY(-220px) scale(1.4);opacity:0}
+}
+
+/* FOOTER */
 footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
 
-/* splash (visible until app shows) */
-#splash{position:fixed;left:0;top:0;width:100%;height:100%;background:linear-gradient(135deg,#ffffff,#eaf6ff);display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:3000}
+/* SPLASH */
+#splash{
+  position:fixed;
+  left:0;top:0;width:100%;height:100%;
+  background:linear-gradient(135deg,#ffffff,#eaf6ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:3000;
+}
 </style>
 </head>
+
 <body>
 
 <!-- SPLASH -->
 <div id="splash">
-  <div class="logo"><img src="logo.png" alt="logo" onerror="this.style.display='none'"></div>
-  <h3 style="font-family:'Baloo 2';margin-top:12px;color:var(--primary)">DS WORLD — RCM PRO MAX</h3>
+  <div class="logo"><img src="logo.png" alt=""></div>
+  <h3 style="margin-top:10px;font-family:'Baloo 2';color:var(--primary)">DS WORLD  RCM PRO MAX</h3>
 </div>
 
-<!-- APP -->
+<!-- MAIN APP -->
 <div class="wrap" id="app" style="display:none">
 
-  <header>
-    <div class="brand">
-      <div class="logo"><img src="logo.png" alt="logo" onerror="this.style.display='none'"></div>
-      <div>
-        <h1>RCM बचत कॅल्क्युलेटर (Pro Max)</h1>
-        <div class="now" id="nowDate"></div>
-      </div>
-    </div>
-
-    <div style="display:flex;gap:10px;align-items:center">
-      <button id="themeToggle">🌙 DARK</button>
-      <div style="font-weight:800;background:linear-gradient(90deg,var(--primary),#0078d1);color:#fff;padding:8px 12px;border-radius:10px">DS WORLD</div>
-    </div>
-  </header>
-
-  <div class="grid">
-
-    <!-- left -->
-    <div class="card">
-      <div class="row">
-        <div class="field">
-          <label>ग्राहकाचे नाव</label>
-          <input id="custName" placeholder="Associate / Buyer name">
-        </div>
-        <div class="field">
-          <label>RCM ID</label>
-          <input id="rcmId" placeholder="RCM ID">
-        </div>
-        <div class="field">
-          <label>Order Date</label>
-          <input id="orderDate" type="date">
-        </div>
-      </div>
-
-      <h3 style="margin-top:12px;color:var(--primary)">प्रॉडक्ट ऍड करा (Google Sheet LIVE)</h3>
-      <div style="margin-top:8px">
-        <label style="font-size:13px;color:var(--muted)">Search</label>
-        <input id="search" placeholder="Search product name...">
-      </div>
-
-      <div class="row" style="margin-top:10px">
-        <select id="productSelect" style="flex:1"><option value="">-- लोड करत आहे... --</option></select>
-        <input id="qtyInput" type="number" value="1" min="1" style="width:90px">
-        <button id="addBtn" class="btn-add">+ ADD</button>
-      </div>
-
-      <div id="productList"></div>
-
-      <div class="summary">
-        <div class="sum-box" id="totalQty">Qty: 0</div>
-        <div class="sum-box" id="totalMarket">Market: ₹0</div>
-        <div class="sum-box" id="totalRCM">RCM: ₹0</div>
-        <div class="sum-box" id="totalPV">PV: 0</div>
-      </div>
-    </div>
-
-    <!-- right -->
+<header>
+  <div class="brand">
+    <div class="logo"><img src="logo.png" alt=""></div>
     <div>
-      <div class="card">
-        <div class="cards">
-          <div class="big-card card-saving">
-            <div class="label">💰 मासिक फायदा</div>
-            <div class="val" id="cardMonthly">₹0</div>
-          </div>
-          <div class="big-card card-cons">
-            <div class="label">🎯 Consistency</div>
-            <div class="val" id="cardCons">₹0</div>
-          </div>
-        </div>
-
-        <div class="cards" style="margin-top:12px">
-          <div class="big-card card-year">
-            <div class="label">📅 वार्षिक फायदा</div>
-            <div class="val" id="cardAnnual">₹0</div>
-          </div>
-          <div class="big-card card-life">
-            <div class="label">🏆 20 वर्षांचा फायदा</div>
-            <div class="val" id="cardTwenty">₹0</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:12px">
-        <button id="waBtn" class="ios-btn ios-wa">📲 WhatsApp</button>
-        <button id="imgBtn" class="ios-btn ios-img">🖼 Image</button>
-        <button id="pdfBtn" class="ios-btn ios-pdf">📄 PDF</button>
-        <button id="clearBtn" class="ios-btn ios-clear">🗑 Clear</button>
-      </div>
+      <h1>RCM   (Pro Max)</h1>
+      <div class="now" id="nowDate"></div>
     </div>
-
   </div>
 
-  <footer>Designed by DS WORLD 🌍 | 7020970727</footer>
+  <div style="display:flex;gap:10px">
+    <button id="themeToggle"> DARK</button>
+    <div class="ds-badge">DS WORLD</div>
+  </div>
+</header>
+
+<div class="grid">
+
+<!-- LEFT SIDE -->
+<div class="card">
+
+  <div class="row">
+    <div class="field">
+      <label> </label>
+      <input id="custName">
+    </div>
+    <div class="field">
+      <label>RCM ID</label>
+      <input id="rcmId">
+    </div>
+    <div class="field">
+      <label>Order Date</label>
+      <input id="orderDate" type="date">
+    </div>
+  </div>
+
+  <h3 style="color:var(--primary);margin-top:14px">   (LIVE Google Sheet)</h3>
+
+  <div style="margin-top:10px">
+    <label>Search Product</label>
+    <input id="search" placeholder="Search product name...">
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <select id="productSelect" style="flex:1">
+      <option>-- Loading --</option>
+    </select>
+    <input id="qtyInput" type="number" min="1" value="1" style="width:80px">
+    <button id="addBtn" class="btn-add">+ ADD</button>
+  </div>
+
+  <div id="productList"></div>
+
+  <div class="summary">
+    <div class="sum-box" id="totalQty">Qty: 0</div>
+    <div class="sum-box" id="totalMarket">Market: 0</div>
+    <div class="sum-box" id="totalRCM">RCM: 0</div>
+    <div class="sum-box" id="totalPV">PV: 0</div>
+  </div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+<div>
+  <div class="card">
+    <div class="cards">
+      <div class="big-card card-saving">
+        <div class="label">  </div>
+        <div class="val" id="cardMonthly">0</div>
+      </div>
+      <div class="big-card card-cons">
+        <div class="label"> Consistency</div>
+        <div class="val" id="cardCons">0</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="big-card card-year">
+        <div class="label">  </div>
+        <div class="val" id="cardAnnual">0</div>
+      </div>
+
+      <div class="big-card card-life">
+        <div class="label"> 20  </div>
+        <div class="val" id="cardTwenty">0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:10px">
+    <button id="waBtn" class="ios-btn ios-wa"> WhatsApp</button>
+    <button id="imgBtn" class="ios-btn ios-img"> Image</button>
+    <button id="pdfBtn" class="ios-btn ios-pdf"> PDF</button>
+    <button id="clearBtn" class="ios-btn ios-clear"> Clear</button>
+  </div>
+
+</div>
+
+</div>
+
+<footer>Designed by DS WORLD  | 7020970727</footer>
+
 </div>
 
 <button id="floatAdd">+</button>
@@ -212,43 +425,31 @@ footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
 <div id="popup"></div>
 <div id="confetti"></div>
 
-<!-- libs -->
+<!-- LIBRARIES -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-
 <script>
-/* ---------------------------
-   CONFIG — set your sheet ID
-   --------------------------- */
-const SHEET_ID = "1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k";
-const RAW_GVIZ = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-// Use AllOrigins proxy to avoid CORS when hosted online
-const SHEET_URL = "https://api.allorigins.win/raw?url=" + encodeURIComponent(RAW_GVIZ);
+/* -----------------------
+   Part 2: Full logic
+   ----------------------- */
 
-/* helpers */
+// helper
 const el = id => document.getElementById(id);
 const fmt = n => Math.round(n).toLocaleString('en-IN');
 
-/* Theme toggle */
-el('themeToggle').onclick = () => {
-  document.body.classList.toggle('dark');
-  el('themeToggle').innerText = document.body.classList.contains('dark') ? '☀️ LIGHT' : '🌙 DARK';
-};
+// Configuration: Sheet ID (replace if needed)
+const SHEET_ID = "1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k";
+const RAW_GVIZ = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+// proxy to avoid CORS when hosted online
+const SHEET_URL = "https://api.allorigins.win/raw?url=" + encodeURIComponent(RAW_GVIZ);
 
-/* time/date */
-setInterval(()=> {
-  el('nowDate').innerText = new Date().toLocaleString('mr-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-},1000);
-el('orderDate').valueAsDate = new Date();
-
-/* State */
+// State
 let products = [];
 let order = [];
 
-/* Robust GViz JSON parser */
+// Robust GViz parser
 function parseGviz(text){
   try{
-    // strip any characters before first {
     const clean = text.replace(/^[^{]*/,'').replace(/;$/,'');
     return JSON.parse(clean);
   }catch(e){
@@ -257,36 +458,7 @@ function parseGviz(text){
   }
 }
 
-/* Load products from Google Sheet (via proxy to avoid CORS) */
-async function loadProducts(){
-  try{
-    const res = await fetch(SHEET_URL);
-    if(!res.ok) throw new Error("Network error: " + res.status);
-    const txt = await res.text();
-    const json = parseGviz(txt);
-    if(json && json.table && Array.isArray(json.table.rows)){
-      products = json.table.rows.map(r => ({
-        name: r.c[0] ? r.c[0].v : '',
-        market: r.c[1] ? Number(r.c[1].v) : 0,
-        rcm: r.c[2] ? Number(r.c[2].v) : 0,
-        pv: r.c[3] ? Number(r.c[3].v) : 0
-      })).filter(p=>p.name);
-    }else{
-      throw new Error("Sheet structure unexpected");
-    }
-  }catch(err){
-    console.warn("Sheet load failed — using fallback:", err);
-    // fallback minimal products so app still works offline
-    products = [
-      {name:"टाटा मीठ 1 किलो",market:30,rcm:20,pv:7},
-      {name:"रेड लेबल चहा 500g",market:310,rcm:240,pv:120},
-      {name:"डव साबण",market:70,rcm:36,pv:23}
-    ];
-  }
-  populateDropdown();
-  calc();
-}
-
+// Populate dropdown
 function populateDropdown(){
   const sel = el('productSelect');
   sel.innerHTML = "<option value=''>-- निवडा --</option>";
@@ -297,22 +469,56 @@ function populateDropdown(){
   });
 }
 
-/* Search filter */
+// Load products from Google Sheet (fallback on error)
+async function loadProducts(){
+  try{
+    const res = await fetch(SHEET_URL);
+    if(!res.ok) throw new Error("Network: "+res.status);
+    const txt = await res.text();
+    const json = parseGviz(txt);
+    if(json && json.table && Array.isArray(json.table.rows)){
+      products = json.table.rows.map(r => ({
+        name: r.c[0] ? r.c[0].v : '',
+        market: r.c[1] ? Number(r.c[1].v) : 0,
+        rcm: r.c[2] ? Number(r.c[2].v) : 0,
+        pv: r.c[3] ? Number(r.c[3].v) : 0
+      })).filter(p=>p.name && p.name.trim() !== '');
+    } else {
+      throw new Error("Unexpected sheet structure");
+    }
+  }catch(err){
+    console.warn("Sheet load failed, using fallback products:", err);
+    products = [
+      {name:"टाटा मीठ 1 किलो",market:30,rcm:20,pv:7},
+      {name:"रेड लेबल चहा 500g",market:310,rcm:240,pv:120},
+      {name:"डव साबण",market:70,rcm:36,pv:23}
+    ];
+  }
+  populateDropdown();
+  calc(); // update UI
+}
+
+/* -----------------------
+   Search filter
+   ----------------------- */
 el('search').addEventListener('input', ()=>{
   const q = el('search').value.trim().toLowerCase();
   const sel = el('productSelect');
   sel.innerHTML = "<option value=''>-- निवडा --</option>";
   products.forEach((p,i)=>{
     if(!q || p.name.toLowerCase().includes(q)) {
-      const o = document.createElement('option'); o.value = i; o.textContent = p.name;
+      const o = document.createElement('option');
+      o.value = i; o.textContent = p.name;
       sel.appendChild(o);
     }
   });
 });
 
-/* Add product handlers */
-el('addBtn').onclick = addProduct;
-el('floatAdd').onclick = addProduct;
+/* -----------------------
+   Add product
+   ----------------------- */
+el('addBtn').addEventListener('click', addProduct);
+el('floatAdd').addEventListener('click', addProduct);
 
 function addProduct(){
   const idx = el('productSelect').value;
@@ -320,13 +526,16 @@ function addProduct(){
   const qty = Math.max(1, parseInt(el('qtyInput').value) || 1);
   const p = products[Number(idx)];
   const existing = order.find(x=>x.name === p.name);
-  if(existing) existing.qty += qty; else order.push({...p, qty});
+  if(existing) existing.qty += qty;
+  else order.push({...p, qty});
   showPopup(`${p.name} Added`);
   confetti();
   calc();
 }
 
-/* calc & render */
+/* -----------------------
+   Calculate & Render
+   ----------------------- */
 function calc(){
   const list = el('productList');
   list.innerHTML = '';
@@ -344,7 +553,7 @@ function calc(){
     div.innerHTML = `
       <div style="flex:1">
         <div class="title">${it.name}</div>
-        <div class="sub">PV: ${it.pv} | Market: ₹${it.market} | RCM: ₹${it.rcm}</div>
+        <div class="sub">PV: ${it.pv} | M: ₹${it.market} | RCM: ₹${it.rcm}</div>
       </div>
       <div style="text-align:right">
         <div class="qty-controls">
@@ -363,7 +572,7 @@ function calc(){
   el('totalRCM').innerText = `RCM: ₹${fmt(tRCM)}`;
   el('totalPV').innerText = `PV: ${fmt(tPV)}`;
 
-  // Consistency logic (kept)
+  // Consistency logic
   let cons = 0;
   if(tPV < 1500) cons = tPV * 0.12;
   else if(tPV < 2500) cons = 1500 * 0.1667;
@@ -375,7 +584,7 @@ function calc(){
   el('cardAnnual').innerText = `₹${fmt(combined * 12)}`;
   el('cardTwenty').innerText = `₹${fmt(combined * 12 * 20)}`;
 
-  // attach handlers
+  // attach handlers for +/- and qty change
   document.querySelectorAll('.btn-ghost').forEach(b=>{
     b.onclick = ()=>{
       const i = Number(b.dataset.i);
@@ -394,20 +603,23 @@ function calc(){
   });
 }
 
-/* popup + confetti */
+/* -----------------------
+   Popup & Confetti
+   ----------------------- */
 function showPopup(text){
   const p = el('popup');
   p.innerText = `✔ ${text}`;
   p.style.display = 'block';
   setTimeout(()=> p.style.display = 'none', 1400);
 }
+
 function confetti(){
   const box = el('confetti');
   const emojis = ['🎉','✨','🎊','💰','⭐'];
   for(let i=0;i<14;i++){
     const d = document.createElement('div');
     d.className = 'conf';
-    d.style.left = (Math.random()*85)+'%';
+    d.style.left = (Math.random()*85) + '%';
     d.style.top = (60 + Math.random()*25) + '%';
     d.innerText = emojis[Math.floor(Math.random()*emojis.length)];
     box.appendChild(d);
@@ -415,18 +627,30 @@ function confetti(){
   }
 }
 
-/* clear */
-el('clearBtn').onclick = ()=>{ if(confirm('Clear order?')){ order = []; calc(); } };
+/* -----------------------
+   Clear order
+   ----------------------- */
+el('clearBtn').onclick = ()=> {
+  if(order.length === 0) return;
+  if(confirm('Clear order?')){
+    order = []; calc();
+  }
+};
 
-/* WhatsApp */
-el('waBtn').onclick = ()=>{
+/* -----------------------
+   WhatsApp share
+   ----------------------- */
+el('waBtn').onclick = ()=> {
+  if(order.length === 0) return alert('No items to share');
   let msg = `*RCM Order*%0A%0A`;
   order.forEach((it,i)=> msg += `${i+1}. ${it.name} × ${it.qty}%0A`);
   msg += `%0ATotal PV: ${el('totalPV').innerText}%0ABenefit: ${el('cardMonthly').innerText}`;
   window.open('https://wa.me/?text=' + encodeURIComponent(msg));
 };
 
-/* Image */
+/* -----------------------
+   Image export
+   ----------------------- */
 el('imgBtn').onclick = ()=> {
   html2canvas(document.querySelector('.wrap')).then(canvas=>{
     const a = document.createElement('a');
@@ -436,22 +660,115 @@ el('imgBtn').onclick = ()=> {
   });
 };
 
-/* PDF */
-el('pdfBtn').onclick = ()=> html2pdf().from(document.querySelector('.wrap')).save('RCM_Invoice.pdf');
+/* -----------------------
+   Invoice-style PDF (A4 bill layout)
+   ----------------------- */
+el('pdfBtn').onclick = ()=> {
+  if(order.length === 0) return alert('Order is empty');
+  // Build invoice HTML
+  let invoice = `
+  <style>
+    body { font-family: Poppins, sans-serif; color:#111; padding:20px; }
+    .head { text-align:center; margin-bottom:10px; }
+    h2 { margin:0; }
+    .meta { margin-top:8px; font-size:14px; }
+    table { width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; }
+    th, td { border:1px solid #bbb; padding:8px; }
+    th { background:#f5f5f5; }
+    .right { text-align:right; }
+    .summary { margin-top:14px; font-size:14px; }
+    footer { text-align:center; margin-top:18px; font-size:12px; color:#666; }
+  </style>
 
-/* Init: load products then hide splash when window loaded */
+  <div class="head">
+    <h2>RCM PRO MAX — Invoice</h2>
+    <div class="meta">DS WORLD 🌍 — Contact: 7020970727</div>
+  </div>
+
+  <div style="margin-top:12px">
+    <div><b>Customer:</b> ${el('custName').value || '-'}</div>
+    <div><b>RCM ID:</b> ${el('rcmId').value || '-'}</div>
+    <div><b>Date:</b> ${el('orderDate').value || ''}</div>
+  </div>
+
+  <table>
+    <tr>
+      <th style="width:6%">No</th>
+      <th>Product</th>
+      <th style="width:10%" class="right">Qty</th>
+      <th style="width:14%" class="right">Market</th>
+      <th style="width:14%" class="right">RCM</th>
+      <th style="width:10%" class="right">PV</th>
+    </tr>
+  `;
+
+  order.forEach((p,i)=>{
+    invoice += `
+      <tr>
+        <td class="right">${i+1}</td>
+        <td>${p.name}</td>
+        <td class="right">${p.qty}</td>
+        <td class="right">₹${fmt(p.market * p.qty)}</td>
+        <td class="right">₹${fmt(p.rcm * p.qty)}</td>
+        <td class="right">${fmt(p.pv * p.qty)}</td>
+      </tr>`;
+  });
+
+  // totals computed from order
+  let tMarket = order.reduce((s,x)=> s + (x.market * x.qty), 0);
+  let tRCM = order.reduce((s,x)=> s + (x.rcm * x.qty), 0);
+  let tPV = order.reduce((s,x)=> s + (x.pv * x.qty), 0);
+  let tSave = tMarket - tRCM;
+
+  // consistency
+  let cons = 0;
+  if(tPV < 1500) cons = tPV * 0.12;
+  else if(tPV < 2500) cons = 1500 * 0.1667;
+  else cons = 5000 * 0.1667;
+
+  let monthly = tSave + cons;
+  let yearly = monthly * 12;
+  let twenty = monthly * 12 * 20;
+
+  invoice += `</table>`;
+
+  invoice += `
+    <div class="summary">
+      <div><b>Total Market:</b> ₹${fmt(tMarket)}</div>
+      <div><b>Total RCM:</b> ₹${fmt(tRCM)}</div>
+      <div><b>Total PV:</b> ${fmt(tPV)}</div>
+      <div><b>Total Saving:</b> ₹${fmt(tSave)}</div>
+      <div><b>Consistency Reward:</b> ₹${fmt(Math.round(cons))}</div>
+      <div><b>Monthly Benefit:</b> ₹${fmt(Math.round(monthly))}</div>
+      <div><b>Yearly Benefit:</b> ₹${fmt(Math.round(yearly))}</div>
+      <div><b>20 Years Benefit:</b> ₹${fmt(Math.round(twenty))}</div>
+    </div>
+
+    <footer>DS WORLD © 2025 — Thank you! | Contact: 7020970727</footer>
+  `;
+
+  html2pdf().from(invoice).set({margin:10, filename: 'RCM_Invoice.pdf', html2canvas: {scale:1.2}}).save();
+};
+
+/* -----------------------
+   Init & splash hide
+   ----------------------- */
 loadProducts();
 
-// Ensure splash hides after page load (even if product fetch slow)
 window.addEventListener('load', ()=>{
   setTimeout(()=>{
-    const s = document.getElementById('splash');
-    const a = document.getElementById('app');
+    const s = el('splash');
+    const a = el('app');
     if(s) s.style.display = 'none';
     if(a) a.style.display = 'block';
   }, 900);
 });
-</script>
 
-</body>
-</html>
+/* Ensure theme toggle exists (Part1 provides button) */
+if(el('themeToggle')){
+  el('themeToggle').onclick = () => {
+    document.body.classList.toggle('dark');
+    el('themeToggle').innerText = document.body.classList.contains('dark') ? '☀️ LIGHT' : '🌙 DARK';
+  };
+}
+</script>
