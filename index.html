@@ -3,639 +3,523 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>DS WORLD - RCM PRO MAX (Final)</title>
+<title>DS WORLD — PRO MAX Calculator</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* THEME */
 :root{
   --primary:#0a5b99;
   --accent:#0ea44a;
   --muted:#6b7280;
-  --bg: linear-gradient(180deg,#dff1ff,#e7edff,#ece3ff);
-  --text:#0f1724;
-  --card-bg: rgba(255,255,255,0.55);
-  --card-blur: blur(12px);
-  --card-border: rgba(255,255,255,0.4);
-  --shadow: 0 10px 30px rgba(15,40,80,0.15);
+  --bg: linear-gradient(180deg,#f4fbff,#eef5ff);
+  --card-bg: rgba(255,255,255,0.7);
+  --glass-blur: blur(10px);
+  --shadow: 0 10px 30px rgba(12,40,80,0.08);
+  --radius:14px;
 }
 .dark{
-  --bg: linear-gradient(180deg,#0c1016,#05060a);
-  --text:#e7ebf2;
-  --primary:#4fa7ff;
-  --accent:#00ff99;
-  --card-bg: rgba(40,45,55,0.55);
-  --card-border: rgba(100,110,130,0.3);
+  --bg: linear-gradient(180deg,#081018,#07101a);
+  --primary:#6fb8ff;
+  --accent:#34e18a;
+  --card-bg: rgba(20,26,34,0.55);
+  --muted:#9aa6b2;
 }
 
-/* BODY */
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:"Noto Sans Devanagari","Poppins",sans-serif;
+  font-family:"Noto Sans Devanagari", sans-serif;
   background:var(--bg);
-  color:var(--text);
-  transition:0.3s;
+  color:#0f1724;
+  transition:background .25s, color .25s;
 }
 
-/* WRAPPER */
-.wrap{max-width:1100px;margin:16px auto;padding:16px}
-
-/* HEADER */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+/* Layout */
+.wrap{
+  max-width:980px;
+  margin:14px auto;
+  padding:14px;
 }
-
-.brand{display:flex;align-items:center;gap:18px}
-
-/* ⭐ BIG CLEAN LOGO */
-.logo{
-  width:95px;
-  height:95px;
-  border-radius:18px;
-  background:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:8px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.15);
+.header{
+  display:flex;justify-content:space-between;align-items:center;
 }
-.logo img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:64px;height:64px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.title{font-size:20px;font-weight:700;color:var(--primary)}
+.now{font-size:13px;color:var(--muted)}
 
-h1{
-  margin:0;
-  font-family:"Baloo 2";
-  color:var(--primary);
-}
-
-.ds-badge{
-  padding:8px 14px;
-  background:linear-gradient(90deg,var(--primary),#0078d1);
-  color:white;
-  border-radius:30px;
-  font-weight:700;
-}
-
-#themeToggle{
-  padding:8px 14px;
-  border-radius:30px;
-  border:none;
-  background:linear-gradient(135deg,#007ee9,#005bb8);
-  color:white;
-  font-weight:700;
-  cursor:pointer;
-}
-
-/* GRID */
 .grid{
   display:grid;
   grid-template-columns:1fr 360px;
   gap:16px;
 }
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr}
-}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
 
-/* CARD */
 .card{
   padding:16px;
-  border-radius:14px;
+  border-radius:var(--radius);
   background:var(--card-bg);
-  backdrop-filter:var(--card-blur);
-  border:1px solid var(--card-border);
+  border:1px solid rgba(255,255,255,0.4);
   box-shadow:var(--shadow);
+  backdrop-filter:var(--glass-blur);
 }
 
-/* INPUTS */
 .row{display:flex;gap:12px;flex-wrap:wrap}
 .field{flex:1}
-label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
-input,select{
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid rgba(0,0,0,0.12);
-  font-size:15px;
-  background:white;
-}
+label{font-size:13px;color:var(--muted)}
+input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #ddd}
 
-/* PRODUCT LIST */
-#productList{
-  max-height:360px;
-  overflow:auto;
-  margin-top:14px;
-  padding-right:6px;
-}
+.qty{width:100px}
 
-/* ⭐ PREMIUM PRODUCT CARD */
-.prod-item{
-  display:flex;
-  justify-content:space-between;
-  gap:14px;
-  padding:16px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.95);
-  border:1px solid rgba(0,0,0,0.08);
-  margin-bottom:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.06);
-}
+/* Product list */
+#productList{margin-top:12px;max-height:340px;overflow:auto}
+.product-item{display:flex;justify-content:space-between;gap:12px;padding:12px;background:#fbfdff;border-radius:10px;border:1px solid #eef6ff;margin-bottom:8px}
+.product-name{font-weight:700;color:var(--primary)}
+.product-meta{font-size:13px;color:var(--muted)}
 
-.prod-left{flex:1}
+/* totals */
+.totals{margin-top:14px;border-top:1px solid #eee;padding-top:10px}
+.total-row{display:flex;justify-content:space-between;padding:6px 0}
+.total-row .muted{color:var(--muted);font-weight:600}
 
-.prod-title{
-  font-size:17px;
-  font-weight:700;
-  color:var(--primary);
-}
-.prod-sub{
-  font-size:13px;
-  margin-top:5px;
-  color:var(--muted);
-}
+/* cards */
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.big-card{padding:16px;border-radius:12px;color:#fff;text-align:center;font-weight:800}
+.card-saving{background:linear-gradient(135deg,#ff9740,#ff7a26)}
+.card-cons{background:linear-gradient(135deg,#a679ff,#6b4be8)}
+.card-annual{background:linear-gradient(135deg,#0ea44a,#007c33)}
+.card-future{background:linear-gradient(135deg,#04a1ff,#006ae3)}
 
-/* RIGHT SIDE */
-.prod-right{text-align:right;min-width:120px}
+/* actions */
+.btn{padding:10px;border-radius:10px;font-weight:700;border:none;cursor:pointer}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-ghost{background:#fff;border:1px solid #ccc;color:var(--primary)}
 
-/* QTY BUTTONS */
-.qty-controls{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin-bottom:6px;
-}
+.actions{display:flex;flex-direction:column;gap:10px}
 
-.qty-controls input{
-  width:52px;
-  padding:6px;
-  text-align:center;
-  border-radius:8px;
-  border:1px solid rgba(0,0,0,0.2);
-}
+/* floating add */
+.fab{position:fixed;right:18px;bottom:20px;width:60px;height:60px;border-radius:50%;font-size:30px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary),#0074d2);color:#fff;box-shadow:0 12px 28px rgba(0,0,0,0.2);z-index:999}
 
-.btn-ghost{
-  padding:6px 12px;
-  font-size:18px;
-  font-weight:800;
-  border-radius:8px;
-  border:1px solid rgba(0,0,0,0.12);
-  background:white;
-  cursor:pointer;
-}
-
-.prod-save{
-  font-size:16px;
-  font-weight:800;
-  color:var(--accent);
-}
-
-/* SUMMARY */
-.summary{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:14px;
-}
-
-.sum-box{
-  padding:12px;
-  background:white;
-  border-radius:12px;
-  text-align:center;
-  font-weight:700;
-}
-
-/* CARDS */
-.cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.big-card{
-  padding:16px;
-  border-radius:14px;
-  color:white;
-}
-
-.card-saving{background:linear-gradient(135deg,#27c76f,#0ea44a)}
-.card-cons{background:linear-gradient(135deg,#9f59ff,#6d3be8)}
-.card-year{background:linear-gradient(135deg,#2fa3ff,#006fdb)}
-.card-life{background:linear-gradient(135deg,#ffae4d,#ff8100)}
-
-.big-card .label{font-size:13px}
-.big-card .val{font-size:28px;font-weight:800;margin-top:5px}
-
-/* BOTTOM BTNS */
-.ios-btn{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  font-weight:800;
-  font-size:16px;
-  margin-bottom:10px;
-  border:none;
-  color:white;
-}
-
-.ios-wa{background:#1bcc4e}
-.ios-img{background:#2f7aff}
-.ios-pdf{background:#ff9b30}
-.ios-clear{background:#ff4a4a}
-
-/* FLOAT */
-#floatAdd{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#0a5b99,#006fbd);
-  color:white;
-  border:none;
-  font-size:34px;
-  box-shadow:0 12px 28px rgba(0,0,0,0.2);
-  cursor:pointer;
-  z-index:1200;
-}
-
-/* POPUP */
-#popup{
-  position:fixed;
-  left:50%;
-  top:16%;
-  transform:translateX(-50%);
-  background:white;
-  padding:10px 16px;
-  border-radius:10px;
-  color:var(--primary);
-  display:none;
-  font-weight:700;
+/* popup */
+#orderPopup{
+  position:fixed;left:0;top:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.35);
+  display:none;justify-content:center;align-items:center;
   z-index:2000;
 }
-
-/* SPLASH */
-#splash{
-  position:fixed;
-  left:0;top:0;
-  width:100%;height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  background:#f7fbff;
-  z-index:3000;
+#orderBox{
+  background:#fff;padding:20px;border-radius:14px;
+  width:92%;max-width:400px;box-shadow:0 12px 30px rgba(0,0,0,0.25);
 }
+.popup-title{font-weight:700;color:var(--primary);margin-bottom:10px}
+.popup-field{margin-bottom:10px}
+.popup-field input{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc}
+
+/* footer */
+.footer{text-align:center;margin-top:14px;color:var(--muted);font-weight:700}
 </style>
-</head>
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="logo"><img src="logo.png"></div>
-  <h3 style="font-family:'Baloo 2';color:var(--primary);margin-top:12px">
-    DS WORLD — RCM PRO MAX
-  </h3>
-</div>
+<div class="wrap">
 
-<!-- MAIN APP -->
-<div class="wrap" id="app" style="display:none">
-
-<header>
-  <div class="brand">
-    <div class="logo"><img src="logo.png"></div>
-    <div>
-      <h1>RCM बचत कॅल्क्युलेटर (Pro Max)</h1>
-      <div id="nowDate" style="font-size:13px;color:var(--muted)"></div>
-    </div>
-  </div>
-
-  <div style="display:flex;gap:10px;align-items:center">
-    <button id="themeToggle">🌙 DARK</button>
-    <div class="ds-badge">DS WORLD</div>
-  </div>
-</header>
-
-<div class="grid">
-
-  <!-- LEFT -->
-  <div class="card">
-    <div class="row">
-      <div class="field">
-        <label>ग्राहकाचे नाव</label>
-        <input id="custName">
+  <header class="header">
+    <div class="brand">
+      <div class="logo">
+        <img src="logo.png" alt="DS" onerror="this.style.display='none'">
       </div>
-      <div class="field">
-        <label>RCM ID</label>
-        <input id="rcmId">
-      </div>
-      <div class="field">
-        <label>तारीख</label>
-        <input id="orderDate" type="date">
+      <div>
+        <div class="title">DS WORLD — PRO MAX</div>
+        <div class="now" id="nowDate"></div>
       </div>
     </div>
 
-    <h3 style="margin-top:14px;color:var(--primary)">प्रॉडक्ट शोधा</h3>
-    <input id="search" placeholder="Type to search..." style="margin-top:8px">
-
-    <div class="row" style="margin-top:10px">
-      <select id="productSelect" style="flex:1"><option>Loading...</option></select>
-      <input id="qtyInput" type="number" min="1" value="1" style="width:80px">
-      <button id="addBtn" class="btn-add">+ ADD</button>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="themeToggle" class="btn btn-ghost">🌙 Dark</button>
+      <div style="font-weight:800;color:var(--primary)">7020970727</div>
     </div>
+  </header>
 
-    <div id="productList"></div>
+  <div class="grid">
 
-    <div class="summary">
-      <div class="sum-box" id="totalQty">Qty: 0</div>
-      <div class="sum-box" id="totalMarket">Market: ₹0</div>
-      <div class="sum-box" id="totalRCM">RCM: ₹0</div>
-      <div class="sum-box" id="totalPV">PV: 0</div>
-    </div>
-
-  </div>
-
-  <!-- RIGHT -->
-  <div>
+    <!-- LEFT SIDE -->
     <div class="card">
-      <div class="cards">
+      <h3 style="margin:0 0 8px 0;color:var(--primary)">PRO MAX कॅलक्युलेटर</h3>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px">
+        Quantity द्या आणि ताबडतोब फायदे पाहा
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Product निवडा</label>
+          <select id="productSelect">
+            <option value="">Loading…</option>
+          </select>
+        </div>
+
+        <div class="field" style="max-width:110px">
+          <label>Qty</label>
+          <input id="qtyInput" type="number" value="1" min="1" class="qty">
+        </div>
+
+        <div style="align-self:flex-end">
+          <button id="addBtn" class="btn btn-primary">+ Add</button>
+        </div>
+      </div>
+
+      <div id="productList" style="margin-top:12px">
+        <div style="text-align:center;color:var(--muted);padding:18px;">
+          तुमची ऑर्डर रिकामी आहे. प्रॉडक्ट निवडा.
+        </div>
+      </div>
+
+      <div class="totals">
+        <div class="total-row"><span class="muted">एकूण Qty</span><span id="totalQty">0</span></div>
+        <div class="total-row"><span class="muted">Market</span><span id="totalMarket">₹0</span></div>
+        <div class="total-row"><span class="muted">RCM</span><span id="totalRCM">₹0</span></div>
+        <div class="total-row"><span class="muted">PV</span><span id="totalPV">0</span></div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="card">
+
+      <div class="cards-grid">
+
         <div class="big-card card-saving">
-          <div class="label">मासिक फायदा</div>
-          <div id="cardMonthly" class="val">₹0</div>
+          <div style="font-size:13px">मासिक फायदा</div>
+          <div id="cardMonthly" style="font-size:24px;margin-top:6px">₹0</div>
         </div>
 
         <div class="big-card card-cons">
-          <div class="label">Consistency</div>
-          <div id="cardCons" class="val">₹0</div>
+          <div style="font-size:13px">Consistency</div>
+          <div id="cardCons" style="font-size:24px;margin-top:6px">₹0</div>
         </div>
+
+        <div class="big-card card-annual">
+          <div style="font-size:13px">वार्षिक बचत</div>
+          <div id="cardAnnual" style="font-size:24px;margin-top:6px">₹0</div>
+        </div>
+
+        <div class="big-card card-future">
+          <div style="font-size:13px">20 वर्षांची बचत</div>
+          <div id="cardTwenty" style="font-size:24px;margin-top:6px">₹0</div>
+        </div>
+
       </div>
 
-      <div class="cards" style="margin-top:12px">
-        <div class="big-card card-year">
-          <div class="label">वार्षिक फायदा</div>
-          <div id="cardAnnual" class="val">₹0</div>
-        </div>
-
-        <div class="big-card card-life">
-          <div class="label">20 वर्षे फायदा</div>
-          <div id="cardTwenty" class="val">₹0</div>
-        </div>
+      <div style="margin-top:14px" class="actions">
+        <button id="waBtn" class="btn btn-primary">📲 WhatsApp Share</button>
+        <button id="orderBtn" class="btn btn-primary">📝 Place Order</button>
+        <button id="pdfBtn" class="btn btn-ghost">📄 Download PDF</button>
+        <button id="imgBtn" class="btn btn-ghost">🖼 Save Image</button>
+        <button id="clearBtn" class="btn btn-ghost">🗑 Clear</button>
       </div>
+
     </div>
 
-    <div class="card" style="margin-top:12px">
-      <button id="waBtn" class="ios-btn ios-wa">📲 WhatsApp</button>
-      <button id="imgBtn" class="ios-btn ios-img">🖼 Image</button>
-      <button id="pdfBtn" class="ios-btn ios-pdf">📄 PDF Bill</button>
-      <button id="clearBtn" class="ios-btn ios-clear">🗑 Clear</button>
-    </div>
   </div>
 
-</div>
-
-<footer style="text-align:center;margin-top:20px;color:#666;font-weight:700">
-  Designed by DS WORLD 🌍 | 7020970727
-</footer>
+  <div class="footer">Designed by DS WORLD 🌍</div>
 
 </div>
 
-<button id="floatAdd">+</button>
+<!-- ORDER POPUP -->
+<div id="orderPopup">
+  <div id="orderBox">
+    <div class="popup-title">Place Order</div>
 
-<div id="popup"></div>
-<div id="confetti"></div>
+    <div class="popup-field">
+      <input id="custName" placeholder="Customer Name *">
+    </div>
 
+    <div class="popup-field">
+      <input id="abId" placeholder="AB / RCM ID *">
+    </div>
+
+    <div class="popup-field">
+      <input id="mob" placeholder="Mobile Number *">
+    </div>
+
+    <div class="popup-field">
+      <textarea id="addr" rows="3" placeholder="Address *"></textarea>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px">
+      <button id="orderCancel" class="btn btn-ghost">Cancel</button>
+      <button id="orderPlace" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP & CONFETTI -->
+<div id="overlay"><div class="popup" id="popupBox">✔ Product Added</div></div>
+<div id="confetti" class="confetti"></div>
+
+<!-- FLOAT BUTTON -->
+<div class="fab" id="fab">+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
 <script>
-const el=id=>document.getElementById(id);
-const fmt=n=>Math.round(n).toLocaleString('en-IN');
+const $ = id => document.getElementById(id);
+const fmt = n => Math.round(n).toLocaleString("en-IN");
 
-/* Google Sheet */
-const SHEET_ID="1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k";
-const RAW_GVIZ=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-const SHEET_URL="https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(RAW_GVIZ);
+let products = [];
+let order = [];
 
-let products=[];
-let order=[];
+const SHEET_ID = "1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k";
+const RAW = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+const API = "https://api.allorigins.win/raw?url=" + encodeURIComponent(RAW);
 
-function parseGviz(text){
-  try{
-    const a=text.indexOf('{'), b=text.lastIndexOf('}');
-    return JSON.parse(text.substring(a,b+1));
-  }catch(e){return null;}
-}
-
-/* Load Product List */
-async function loadProducts(){
-  try{
-    const res=await fetch(SHEET_URL);
-    const txt=await res.text();
-    const json=parseGviz(txt);
-    products=json.table.rows.map(r=>({
-      name:r.c[0]?.v||"",
-      market:+(r.c[1]?.v||0),
-      rcm:+(r.c[2]?.v||0),
-      pv:+(r.c[3]?.v||0)
-    })).filter(p=>p.name.trim()!=="");
-  }catch(e){
-    alert("Google Sheet load होत नाही");
-  }
-  populateDropdown();
-  calc();
-}
-
-/* Dropdown Fill */
-function populateDropdown(){
-  const sel=el('productSelect');
-  sel.innerHTML="<option value=''>-- निवडा --</option>";
-  products.forEach((p,i)=>{
-    const o=document.createElement("option");
-    o.value=i;
-    o.textContent=p.name;
-    sel.appendChild(o);
+/* Time update */
+setInterval(()=>{
+  $("nowDate").innerText = new Date().toLocaleString("mr-IN",{
+    day:"2-digit",month:"short",year:"numeric",
+    hour:"2-digit",minute:"2-digit"
   });
-}
+},1000);
 
-/* Search */
-el('search').oninput=()=>{
-  const q=el('search').value.toLowerCase();
-  const sel=el('productSelect');
-  sel.innerHTML="<option value=''>-- निवडा --</option>";
-  products.forEach((p,i)=>{
-    if(p.name.toLowerCase().includes(q)){
-      const o=document.createElement("option");
-      o.value=i;
-      o.textContent=p.name;
-      sel.appendChild(o);
-    }
-  });
+/* THEME */
+$("themeToggle").onclick = ()=>{
+  document.body.classList.toggle("dark");
+  $("themeToggle").innerText = 
+    document.body.classList.contains("dark") ? "☀️ Light" : "🌙 Dark";
 };
 
-/* Add Product */
-el('addBtn').onclick=addProduct;
-el('floatAdd').onclick=addProduct;
+/* LOAD PRODUCTS */
+async function loadProducts(){
+  try{
+    const res = await fetch(API);
+    const text = await res.text();
+    const json = JSON.parse(text.substring(47,text.length-2));
 
-function addProduct(){
-  const idx=el('productSelect').value;
-  if(idx==="") return alert("प्रॉडक्ट निवडा");
+    products = json.table.rows.map(r=>({
+      name : r.c[0]?.v || "",
+      market: +r.c[1]?.v || 0,
+      rcm   : +r.c[2]?.v || 0,
+      pv    : +r.c[3]?.v || 0
+    }));
 
-  const qty=Math.max(1,+el('qtyInput').value||1);
-  const p=products[idx];
+    $("productSelect").innerHTML = 
+      `<option value="">-- Product निवडा --</option>` +
+      products.map((p,i)=>`<option value="${i}">${p.name}</option>`).join("");
 
-  const ex=order.find(x=>x.name===p.name);
-  if(ex) ex.qty+=qty;
-  else order.push({...p,qty});
+  }catch(e){
+    alert("Google Sheet error. कृपया परत प्रयत्न करा.");
+  }
+}
+loadProducts();
 
-  showPopup("Product Added");
+/* PRODUCT ADD */
+$("addBtn").onclick = ()=>{
+  let i = $("productSelect").value;
+  if(i==="") return alert("Product निवडा!");
+
+  let qty = Math.max(1, parseInt($("qtyInput").value)||1);
+  let p = products[i];
+
+  let ex = order.find(o=>o.name===p.name);
+  if(ex) ex.qty += qty;
+  else order.push({...p, qty});
+
   calc();
-}
+  showPopup(`${p.name} added`);
+};
 
-/* Popup */
-function showPopup(t){
-  const p=el('popup');
-  p.innerText="✔ "+t;
-  p.style.display="block";
-  setTimeout(()=>p.style.display="none",1000);
-}
+/* FLOAT BUTTON → ADD */
+$("fab").onclick = ()=> $("addBtn").click();
 
-/* CALC */
+/* RENDER + CALC */
 function calc(){
-  const list=el('productList');
-  list.innerHTML="";
+  const list = $("productList");
+  list.innerHTML = "";
 
-  let TQ=0, TM=0, TR=0, TPV=0, SAVE=0;
+  let tQ=0,tM=0,tR=0,tPV=0,tS=0;
+
+  if(order.length===0){
+    list.innerHTML = `<div style='text-align:center;padding:18px;color:var(--muted)'>
+      ऑर्डर रिकामी आहे.
+    </div>`;
+  }
 
   order.forEach((it,i)=>{
-    const m=it.market*it.qty;
-    const r=it.rcm*it.qty;
-    const pv=it.pv*it.qty;
-    const s=(it.market-it.rcm)*it.qty;
+    let m=it.market*it.qty;
+    let r=it.rcm*it.qty;
+    let pv=it.pv*it.qty;
+    let s=(it.market-it.rcm)*it.qty;
 
-    TQ+=it.qty;
-    TM+=m;
-    TR+=r;
-    TPV+=pv;
-    SAVE+=s;
+    tQ+=it.qty; tM+=m; tR+=r; tPV+=pv; tS+=s;
 
-    const div=document.createElement("div");
-    div.className="prod-item";
-
+    let div = document.createElement("div");
+    div.className="product-item";
     div.innerHTML=`
-      <div class="prod-left">
-        <div class="prod-title">${it.name}</div>
-        <div class="prod-sub">
-          PV: ${it.pv} | M: ₹${it.market} | RCM: ₹${it.rcm}
-        </div>
+      <div style="flex:1">
+        <div class="product-name">${it.name}</div>
+        <div class="product-meta">PV: ${it.pv} | M: ₹${it.market} | R: ₹${it.rcm}</div>
       </div>
-      <div class="prod-right">
-        <div class="qty-controls">
-          <button class="btn-ghost" data-i="${i}" data-a="minus">-</button>
-          <input class="inline-qty" data-i="${i}" type="number" value="${it.qty}">
-          <button class="btn-ghost" data-i="${i}" data-a="plus">+</button>
+
+      <div style="text-align:right">
+        <div class="qty-controls" style="display:flex;gap:6px;">
+          <button class="btn-ghost" onclick="qtyMinus(${i})">-</button>
+          <input type="number" min="1" value="${it.qty}" 
+                 onchange="qtySet(${i},this.value)" 
+                 style="width:60px;text-align:center">
+          <button class="btn-ghost" onclick="qtyPlus(${i})">+</button>
         </div>
-        <div class="prod-save">₹${fmt(s)}</div>
+        <div style="margin-top:6px;color:var(--accent);font-weight:700">
+          ₹${fmt(s)}
+        </div>
       </div>
     `;
-
     list.appendChild(div);
   });
 
-  el('totalQty').innerText="Qty: "+TQ;
-  el('totalMarket').innerText="Market: ₹"+fmt(TM);
-  el('totalRCM').innerText="RCM: ₹"+fmt(TR);
-  el('totalPV').innerText="PV: "+fmt(TPV);
+  $("totalQty").innerText = tQ;
+  $("totalMarket").innerText = "₹"+fmt(tM);
+  $("totalRCM").innerText = "₹"+fmt(tR);
+  $("totalPV").innerText = fmt(tPV);
 
-  /* Consistency */
-  let CONS=0;
-  if(TPV<1500) CONS=TPV*0.12;
-  else if(TPV<2500) CONS=1500*0.1667;
-  else CONS=5000*0.1667;
+  /* CONSISTENCY */
+  let cons = 0;
+  if(tPV < 1500) cons = tPV * 0.12;
+  else if(tPV < 2500) cons = 1500 * 0.1667;
+  else cons = 5000 * 0.1667;
 
-  const MONTH=SAVE+CONS;
+  let monthly = tS + cons;
 
-  el('cardCons').innerText="₹"+fmt(CONS);
-  el('cardMonthly').innerText="₹"+fmt(MONTH);
-  el('cardAnnual').innerText="₹"+fmt(MONTH*12);
-  el('cardTwenty').innerText="₹"+fmt(MONTH*12*20);
-
-  document.querySelectorAll(".btn-ghost").forEach(btn=>{
-    btn.onclick=()=>{
-      const i=btn.dataset.i, a=btn.dataset.a;
-      if(a==="plus") order[i].qty++;
-      else order[i].qty=Math.max(1,order[i].qty-1);
-      calc();
-    };
-  });
-
-  document.querySelectorAll(".inline-qty").forEach(inp=>{
-    inp.onchange=()=>{
-      const i=inp.dataset.i;
-      order[i].qty=Math.max(1,+inp.value||1);
-      calc();
-    };
-  });
+  $("cardMonthly").innerText = "₹"+fmt(monthly);
+  $("cardCons").innerText = "₹"+fmt(cons);
+  $("cardAnnual").innerText = "₹"+fmt(monthly*12);
+  $("cardTwenty").innerText = "₹"+fmt(monthly*12*20);
 }
 
-/* 4 BUTTON FEATURES */
+/* QTY FUNCTIONS */
+function qtyPlus(i){ order[i].qty++; calc(); }
+function qtyMinus(i){ order[i].qty=Math.max(1,order[i].qty-1); calc(); }
+function qtySet(i,v){ order[i].qty=Math.max(1,parseInt(v)||1); calc(); }
 
-/* WhatsApp */
-el('waBtn').onclick=()=>{
-  if(order.length===0) return alert("काहीही प्रॉडक्ट नाहीत");
+/* CLEAR */
+$("clearBtn").onclick = ()=>{
+  if(confirm("Clear करायचे?")){
+    order=[]; calc();
+  }
+};
 
-  let msg="*RCM Order Summary*%0A%0A";
-  order.forEach((p,i)=> msg+=`${i+1}. ${p.name} × ${p.qty}%0A`);
-  msg+=`%0ATotal PV: ${fmt(order.reduce((s,x)=>s+x.pv*x.qty,0))}`;
-  msg+=`%0AMonthly Benefit: ${el('cardMonthly').innerText}`;
+/* POPUP + CONFETTI */
+function showPopup(msg){
+  $("popupBox").innerText = msg;
+  $("overlay").style.display="flex";
 
-  window.open("https://wa.me/?text="+msg,"_blank");
+  setTimeout(()=> $("overlay").style.display="none", 1300);
+
+  shootConfetti();
+}
+
+function shootConfetti(){
+  const emojis=["🎉","✨","💥","💰","🌟"];
+  for(let i=0;i<10;i++){
+    let d=document.createElement("div");
+    d.className="conf";
+    d.style.left = (Math.random()*100)+"%";
+    d.style.top = "60%";
+    d.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    $("confetti").appendChild(d);
+    setTimeout(()=> d.remove(),1200);
+  }
+}
+
+/* WHATSAPP SHARE (FULL TABLE) */
+$("waBtn").onclick = ()=>{
+
+  if(order.length===0) return alert("ऑर्डर रिकामी आहे!");
+
+  let msg = `--------------------------------
+RCM Order Summary — DS WORLD
+--------------------------------\n`;
+
+  order.forEach((it,i)=>{
+    msg += `\n${i+1}) ${it.name}
+Qty: ${it.qty}
+Market: ₹${it.market}
+RCM: ₹${it.rcm}
+PV: ${it.pv}
+Saving: ₹${fmt((it.market-it.rcm)*it.qty)}
+--------------------------------`;
+  });
+
+  msg += `\nTotal Market: ${$("totalMarket").innerText}
+Total RCM: ${$("totalRCM").innerText}
+Total PV: ${$("totalPV").innerText}
+
+Monthly Benefit: ${$("cardMonthly").innerText}
+Yearly: ${$("cardAnnual").innerText}
+20-Year: ${$("cardTwenty").innerText}
+
+धन्यवाद!
+DS WORLD 🌍`;
+
+  window.open("https://wa.me/?text="+encodeURIComponent(msg));
+};
+
+/* ORDER FORM POPUP */
+$("orderBtn").onclick = ()=> $("orderPopup").style.display="flex";
+$("orderCancel").onclick = ()=> $("orderPopup").style.display="none";
+
+/* ORDER PLACE */
+$("orderPlace").onclick = ()=>{
+
+  let nm = $("custName").value.trim();
+  let ab = $("abId").value.trim();
+  let mob = $("mob").value.trim();
+  let ad = $("addr").value.trim();
+
+  if(!nm || !ab || !mob || !ad)
+    return alert("सर्व फील्ड आवश्यक आहेत!");
+
+  if(order.length===0)
+    return alert("Order रिकामी आहे!");
+
+  let msg = `📝 ORDER REQUEST — DS WORLD
+--------------------------------
+Name: ${nm}
+AB ID: ${ab}
+Mobile: ${mob}
+Address: ${ad}
+--------------------------------\n\n`;
+
+  order.forEach((it,i)=>{
+    msg += `${i+1}) ${it.name}
+Qty: ${it.qty} | PV: ${it.pv}
+Saving: ₹${fmt((it.market-it.rcm)*it.qty)}
+--------------------------------\n`;
+  });
+
+  msg += `
+Total PV: ${$("totalPV").innerText}
+Monthly: ${$("cardMonthly").innerText}
+Yearly: ${$("cardAnnual").innerText}
+
+Send via Pro Max App`;
+
+  window.open("https://wa.me/7020970727?text="+encodeURIComponent(msg));
+
+  $("orderPopup").style.display="none";
 };
 
 /* IMAGE */
-el('imgBtn').onclick=()=>{
-  html2canvas(document.querySelector('.wrap')).then(canvas=>{
-    const a=document.createElement('a');
-    a.href=canvas.toDataURL("image/png");
+$("imgBtn").onclick = ()=>{
+  html2canvas(document.body).then(c=>{
+    let a=document.createElement("a");
+    a.href=c.toDataURL();
     a.download="RCM_Order.png";
     a.click();
   });
 };
 
 /* PDF */
-el('pdfBtn').onclick=()=>{
-  if(order.length===0) return alert("Products नाहीत");
-
-  html2pdf()
-    .from(document.querySelector('.wrap'))
-    .set({margin:10,filename:"RCM_Order.pdf",html2canvas:{scale:1.2}})
-    .save();
-};
-
-/* CLEAR */
-el('clearBtn').onclick=()=>{
-  if(confirm("सगळी प्रॉडक्ट लिस्ट साफ करायची का?")){
-    order=[];
-    calc();
-  }
-};
-
-/* INIT */
-window.onload=()=>{
-  el('orderDate').valueAsDate=new Date();
-  el('nowDate').innerText=new Date().toLocaleString();
-
-  setTimeout(()=>{
-    el('splash').style.display="none";
-    el('app').style.display="block";
-    loadProducts();
-  },800);
+$("pdfBtn").onclick = ()=>{
+  html2pdf().from(document.body).save("RCM_Order.pdf");
 };
 </script>
-</body>
-   </html>
