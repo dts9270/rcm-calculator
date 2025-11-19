@@ -118,6 +118,69 @@ input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #ddd}
 
 /* footer */
 .footer{text-align:center;margin-top:14px;color:var(--muted);font-weight:700}
+  /* ===== MOBILE UI OPTIMIZATION ===== */
+@media(max-width:600px){
+
+  .wrap{
+    padding:10px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .header{
+    flex-direction:column;
+    gap:6px;
+    text-align:center;
+  }
+
+  .logo{
+    width:52px;
+    height:52px;
+  }
+
+  .cards-grid{
+    grid-template-columns:1fr;
+  }
+
+  .big-card{
+    padding:14px;
+    min-height:100px;
+  }
+
+  .product-item{
+    flex-direction:column;
+    gap:6px;
+    padding:10px;
+  }
+
+  .product-meta{
+    font-size:12px;
+  }
+
+  .qty-controls input{
+    width:50px !important;
+  }
+
+  .actions button{
+    width:100%;
+  }
+
+  .fab{
+    width:52px;
+    height:52px;
+    font-size:24px;
+    right:14px;
+    bottom:14px;
+  }
+
+  #orderBox{
+    width:92%;
+    max-width:360px;
+  }
+}
 </style>
 <body>
 
