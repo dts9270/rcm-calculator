@@ -10,7 +10,7 @@
 
 <style>
 /* =======================
-   ORIGINAL CSS — NO CHANGE
+   ORIGINAL THEMING
    ======================= */
 :root{
   --primary:#0a5b99;
@@ -57,20 +57,85 @@ h1{margin:0;font-family:"Baloo 2";color:var(--primary)}
 label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
 input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);background:rgba(255,255,255,0.72);color:var(--text);font-size:15px}
 
-/* product list */
+/* SEARCH LIST */
 #productList{max-height:360px;overflow:auto;margin-top:12px;padding-right:6px}
-.prod-item{display:flex;justify-content:space-between;gap:12px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.75);border:1px solid rgba(0,0,0,0.06);margin-bottom:10px}
-.title{font-weight:700;color:var(--primary)}
-.sub{font-size:13px;color:var(--muted)}
-.qty-controls{display:flex;gap:8px;align-items:center}
-.btn-ghost{padding:6px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:rgba(255,255,255,0.9);font-weight:700;color:var(--primary);cursor:pointer}
-.btn-add{padding:10px 14px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--primary),#006dc5);color:#fff;font-weight:800}
 
-/* summary */
+/* =============================
+   PERFECT FIXED PRODUCT CARD UI
+   ============================= */
+.prod-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  padding:16px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.92);
+  border:1px solid rgba(0,0,0,0.08);
+  margin-bottom:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.06);
+}
+
+.prod-left{
+  flex:1;
+}
+
+.prod-title{
+  font-size:16px;
+  font-weight:700;
+  color:var(--primary);
+  line-height:1.35;
+}
+
+.prod-sub{
+  margin-top:6px;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.45;
+}
+
+.prod-right{
+  text-align:right;
+  min-width:120px;
+}
+
+.qty-controls{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-bottom:6px;
+}
+
+.qty-controls input{
+  width:52px;
+  text-align:center;
+  padding:6px 5px;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.18);
+}
+
+.btn-ghost{
+  padding:6px 12px;
+  font-size:16px;
+  font-weight:800;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.12);
+  background:white;
+  cursor:pointer;
+}
+
+.prod-save{
+  font-weight:800;
+  font-size:16px;
+  color:var(--accent);
+}
+
+
+/* SUMMARY */
 .summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .sum-box{padding:12px;border-radius:10px;background:rgba(255,255,255,0.8);text-align:center;font-weight:700}
 
-/* cards */
+/* CARDS */
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .big-card{padding:16px;border-radius:12px;color:#fff}
 .card-saving{background:linear-gradient(135deg,#27c76f,#0ea44a)}
@@ -80,25 +145,26 @@ input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,
 .big-card .label{font-size:13px}
 .big-card .val{font-size:28px;font-weight:800;margin-top:6px}
 
-/* action buttons */
+/* ACTION BTNS */
 .ios-btn{width:100%;padding:12px;border-radius:12px;border:none;color:#fff;font-weight:800;margin-bottom:8px}
 .ios-wa{background:#20d447}
 .ios-img{background:#428bff}
 .ios-pdf{background:#ffa34d}
 .ios-clear{background:#ff4a4a}
 
-/* float */
+/* FLOAT */
 #floatAdd{position:fixed;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#006fbd);color:#fff;font-size:34px;border:none;box-shadow:0 12px 28px rgba(0,0,0,0.22);cursor:pointer;z-index:1200}
 
-/* popup/confetti */
+/* POPUP */
 #popup{position:fixed;left:50%;top:16%;transform:translateX(-50%);background:white;padding:12px 18px;border-radius:10px;color:var(--primary);display:none;z-index:2000;box-shadow:0 10px 25px rgba(0,0,0,0.14)}
 #confetti{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1700}
 .conf{position:absolute;font-size:24px;animation:fly 1.4s ease-out forwards}
 @keyframes fly{0%{transform:translateY(0) scale(.8);opacity:1}100%{transform:translateY(-240px) scale(1.3);opacity:0}}
 
-/* splash */
 #splash{position:fixed;left:0;top:0;width:100%;height:100%;background:linear-gradient(135deg,#ffffff,#eaf6ff);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3000}
+
 footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
+
 </style>
 </head>
 <body>
@@ -211,7 +277,7 @@ footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
 <!-- Floating Add -->
 <button id="floatAdd">+</button>
 
-<!-- Popup -->
+<!-- Popup + Confetti -->
 <div id="popup"></div>
 <div id="confetti"></div>
 
@@ -219,35 +285,31 @@ footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
-<!-- =====================
-     FINAL WORKING JS CODE
-     ===================== -->
+<!-- ============================
+     FINAL COMPLETE WORKING JS
+     ============================ -->
 <script>
 const el=id=>document.getElementById(id);
 const fmt=n=>Math.round(n).toLocaleString('en-IN');
 
+/* Sheet Setup */
 const SHEET_ID="1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k";
-
-/* ⭐ BEST PROXY ⭐ */
 const RAW_GVIZ=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 const SHEET_URL="https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(RAW_GVIZ);
 
 let products=[];
 let order=[];
 
-/* ⭐ FIXED GVIZ PARSER ⭐ */
+/* Parse Fix */
 function parseGviz(text){
   try{
     const s=text.indexOf('{');
     const e=text.lastIndexOf('}');
     return JSON.parse(text.substring(s,e+1));
-  }catch(e){
-    console.log("Parse error",e);
-    return null;
-  }
+  }catch(e){ return null; }
 }
 
-/* ⭐ LOAD PRODUCTS ⭐ */
+/* Load Products */
 async function loadProducts(){
   try{
     const res=await fetch(SHEET_URL);
@@ -262,7 +324,7 @@ async function loadProducts(){
     })).filter(p=>p.name.trim()!=="");
 
   }catch(e){
-    alert("Google Sheet load होत नाही");
+    alert("⚠️ Google Sheet load होत नाही");
     products=[];
   }
 
@@ -270,7 +332,7 @@ async function loadProducts(){
   calc();
 }
 
-/* Populate Dropdown */
+/* Fill Dropdown */
 function populateDropdown(){
   const sel=el('productSelect');
   sel.innerHTML="<option value=''>-- निवडा --</option>";
@@ -289,7 +351,7 @@ el('search').oninput=()=>{
   sel.innerHTML="<option value=''>-- निवडा --</option>";
   products.forEach((p,i)=>{
     if(p.name.toLowerCase().includes(q)){
-      const o=document.createElement("option");
+      const o=document.createElement('option');
       o.value=i;
       o.textContent=p.name;
       sel.appendChild(o);
@@ -303,19 +365,47 @@ el('floatAdd').onclick=addProduct;
 
 function addProduct(){
   const idx=el('productSelect').value;
-  if(idx==="") return alert("Select product");
+  if(idx==="") return alert("कृपया प्रॉडक्ट निवडा");
+
   const qty=Math.max(1,+el('qtyInput').value||1);
   const p=products[idx];
+
   const ex=order.find(x=>x.name===p.name);
   if(ex) ex.qty+=qty;
   else order.push({...p,qty});
+
+  showPopup("Product Added");
   calc();
 }
 
-/* Calculate */
+/* Popup */
+function showPopup(msg){
+  const p=el('popup');
+  p.innerText="✔ "+msg;
+  p.style.display="block";
+  setTimeout(()=>p.style.display="none",1100);
+}
+
+/* Confetti */
+function confetti(){
+  const box=el('confetti');
+  const emojis=['🎉','✨','🎊','💰','⭐'];
+  for(let i=0;i<12;i++){
+    const d=document.createElement('div');
+    d.className='conf';
+    d.style.left=(10+Math.random()*80)+'%';
+    d.style.top='70%';
+    d.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+    box.appendChild(d);
+    setTimeout(()=>d.remove(),1400);
+  }
+}
+
+/* Main Calculation */
 function calc(){
   const list=el('productList');
   list.innerHTML="";
+
   let tQ=0,tM=0,tR=0,tPV=0,tS=0;
 
   order.forEach((it,i)=>{
@@ -323,24 +413,32 @@ function calc(){
     const r=it.rcm*it.qty;
     const pv=it.pv*it.qty;
     const s=(it.market-it.rcm)*it.qty;
-    tQ+=it.qty; tM+=m; tR+=r; tPV+=pv; tS+=s;
+
+    tQ+=it.qty;
+    tM+=m;
+    tR+=r;
+    tPV+=pv;
+    tS+=s;
 
     const div=document.createElement("div");
     div.className="prod-item";
+
     div.innerHTML=`
-      <div style="flex:1">
-        <div class="title">${it.name}</div>
-        <div class="sub">PV:${it.pv} | M:₹${it.market} | R:₹${it.rcm}</div>
+      <div class="prod-left">
+        <div class="prod-title">${it.name}</div>
+        <div class="prod-sub">PV: ${it.pv} | M: ₹${it.market} | RCM: ₹${it.rcm}</div>
       </div>
-      <div>
+
+      <div class="prod-right">
         <div class="qty-controls">
           <button class="btn-ghost" data-i="${i}" data-a="minus">-</button>
           <input class="inline-qty" data-i="${i}" type="number" value="${it.qty}">
           <button class="btn-ghost" data-i="${i}" data-a="plus">+</button>
         </div>
-        <div style="margin-top:8px;font-weight:800;color:var(--accent)">₹${fmt(s)}</div>
+        <div class="prod-save">₹${fmt(s)}</div>
       </div>
     `;
+
     list.appendChild(div);
   });
 
@@ -349,20 +447,44 @@ function calc(){
   el('totalRCM').innerText=`RCM: ₹${fmt(tR)}`;
   el('totalPV').innerText=`PV: ${fmt(tPV)}`;
 
+  /* CONSISTENCY */
   let cons=0;
   if(tPV<1500) cons=tPV*0.12;
   else if(tPV<2500) cons=1500*0.1667;
   else cons=5000*0.1667;
 
-  const mon=tS+cons;
+  const monthly=tS+cons;
+
   el('cardCons').innerText="₹"+fmt(cons);
-  el('cardMonthly').innerText="₹"+fmt(mon);
-  el('cardAnnual').innerText="₹"+fmt(mon*12);
-  el('cardTwenty').innerText="₹"+fmt(mon*12*20);
+  el('cardMonthly').innerText="₹"+fmt(monthly);
+  el('cardAnnual').innerText="₹"+fmt(monthly*12);
+  el('cardTwenty').innerText="₹"+fmt(monthly*12*20);
+
+  /* Button Listeners */
+  document.querySelectorAll(".btn-ghost").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=btn.dataset.i;
+      const a=btn.dataset.a;
+      if(a==="plus") order[i].qty++;
+      else order[i].qty=Math.max(1,order[i].qty-1);
+      calc();
+    };
+  });
+
+  document.querySelectorAll(".inline-qty").forEach(inp=>{
+    inp.onchange=()=>{
+      const i=inp.dataset.i;
+      order[i].qty=Math.max(1,+inp.value||1);
+      calc();
+    };
+  });
 }
 
+/* Init */
 window.onload=()=>{
   el('orderDate').valueAsDate=new Date();
+  el('nowDate').innerText=new Date().toLocaleString();
+
   setTimeout(()=>{
     el('splash').style.display="none";
     el('app').style.display="block";
