@@ -3,265 +3,298 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>DS WORLD - RCM PRO MAX (Final)</title>
+<title>DS WORLD — RCM Calculator (RCM Look)</title>
 
 <!-- Marathi font + heading font -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;600;700&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
+  --bg:#fafcff;
   --primary:#0a5b99;
   --accent:#0ea44a;
   --muted:#6b7280;
-  --bg: linear-gradient(180deg,#dff1ff,#e7edff,#ece3ff);
-  --text:#0f1724;
-  --card-bg: rgba(255,255,255,0.55);
-  --card-blur: blur(12px);
-  --card-border: rgba(255,255,255,0.4);
-  --shadow: 0 10px 30px rgba(15,40,80,0.15);
+  --card:#ffffff;
+  --glass: rgba(255,255,255,0.85);
+  --shadow: 0 10px 30px rgba(10,30,80,0.08);
+  --round:14px;
 }
-.dark{
-  --bg: linear-gradient(180deg,#0c1016,#05060a);
-  --text:#e7ebf2;
-  --primary:#4fa7ff;
-  --accent:#00ff99;
-  --card-bg: rgba(40,45,55,0.55);
-  --card-border: rgba(100,110,130,0.3);
-}
-
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:"Noto Sans Devanagari", "Poppins", sans-serif;
   background:var(--bg);
-  color:var(--text);
-  transition:0.25s;
+  color:#111;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
-.wrap{max-width:1100px;margin:16px auto;padding:16px}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:62px;height:62px;border-radius:12px;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,0.12)}
+/* App container */
+.app{
+  max-width:420px;
+  margin:0 auto;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 14px;
+  background:linear-gradient(90deg,#fff,#f7fbff);
+  box-shadow: var(--shadow);
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:44px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
 .logo img{width:100%;height:100%;object-fit:contain}
-h1{margin:0;font-family:"Baloo 2";color:var(--primary)}
-.ds-badge{padding:8px 12px;background:linear-gradient(90deg,var(--primary),#0078d1);color:#fff;border-radius:30px;font-weight:700}
-#themeToggle{padding:8px 14px;border-radius:30px;border:none;background:linear-gradient(135deg,#007ee9,#005bb8);color:#fff;font-weight:700;cursor:pointer}
-
-/* layout */
-.grid{display:grid;grid-template-columns:1fr 360px;gap:16px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{padding:14px;border-radius:12px;background:var(--card-bg);backdrop-filter:var(--card-blur);border:1px solid var(--card-border);box-shadow:var(--shadow)}
-.row{display:flex;gap:12px;flex-wrap:wrap}
-.field{flex:1}
-label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);background:rgba(255,255,255,0.72);color:var(--text);font-size:15px}
-
-/* product list */
-#productList{max-height:360px;overflow:auto;margin-top:12px;padding-right:6px}
-.prod-item{display:flex;justify-content:space-between;gap:12px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.75);border:1px solid rgba(0,0,0,0.06);margin-bottom:10px}
-.title{font-weight:700;color:var(--primary)}
-.sub{font-size:13px;color:var(--muted)}
-.qty-controls{display:flex;gap:8px;align-items:center}
-.btn-ghost{padding:6px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:rgba(255,255,255,0.9);font-weight:700;color:var(--primary);cursor:pointer}
-.btn-add{padding:10px 14px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--primary),#006dc5);color:#fff;font-weight:800}
-
-/* summary */
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.sum-box{padding:12px;border-radius:10px;background:rgba(255,255,255,0.8);text-align:center;font-weight:700}
-
-/* cards */
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.big-card{padding:16px;border-radius:12px;color:#fff}
-.card-saving{background:linear-gradient(135deg,#27c76f,#0ea44a)}
-.card-cons{background:linear-gradient(135deg,#9f59ff,#6d3be8)}
-.card-year{background:linear-gradient(135deg,#2fa3ff,#006fdb)}
-.card-life{background:linear-gradient(135deg,#ffae4d,#ff8100)}
-.big-card .label{font-size:13px}
-.big-card .val{font-size:28px;font-weight:800;margin-top:6px}
-
-/* action buttons */
-.ios-btn{width:100%;padding:12px;border-radius:12px;border:none;color:#fff;font-weight:800;margin-bottom:8px}
-.ios-wa{background:#20d447}
-.ios-img{background:#428bff}
-.ios-pdf{background:#ffa34d}
-.ios-clear{background:#ff4a4a}
-
-/* float */
-#floatAdd{position:fixed;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#006fbd);color:#fff;font-size:34px;border:none;box-shadow:0 12px 28px rgba(0,0,0,0.22);cursor:pointer;z-index:1200}
-
+.loc{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.loc b{color:var(--primary)}
+/* SEARCH BAR */
+.search-wrap{padding:12px 14px}
+.search{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:var(--card);
+  border-radius:999px;
+  padding:8px 12px;
+  box-shadow:0 6px 18px rgba(10,30,80,0.04);
+}
+.search input{border:0;outline:0;font-size:14px;width:100%;font-family:inherit;background:transparent;}
+/* SLIDER */
+.slider{margin:14px 12px 6px 12px;position:relative;}
+.slide-track{display:flex;gap:12px;overflow:hidden;}
+.slide{min-width:330px;height:150px;border-radius:12px;background:linear-gradient(135deg,#ffecd2,#ffd8d8);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;background-size:cover;background-position:center;box-shadow:var(--shadow);}
+/* DOTS */
+.dots{display:flex;gap:6px;justify-content:center;margin-top:8px}
+.dot{width:8px;height:8px;border-radius:999px;background:#e6e6e6}
+/* CATEGORIES */
+.cats{margin:12px;display:flex;gap:12px;overflow:auto;padding-bottom:6px}
+.cat{min-width:86px;text-align:center;background:var(--card);padding:10px;border-radius:12px;box-shadow:var(--shadow)}
+.cat img{width:52px;height:52px;border-radius:999px;object-fit:cover;display:block;margin:0 auto 8px}
+.cat p{margin:0;font-size:13px;color:var(--muted)}
+/* MAIN CONTENT card (calculator) */
+.content{margin:12px;background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:12px;}
+.calc-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.calc-head h2{margin:0;font-family:"Baloo 2";font-size:18px;color:var(--primary)}
+.calc-sub{color:var(--muted);font-size:13px}
+/* Controls */
+.controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.controls select,.controls input[type="number"]{flex:1;padding:10px;border-radius:10px;border:1px solid #eee;background:#fafafa;font-size:14px}
+.controls .qty{flex-basis:86px;flex:0 0 86px}
+/* product list area */
+.prod-list{margin-top:12px;max-height:220px;overflow:auto}
+.prod-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:#fbfeff;margin-bottom:8px;border:1px solid #f0f6ff}
+.prod-item .info{flex:1;padding-right:8px}
+.prod-item .name{font-weight:700;color:var(--primary);font-size:14px}
+.prod-item .meta{font-size:13px;color:var(--muted)}
+/* totals */
+.totals{margin-top:12px;border-top:1px dashed #eaeef8;padding-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.total-box{background:#fff;padding:10px;border-radius:10px;box-shadow:0 6px 16px rgba(10,30,80,0.03);font-weight:700;text-align:center}
+.total-box .label{font-size:13px;color:var(--muted);font-weight:600}
+.total-box .val{font-size:16px;margin-top:6px}
+/* big cards row */
+.big-row{display:flex;gap:10px;margin-top:12px}
+.big{flex:1;padding:12px;border-radius:10px;color:#fff;font-weight:800;text-align:center}
+.big .lbl{font-size:13px}
+.big .v{font-size:20px;margin-top:6px}
+.big.save{background:linear-gradient(135deg,#ff9a3c,#ff6f2d)}
+.big.cons{background:linear-gradient(135deg,#9f59ff,#6d3be8)}
+/* bottom nav */
+.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:420px;max-width:96%;display:flex;justify-content:space-between;gap:8px}
+.nav-btn{background:var(--card);padding:10px 12px;border-radius:12px;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;font-weight:700;color:var(--muted)}
+.nav-btn.active{border:2px solid var(--primary);color:var(--primary)}
+/* floating quick add */
+.fab{position:fixed;right:22px;bottom:82px;width:60px;height:60px;border-radius:999px;background:linear-gradient(135deg,var(--primary),#006fbd);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 12px 28px rgba(0,0,0,0.22)}
 /* popup/confetti */
 #popup{position:fixed;left:50%;top:16%;transform:translateX(-50%);background:white;padding:12px 18px;border-radius:10px;color:var(--primary);display:none;z-index:2000;box-shadow:0 10px 25px rgba(0,0,0,0.14)}
 #confetti{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1700}
 .conf{position:absolute;font-size:24px;animation:fly 1.4s ease-out forwards}
 @keyframes fly{0%{transform:translateY(0) scale(.8);opacity:1}100%{transform:translateY(-240px) scale(1.3);opacity:0}}
-
-/* splash */
-#splash{position:fixed;left:0;top:0;width:100%;height:100%;background:linear-gradient(135deg,#ffffff,#eaf6ff);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3000}
-footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
+/* responsive tweaks */
+@media(max-width:420px){.app{max-width:100%}.slide{min-width:300px}}
 </style>
 </head>
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="logo"><img src="logo.png" alt="Logo" onerror="this.style.display='none'"></div>
-  <h3 style="font-family:'Baloo 2';color:var(--primary);margin-top:12px">DS WORLD — RCM PRO MAX</h3>
-</div>
+<div class="app">
 
-<!-- APP -->
-<div class="wrap" id="app" style="display:none">
-
-<header>
-  <div class="brand">
-    <div class="logo"><img src="logo.png" alt="Logo" onerror="this.style.display='none'"></div>
-    <div>
-      <h1>RCM बचत कॅल्क्युलेटर (Pro Max)</h1>
-      <div id="nowDate" style="font-size:13px;color:var(--muted)"></div>
-    </div>
-  </div>
-
-  <div style="display:flex;gap:10px;align-items:center">
-    <button id="themeToggle">🌙 DARK</button>
-    <div class="ds-badge">DS WORLD</div>
-  </div>
-</header>
-
-<div class="grid">
-
-  <!-- LEFT -->
-  <div class="card">
-    <div class="row">
-      <div class="field">
-        <label>ग्राहकाचे नाव</label>
-        <input id="custName" placeholder="Associate / Buyer name">
-      </div>
-      <div class="field">
-        <label>RCM ID</label>
-        <input id="rcmId" placeholder="RCM ID">
-      </div>
-      <div class="field">
-        <label>तारीख</label>
-        <input id="orderDate" type="date">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">
+      <div class="logo"><img src="logo.png" alt="logo" onerror="this.style.display='block'; this.style.width='36px'; this.style.height='36px'; this.style.background='#fff'"></div>
+      <div>
+        <div style="font-size:13px;color:var(--muted)">Deliver to</div>
+        <div class="loc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-right:6px"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z" fill="#0a5b99"/></svg><b>431401</b></div>
       </div>
     </div>
 
-    <h3 style="margin-top:14px;color:var(--primary)">प्रॉडक्ट शोधा</h3>
-    <input id="search" placeholder="Type to search..." style="margin-top:8px">
+    <div style="display:flex;gap:8px;align-items:center">
+      <div style="font-weight:700;color:var(--primary)">DS WORLD</div>
+    </div>
+  </div>
 
-    <div class="row" style="margin-top:10px">
-      <select id="productSelect" style="flex:1"><option>Loading...</option></select>
-      <input id="qtyInput" type="number" min="1" value="1" style="width:80px">
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <div class="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#999" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <input id="search" placeholder='Search "Brand" — Products from Google Sheet'>
+      <svg width="20" height="20" viewBox="0 0 24 24" style="opacity:0.6"><path d="M12 2v6" stroke="#999" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+
+  <!-- SLIDER -->
+  <div class="slider">
+    <div class="slide-track" id="slideTrack" style="transform:translateX(0);transition:transform .45s ease">
+      <div class="slide" style="background-image:url('https://picsum.photos/id/1018/800/400');">TRUVIA - Travel</div>
+      <div class="slide" style="background-image:url('https://picsum.photos/id/1025/800/400');">Health Care</div>
+      <div class="slide" style="background-image:url('https://picsum.photos/id/1036/800/400');">Grocery Deals</div>
+    </div>
+    <div class="dots" id="dots"><span class="dot" style="background:#111;width:10px;height:10px;border-radius:999px"></span><span class="dot"></span><span class="dot"></span></div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="cats" id="cats">
+    <div class="cat"><img src="https://picsum.photos/seed/house/100" alt=""><p>Household</p></div>
+    <div class="cat"><img src="https://picsum.photos/seed/foot/100" alt=""><p>Footwear</p></div>
+    <div class="cat"><img src="https://picsum.photos/seed/groc/100" alt=""><p>Food & Grocery</p></div>
+    <div class="cat"><img src="https://picsum.photos/seed/lugg/100" alt=""><p>Luggage</p></div>
+    <div class="cat"><img src="https://picsum.photos/seed/pers/100" alt=""><p>Personal Care</p></div>
+  </div>
+
+  <!-- CALCULATOR CARD -->
+  <div class="content" id="calculatorCard">
+    <div class="calc-head">
+      <div>
+        <h2>RCM बचत कॅल्क्युलेटर</h2>
+        <div class="calc-sub">Quantity type and see instant saving</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:12px;color:var(--muted)">Designed by</div>
+        <div style="font-weight:800;color:var(--primary)">DS WORLD 🌍</div>
+      </div>
+    </div>
+
+    <!-- controls -->
+    <div class="controls">
+      <select id="productSelect"><option>Loading products...</option></select>
+      <input id="qtyInput" type="number" min="1" value="1" class="qty">
       <button id="addBtn" class="btn-add">+ ADD</button>
     </div>
 
-    <div id="productList"></div>
+    <!-- product list -->
+    <div class="prod-list" id="productList">
+      <div style="text-align:center;color:var(--muted);padding:18px">तुमची ऑर्डर रिकामी आहे. प्रॉडक्ट ऍड करा.</div>
+    </div>
 
-    <div class="summary">
-      <div class="sum-box" id="totalQty">Qty: 0</div>
-      <div class="sum-box" id="totalMarket">Market: ₹0</div>
-      <div class="sum-box" id="totalRCM">RCM: ₹0</div>
-      <div class="sum-box" id="totalPV">PV: 0</div>
+    <!-- totals -->
+    <div class="totals">
+      <div class="total-box"><div class="label">एकूण Qty</div><div id="totalQty" class="val">0</div></div>
+      <div class="total-box"><div class="label">एकूण PV</div><div id="totalPV" class="val">0</div></div>
+      <div class="total-box"><div class="label">एकूण Market</div><div id="totalMarket" class="val">₹0</div></div>
+      <div class="total-box"><div class="label">एकूण RCM</div><div id="totalRCM" class="val">₹0</div></div>
+    </div>
+
+    <div class="big-row">
+      <div class="big save"><div class="lbl">मासिक फायदा</div><div id="cardMonthly" class="v">₹0</div></div>
+      <div class="big cons"><div class="lbl">Consistency</div><div id="cardCons" class="v">₹0</div></div>
+    </div>
+
+    <!-- actions -->
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="waBtn" class="ios-btn ios-wa" style="flex:1">WhatsApp शेअर</button>
+      <button id="pdfBtn" class="ios-btn ios-pdf" style="flex:1">PDF बिल्ल</button>
     </div>
   </div>
 
-  <!-- RIGHT -->
-  <div>
-    <div class="card">
-      <div class="cards">
-        <div class="big-card card-saving">
-          <div class="label">मासिक फायदा</div>
-          <div id="cardMonthly" class="val">₹0</div>
-        </div>
-        <div class="big-card card-cons">
-          <div class="label">Consistency</div>
-          <div id="cardCons" class="val">₹0</div>
-        </div>
-      </div>
+  <div style="height:110px"></div> <!-- spacing for bottom nav -->
 
-      <div class="cards" style="margin-top:12px">
-        <div class="big-card card-year">
-          <div class="label">वार्षिक फायदा</div>
-          <div id="cardAnnual" class="val">₹0</div>
-        </div>
-        <div class="big-card card-life">
-          <div class="label">20 वर्षे फायदा</div>
-          <div id="cardTwenty" class="val">₹0</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:12px">
-      <button id="waBtn" class="ios-btn ios-wa">📲 WhatsApp</button>
-      <button id="imgBtn" class="ios-btn ios-img">🖼 Image</button>
-      <button id="pdfBtn" class="ios-btn ios-pdf">📄 PDF Bill</button>
-      <button id="clearBtn" class="ios-btn ios-clear">🗑 Clear</button>
-    </div>
+  <!-- bottom nav -->
+  <div class="bottom-nav">
+    <div class="nav-btn active">Home</div>
+    <div class="nav-btn">Shop</div>
+    <div class="nav-btn">Cart</div>
+    <div class="nav-btn">Account</div>
+    <div class="nav-btn">Menu</div>
   </div>
 
-</div>
+  <!-- floating add -->
+  <button class="fab" id="floatAdd">+</button>
 
-<footer>Designed by DS WORLD 🌍 | 7020970727</footer>
-</div>
+  <!-- popup + confetti -->
+  <div id="popup"></div>
+  <div id="confetti"></div>
 
-<button id="floatAdd">+</button>
-
-<div id="popup"></div>
-<div id="confetti"></div>
+</div> <!-- app -->
 
 <!-- libs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
 <script>
-/* ---------------------------
-   FULL FINAL SCRIPT
-   --------------------------- */
+/* -----------------------
+  RCM LOOK - Calculator Logic + Auto-Fix Loader
+-------------------------*/
 const el = id => document.getElementById(id);
 const fmt = n => Math.round(n).toLocaleString('en-IN');
 
+/* --- Sheet config --- */
 const SHEET_ID = "1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k";
-// Add sheet name explicitly and use proxy to avoid CORS
 const RAW_GVIZ = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
 const SHEET_URL = "https://api.allorigins.win/raw?url=" + encodeURIComponent(RAW_GVIZ);
 
+/* state */
 let products = [];
 let order = [];
 
-/* GViz parser */
-function parseGviz(text){
+/* ------------------ AUTO FIX LOADER ------------------ */
+function parseGvizSafe(text){
   try{
-    const clean = text.replace(/^[^{]*/,'').replace(/;$/,'');
-    return JSON.parse(clean);
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    const jsonText = text.substring(start, end+1);
+    return JSON.parse(jsonText);
   }catch(e){
-    console.warn("GViz parse failed:", e);
+    console.error("GViz parse error", e);
     return null;
   }
 }
 
-/* Load products */
 async function loadProducts(){
   try{
-    const res = await fetch(SHEET_URL);
-    if(!res.ok) throw new Error("Network: "+res.status);
-    const txt = await res.text();
-    const json = parseGviz(txt);
-    if(json && json.table && Array.isArray(json.table.rows)){
-      products = json.table.rows.map(r => ({
-        name: r.c[0] ? r.c[0].v : '',
-        market: r.c[1] ? Number(r.c[1].v) : 0,
-        rcm: r.c[2] ? Number(r.c[2].v) : 0,
-        pv: r.c[3] ? Number(r.c[3].v) : 0
-      })).filter(p=>p.name && p.name.trim() !== '');
-    } else {
-      throw new Error("Sheet structure unexpected");
-    }
+    const r = await fetch(SHEET_URL);
+    if(!r.ok) throw new Error("Network "+r.status);
+    const txt = await r.text();
+    const j = parseGvizSafe(txt);
+    if(!j || !j.table || !Array.isArray(j.table.rows)) throw new Error("Invalid sheet format");
+
+    products = j.table.rows.map(row=>({
+      name: row.c[0]?.v || "",
+      market: Number(row.c[1]?.v || 0),
+      rcm: Number(row.c[2]?.v || 0),
+      pv: Number(row.c[3]?.v || 0)
+    })).filter(p=>p.name && p.name.trim() !== '');
+
+    if(products.length === 0) throw new Error("No products found");
+
+    populateDropdown();
+    calc();
+    console.log("Loaded", products.length, "products");
   }catch(err){
-    console.warn("Sheet load failed — using fallback:", err);
+    console.warn("Sheet error:", err);
+    // fallback small list
     products = [
       {name:"टाटा मीठ 1 किलो",market:30,rcm:20,pv:7},
       {name:"रेड लेबल चहा 500g",market:310,rcm:240,pv:120}
     ];
+    populateDropdown();
+    calc();
+    alert("Google Sheet लोड करण्यात काही अडचण. Fallback products लोड केले.");
   }
-  populateDropdown();
-  calc();
 }
 
 function populateDropdown(){
@@ -274,19 +307,7 @@ function populateDropdown(){
   });
 }
 
-/* Search */
-el('search').addEventListener('input', ()=>{
-  const q = el('search').value.trim().toLowerCase();
-  const sel = el('productSelect');
-  sel.innerHTML = "<option value=''>-- निवडा --</option>";
-  products.forEach((p,i)=>{
-    if(!q || p.name.toLowerCase().includes(q)){
-      const o = document.createElement('option'); o.value = i; o.textContent = p.name; sel.appendChild(o);
-    }
-  });
-});
-
-/* Add product */
+/* ------------------ add product ------------------ */
 el('addBtn').onclick = addProduct;
 el('floatAdd').onclick = addProduct;
 function addProduct(){
@@ -294,20 +315,22 @@ function addProduct(){
   if(idx === '') return alert('कृपया प्रॉडक्ट निवडा');
   const qty = Math.max(1, parseInt(el('qtyInput').value) || 1);
   const p = products[Number(idx)];
-  const existing = order.find(x=>x.name === p.name);
-  if(existing) existing.qty += qty; else order.push({...p, qty});
-  showPopup(`${p.name} Added`);
+  const ex = order.find(o=>o.name===p.name);
+  if(ex) ex.qty += qty; else order.push({...p, qty});
+  showPopup(`${p.name} जोडले`);
   confetti();
   calc();
 }
 
-/* Calculate & render */
+/* ------------------ calc & render ------------------ */
 function calc(){
   const list = el('productList');
   list.innerHTML = '';
+  if(order.length === 0){
+    list.innerHTML = `<div style="text-align:center;color:var(--muted);padding:18px">तुमची ऑर्डर रिकामी आहे. प्रॉडक्ट ऍड करा.</div>`;
+  }
   let tQ=0,tM=0,tR=0,tPV=0,tSave=0;
-
-  order.forEach((it,idx)=>{
+  order.forEach((it, idx)=>{
     const m = it.market * it.qty;
     const r = it.rcm * it.qty;
     const pv = it.pv * it.qty;
@@ -317,14 +340,14 @@ function calc(){
     const div = document.createElement('div');
     div.className = 'prod-item';
     div.innerHTML = `
-      <div style="flex:1">
-        <div class="title">${it.name}</div>
-        <div class="sub">PV: ${it.pv} | M: ₹${it.market} | RCM: ₹${it.rcm}</div>
+      <div class="info">
+        <div class="name">${it.name}</div>
+        <div class="meta">PV: ${it.pv} • M: ₹${it.market} • RCM: ₹${it.rcm}</div>
       </div>
       <div style="text-align:right">
-        <div class="qty-controls">
-          <button class="btn-ghost" data-i="${idx}" data-a="minus">-</button>
-          <input class="inline-qty" data-i="${idx}" type="number" value="${it.qty}" min="1" style="width:58px;text-align:center">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          <button class="btn-ghost" data-i="${idx}" data-a="minus">−</button>
+          <input class="inline-qty" data-i="${idx}" type="number" value="${it.qty}" min="1" style="width:56px;text-align:center;border-radius:8px;border:1px solid #eee;padding:6px">
           <button class="btn-ghost" data-i="${idx}" data-a="plus">+</button>
         </div>
         <div style="margin-top:8px;font-weight:800;color:var(--accent)">₹${fmt(s)}</div>
@@ -333,29 +356,26 @@ function calc(){
     list.appendChild(div);
   });
 
-  el('totalQty').innerText = `Qty: ${tQ}`;
-  el('totalMarket').innerText = `Market: ₹${fmt(tM)}`;
-  el('totalRCM').innerText = `RCM: ₹${fmt(tR)}`;
-  el('totalPV').innerText = `PV: ${fmt(tPV)}`;
+  el('totalQty').innerText = tQ;
+  el('totalPV').innerText = tPV;
+  el('totalMarket').innerText = `₹${fmt(tM)}`;
+  el('totalRCM').innerText = `₹${fmt(tR)}`;
 
-  // consistency logic
-  let cons = 0;
+  // consistency
+  let cons=0;
   if(tPV < 1500) cons = tPV * 0.12;
   else if(tPV < 2500) cons = 1500 * 0.1667;
   else cons = 5000 * 0.1667;
 
   const monthly = tSave + cons;
-  el('cardCons').innerText = `₹${fmt(cons)}`;
-  el('cardMonthly').innerText = `₹${fmt(monthly)}`;
-  el('cardAnnual').innerText = `₹${fmt(monthly*12)}`;
-  el('cardTwenty').innerText = `₹${fmt(monthly*12*20)}`;
+  el('cardCons').innerText = `₹${fmt(Math.round(cons))}`;
+  el('cardMonthly').innerText = `₹${fmt(Math.round(monthly))}`;
 
-  // attach handlers
+  // attach qty handlers
   document.querySelectorAll('.btn-ghost').forEach(b=>{
     b.onclick = ()=>{
       const i = Number(b.dataset.i);
-      const a = b.dataset.a;
-      if(a === 'plus') order[i].qty++;
+      if(b.dataset.a === 'plus') order[i].qty++;
       else order[i].qty = Math.max(1, order[i].qty - 1);
       calc();
     };
@@ -369,17 +389,17 @@ function calc(){
   });
 }
 
-/* popup + confetti */
+/* ------------------ popup + confetti ------------------ */
 function showPopup(text){
   const p = el('popup');
-  p.innerText = `✔ ${text}`;
+  p.innerText = '✔ ' + text;
   p.style.display = 'block';
-  setTimeout(()=> p.style.display = 'none', 1300);
+  setTimeout(()=> p.style.display = 'none', 1400);
 }
 function confetti(){
   const box = el('confetti');
   const emojis = ['🎉','✨','🎊','💰','⭐'];
-  for(let i=0;i<14;i++){
+  for(let i=0;i<10;i++){
     const d = document.createElement('div');
     d.className = 'conf';
     d.style.left = (10 + Math.random()*80) + '%';
@@ -390,114 +410,67 @@ function confetti(){
   }
 }
 
-/* clear */
-el('clearBtn').onclick = ()=> {
-  if(order.length === 0) return;
-  if(confirm('Clear order?')){ order=[]; calc(); }
-};
-
-/* WhatsApp */
-el('waBtn').onclick = ()=> {
-  if(order.length===0) return alert('No items to share');
+/* ------------------ WhatsApp / Image / PDF ------------------ */
+el('waBtn').onclick = ()=>{
+  if(order.length===0) return alert('काही आयटम नाहीत');
   let msg = `*RCM Order Summary*%0A%0A`;
   order.forEach((p,i)=> msg += `${i+1}. ${p.name} × ${p.qty}%0A`);
-  msg += `%0ATotal PV: ${fmt(order.reduce((s,x)=> s + x.pv * x.qty, 0))}`;
-  msg += `%0ABenefit: ${el('cardMonthly').innerText}`;
+  msg += `%0ATotal PV: ${el('totalPV').innerText}%0ABenefit: ${el('cardMonthly').innerText}`;
   window.open('https://wa.me/?text=' + encodeURIComponent(msg));
 };
 
-/* Image */
-el('imgBtn').onclick = ()=> {
-  html2canvas(document.querySelector('.wrap')).then(canvas=>{
+el('imgBtn')?.addEventListener('click', ()=>{
+  html2canvas(document.querySelector('.app')).then(canvas=>{
     const a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');
-    a.download = 'RCM_Order.png';
+    a.href = canvas.toDataURL();
+    a.download = 'rcm_order.png';
     a.click();
   });
-};
+});
 
-/* PDF invoice */
-el('pdfBtn').onclick = ()=> {
-  if(order.length===0) return alert('No items to print');
-  let invoice = `
-    <style>
-      body{font-family:Noto Sans Devanagari, Arial, sans-serif; color:#111; padding:18px}
-      h2{color:#0a5b99; text-align:center; margin-bottom:0}
-      .meta{ text-align:center; margin-bottom:8px; font-size:13px }
-      table{width:100%; border-collapse:collapse; margin-top:12px; font-size:13px}
-      th,td{border:1px solid #bbb; padding:8px}
-      th{background:#f5f5f5}
-      .right{text-align:right}
-      .summary{margin-top:12px; font-size:14px}
-      footer{margin-top:18px; text-align:center; color:#666; font-size:12px}
-    </style>
-
-    <h2>RCM PRO MAX — Invoice</h2>
-    <div class="meta">DS WORLD 🌍 — Contact: 7020970727</div>
-
-    <div><b>ग्राहक:</b> ${el('custName').value || '-'} </div>
-    <div><b>RCM ID:</b> ${el('rcmId').value || '-'} </div>
-    <div><b>तारीख:</b> ${el('orderDate').value || ''}</div>
-
-    <table>
-      <tr><th style="width:6%">क्र.</th><th>प्रॉडक्ट</th><th style="width:10%">Qty</th><th style="width:14%">Market</th><th style="width:14%">RCM</th><th style="width:10%">PV</th></tr>
-  `;
+el('pdfBtn').onclick = ()=>{
+  if(order.length===0) return alert('Order is empty');
+  let html = `<h2 style="color:${getComputedStyle(document.documentElement).getPropertyValue('--primary')};text-align:center">RCM Invoice</h2>`;
+  html += `<p><b>Customer:</b> ${el('custName')?.value || '-'}</p>`;
+  html += `<table style="width:100%;border-collapse:collapse;font-size:13px">`;
+  html += `<tr><th style="border:1px solid #ccc;padding:6px">#</th><th style="border:1px solid #ccc;padding:6px">Product</th><th style="border:1px solid #ccc;padding:6px">Qty</th><th style="border:1px solid #ccc;padding:6px">PV</th><th style="border:1px solid #ccc;padding:6px">RCM</th></tr>`;
   order.forEach((p,i)=>{
-    invoice += `<tr>
-      <td class="right">${i+1}</td>
-      <td>${p.name}</td>
-      <td class="right">${p.qty}</td>
-      <td class="right">₹${fmt(p.market * p.qty)}</td>
-      <td class="right">₹${fmt(p.rcm * p.qty)}</td>
-      <td class="right">${fmt(p.pv * p.qty)}</td>
-    </tr>`;
+    html += `<tr><td style="border:1px solid #ccc;padding:6px">${i+1}</td><td style="border:1px solid #ccc;padding:6px">${p.name}</td><td style="border:1px solid #ccc;padding:6px">${p.qty}</td><td style="border:1px solid #ccc;padding:6px">${p.pv * p.qty}</td><td style="border:1px solid #ccc;padding:6px">₹${fmt(p.rcm * p.qty)}</td></tr>`;
   });
-
-  const tM = order.reduce((s,x)=> s + x.market * x.qty, 0);
-  const tR = order.reduce((s,x)=> s + x.rcm * x.qty, 0);
-  const tPV = order.reduce((s,x)=> s + x.pv * x.qty, 0);
-  const save = tM - tR;
-
-  let cons=0;
-  if(tPV < 1500) cons = tPV * 0.12;
-  else if(tPV < 2500) cons = 1500 * 0.1667;
-  else cons = 5000 * 0.1667;
-
-  const monthly = save + cons;
-  invoice += `</table>
-    <div class="summary">
-      <div><b>Total Market:</b> ₹${fmt(tM)}</div>
-      <div><b>Total RCM:</b> ₹${fmt(tR)}</div>
-      <div><b>Total PV:</b> ${fmt(tPV)}</div>
-      <div><b>Saving:</b> ₹${fmt(save)}</div>
-      <div><b>Consistency:</b> ₹${fmt(Math.round(cons))}</div>
-      <div><b>Monthly Benefit:</b> ₹${fmt(Math.round(monthly))}</div>
-      <div><b>Yearly Benefit:</b> ₹${fmt(Math.round(monthly*12))}</div>
-      <div><b>20 Years Benefit:</b> ₹${fmt(Math.round(monthly*12*20))}</div>
-    </div>
-    <footer>DS WORLD © 2025 — Thank you! | 7020970727</footer>
-  `;
-
-  html2pdf().from(invoice).set({margin:10, filename:'RCM_Invoice.pdf', html2canvas:{scale:1.1}}).save();
+  html += `</table>`;
+  html2pdf().from(html).set({margin:10, filename:'RCM_Invoice.pdf', html2canvas:{scale:1.1}}).save();
 };
 
-/* Theme toggle */
-el('themeToggle').onclick = ()=>{
-  document.body.classList.toggle('dark');
-  el('themeToggle').innerText = document.body.classList.contains('dark') ? '☀️ LIGHT' : '🌙 DARK';
-};
+/* ------------------ search filter ------------------ */
+el('search').addEventListener('input', ()=>{
+  const q = el('search').value.trim().toLowerCase();
+  const sel = el('productSelect');
+  sel.innerHTML = "<option value=''>-- निवडा --</option>";
+  products.forEach((p,i)=>{
+    if(!q || p.name.toLowerCase().includes(q)) {
+      const o = document.createElement('option'); o.value = i; o.textContent = p.name; sel.appendChild(o);
+    }
+  });
+});
 
-/* Init values + splash hide */
-el('orderDate').valueAsDate = new Date();
-el('nowDate').innerText = new Date().toLocaleString('mr-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-
+/* ------------------ init UI interactions ------------------ */
 window.addEventListener('load', ()=>{
-  setTimeout(()=>{
-    const s = el('splash'); if(s) s.style.display = 'none';
-    const a = el('app'); if(a) a.style.display = 'block';
-    loadProducts();
-  }, 700);
+  // slider autoplay
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const track = el('slideTrack');
+  const dots = document.querySelectorAll('.dot');
+  setInterval(()=> {
+    if(!slides.length) return;
+    cur = (cur + 1) % (slides.length);
+    const w = slides[0].offsetWidth + 12;
+    track.style.transform = `translateX(-${cur * w}px)`;
+    dots.forEach((d,i)=> d.style.background = i===cur ? '#111' : '#e6e6e6');
+  }, 3000);
+
+  loadProducts();
 });
 </script>
+
 </body>
 </html>
