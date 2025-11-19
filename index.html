@@ -5,13 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>DS WORLD - RCM PRO MAX (Final)</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-/* =======================
-   ORIGINAL THEMING
-   ======================= */
+/* THEME */
 :root{
   --primary:#0a5b99;
   --accent:#0ea44a;
@@ -32,73 +29,140 @@
   --card-border: rgba(100,110,130,0.3);
 }
 
+/* BODY */
 body{
   margin:0;
-  font-family:"Noto Sans Devanagari", "Poppins", sans-serif;
+  font-family:"Noto Sans Devanagari","Poppins",sans-serif;
   background:var(--bg);
   color:var(--text);
-  transition:0.25s;
+  transition:0.3s;
 }
-.wrap{max-width:1100px;margin:16px auto;padding:16px}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:62px;height:62px;border-radius:12px;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,0.12)}
-.logo img{width:100%;height:100%;object-fit:contain}
-h1{margin:0;font-family:"Baloo 2";color:var(--primary)}
-.ds-badge{padding:8px 12px;background:linear-gradient(90deg,var(--primary),#0078d1);color:#fff;border-radius:30px;font-weight:700}
-#themeToggle{padding:8px 14px;border-radius:30px;border:none;background:linear-gradient(135deg,#007ee9,#005bb8);color:#fff;font-weight:700;cursor:pointer}
 
-/* layout */
-.grid{display:grid;grid-template-columns:1fr 360px;gap:16px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{padding:14px;border-radius:12px;background:var(--card-bg);backdrop-filter:var(--card-blur);border:1px solid var(--card-border);box-shadow:var(--shadow)}
+/* WRAPPER */
+.wrap{max-width:1100px;margin:16px auto;padding:16px}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.brand{display:flex;align-items:center;gap:18px}
+
+/* ⭐ BIG CLEAN LOGO */
+.logo{
+  width:95px;
+  height:95px;
+  border-radius:18px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.15);
+}
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+h1{
+  margin:0;
+  font-family:"Baloo 2";
+  color:var(--primary);
+}
+
+.ds-badge{
+  padding:8px 14px;
+  background:linear-gradient(90deg,var(--primary),#0078d1);
+  color:white;
+  border-radius:30px;
+  font-weight:700;
+}
+
+#themeToggle{
+  padding:8px 14px;
+  border-radius:30px;
+  border:none;
+  background:linear-gradient(135deg,#007ee9,#005bb8);
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:16px;
+}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* CARD */
+.card{
+  padding:16px;
+  border-radius:14px;
+  background:var(--card-bg);
+  backdrop-filter:var(--card-blur);
+  border:1px solid var(--card-border);
+  box-shadow:var(--shadow);
+}
+
+/* INPUTS */
 .row{display:flex;gap:12px;flex-wrap:wrap}
 .field{flex:1}
-label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);background:rgba(255,255,255,0.72);color:var(--text);font-size:15px}
+label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
+input,select{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.12);
+  font-size:15px;
+  background:white;
+}
 
-/* SEARCH LIST */
-#productList{max-height:360px;overflow:auto;margin-top:12px;padding-right:6px}
+/* PRODUCT LIST */
+#productList{
+  max-height:360px;
+  overflow:auto;
+  margin-top:14px;
+  padding-right:6px;
+}
 
-/* =============================
-   PERFECT FIXED PRODUCT CARD UI
-   ============================= */
+/* ⭐ PREMIUM PRODUCT CARD */
 .prod-item{
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
   gap:14px;
   padding:16px;
   border-radius:14px;
-  background:rgba(255,255,255,0.92);
+  background:rgba(255,255,255,0.95);
   border:1px solid rgba(0,0,0,0.08);
   margin-bottom:12px;
   box-shadow:0 4px 10px rgba(0,0,0,0.06);
 }
 
-.prod-left{
-  flex:1;
-}
+.prod-left{flex:1}
 
 .prod-title{
-  font-size:16px;
+  font-size:17px;
   font-weight:700;
   color:var(--primary);
-  line-height:1.35;
 }
-
 .prod-sub{
-  margin-top:6px;
   font-size:13px;
+  margin-top:5px;
   color:var(--muted);
-  line-height:1.45;
 }
 
-.prod-right{
-  text-align:right;
-  min-width:120px;
-}
+/* RIGHT SIDE */
+.prod-right{text-align:right;min-width:120px}
 
+/* QTY BUTTONS */
 .qty-controls{
   display:flex;
   gap:8px;
@@ -108,15 +172,15 @@ input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,
 
 .qty-controls input{
   width:52px;
+  padding:6px;
   text-align:center;
-  padding:6px 5px;
   border-radius:8px;
-  border:1px solid rgba(0,0,0,0.18);
+  border:1px solid rgba(0,0,0,0.2);
 }
 
 .btn-ghost{
   padding:6px 12px;
-  font-size:16px;
+  font-size:18px;
   font-weight:800;
   border-radius:8px;
   border:1px solid rgba(0,0,0,0.12);
@@ -125,54 +189,119 @@ input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,
 }
 
 .prod-save{
-  font-weight:800;
   font-size:16px;
+  font-weight:800;
   color:var(--accent);
 }
 
-
 /* SUMMARY */
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.sum-box{padding:12px;border-radius:10px;background:rgba(255,255,255,0.8);text-align:center;font-weight:700}
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+
+.sum-box{
+  padding:12px;
+  background:white;
+  border-radius:12px;
+  text-align:center;
+  font-weight:700;
+}
 
 /* CARDS */
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.big-card{padding:16px;border-radius:12px;color:#fff}
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.big-card{
+  padding:16px;
+  border-radius:14px;
+  color:white;
+}
+
 .card-saving{background:linear-gradient(135deg,#27c76f,#0ea44a)}
 .card-cons{background:linear-gradient(135deg,#9f59ff,#6d3be8)}
 .card-year{background:linear-gradient(135deg,#2fa3ff,#006fdb)}
 .card-life{background:linear-gradient(135deg,#ffae4d,#ff8100)}
-.big-card .label{font-size:13px}
-.big-card .val{font-size:28px;font-weight:800;margin-top:6px}
 
-/* ACTION BTNS */
-.ios-btn{width:100%;padding:12px;border-radius:12px;border:none;color:#fff;font-weight:800;margin-bottom:8px}
-.ios-wa{background:#20d447}
-.ios-img{background:#428bff}
-.ios-pdf{background:#ffa34d}
+.big-card .label{font-size:13px}
+.big-card .val{font-size:28px;font-weight:800;margin-top:5px}
+
+/* BOTTOM BTNS */
+.ios-btn{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  font-weight:800;
+  font-size:16px;
+  margin-bottom:10px;
+  border:none;
+  color:white;
+}
+
+.ios-wa{background:#1bcc4e}
+.ios-img{background:#2f7aff}
+.ios-pdf{background:#ff9b30}
 .ios-clear{background:#ff4a4a}
 
 /* FLOAT */
-#floatAdd{position:fixed;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#006fbd);color:#fff;font-size:34px;border:none;box-shadow:0 12px 28px rgba(0,0,0,0.22);cursor:pointer;z-index:1200}
+#floatAdd{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#0a5b99,#006fbd);
+  color:white;
+  border:none;
+  font-size:34px;
+  box-shadow:0 12px 28px rgba(0,0,0,0.2);
+  cursor:pointer;
+  z-index:1200;
+}
 
 /* POPUP */
-#popup{position:fixed;left:50%;top:16%;transform:translateX(-50%);background:white;padding:12px 18px;border-radius:10px;color:var(--primary);display:none;z-index:2000;box-shadow:0 10px 25px rgba(0,0,0,0.14)}
-#confetti{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1700}
-.conf{position:absolute;font-size:24px;animation:fly 1.4s ease-out forwards}
-@keyframes fly{0%{transform:translateY(0) scale(.8);opacity:1}100%{transform:translateY(-240px) scale(1.3);opacity:0}}
+#popup{
+  position:fixed;
+  left:50%;
+  top:16%;
+  transform:translateX(-50%);
+  background:white;
+  padding:10px 16px;
+  border-radius:10px;
+  color:var(--primary);
+  display:none;
+  font-weight:700;
+  z-index:2000;
+}
 
-#splash{position:fixed;left:0;top:0;width:100%;height:100%;background:linear-gradient(135deg,#ffffff,#eaf6ff);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3000}
-
-footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
-
+/* SPLASH */
+#splash{
+  position:fixed;
+  left:0;top:0;
+  width:100%;height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:#f7fbff;
+  z-index:3000;
+}
 </style>
 </head>
 <body>
 
-<!-- SPLASH SCREEN -->
+<!-- SPLASH -->
 <div id="splash">
   <div class="logo"><img src="logo.png"></div>
-  <h3 style="font-family:'Baloo 2';color:var(--primary)">DS WORLD — RCM PRO MAX</h3>
+  <h3 style="font-family:'Baloo 2';color:var(--primary);margin-top:12px">
+    DS WORLD — RCM PRO MAX
+  </h3>
 </div>
 
 <!-- MAIN APP -->
@@ -195,9 +324,8 @@ footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
 
 <div class="grid">
 
-  <!-- LEFT SIDE -->
+  <!-- LEFT -->
   <div class="card">
-
     <div class="row">
       <div class="field">
         <label>ग्राहकाचे नाव</label>
@@ -233,7 +361,7 @@ footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
 
   </div>
 
-  <!-- RIGHT SIDE -->
+  <!-- RIGHT -->
   <div>
     <div class="card">
       <div class="cards">
@@ -271,28 +399,25 @@ footer{text-align:center;margin-top:16px;color:var(--muted);font-weight:700}
 
 </div>
 
-<footer>Designed by DS WORLD 🌍 | 7020970727</footer>
+<footer style="text-align:center;margin-top:20px;color:#666;font-weight:700">
+  Designed by DS WORLD 🌍 | 7020970727
+</footer>
+
 </div>
 
-<!-- Floating Add -->
 <button id="floatAdd">+</button>
 
-<!-- Popup + Confetti -->
 <div id="popup"></div>
 <div id="confetti"></div>
 
-<!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
-<!-- ============================
-     FINAL COMPLETE WORKING JS
-     ============================ -->
 <script>
 const el=id=>document.getElementById(id);
 const fmt=n=>Math.round(n).toLocaleString('en-IN');
 
-/* Sheet Setup */
+/* Google Sheet */
 const SHEET_ID="1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k";
 const RAW_GVIZ=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 const SHEET_URL="https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(RAW_GVIZ);
@@ -300,39 +425,33 @@ const SHEET_URL="https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(RA
 let products=[];
 let order=[];
 
-/* Parse Fix */
 function parseGviz(text){
   try{
-    const s=text.indexOf('{');
-    const e=text.lastIndexOf('}');
-    return JSON.parse(text.substring(s,e+1));
-  }catch(e){ return null; }
+    const a=text.indexOf('{'), b=text.lastIndexOf('}');
+    return JSON.parse(text.substring(a,b+1));
+  }catch(e){return null;}
 }
 
-/* Load Products */
+/* Load Product List */
 async function loadProducts(){
   try{
     const res=await fetch(SHEET_URL);
     const txt=await res.text();
     const json=parseGviz(txt);
-
     products=json.table.rows.map(r=>({
       name:r.c[0]?.v||"",
       market:+(r.c[1]?.v||0),
       rcm:+(r.c[2]?.v||0),
       pv:+(r.c[3]?.v||0)
     })).filter(p=>p.name.trim()!=="");
-
   }catch(e){
-    alert("⚠️ Google Sheet load होत नाही");
-    products=[];
+    alert("Google Sheet load होत नाही");
   }
-
   populateDropdown();
   calc();
 }
 
-/* Fill Dropdown */
+/* Dropdown Fill */
 function populateDropdown(){
   const sel=el('productSelect');
   sel.innerHTML="<option value=''>-- निवडा --</option>";
@@ -351,7 +470,7 @@ el('search').oninput=()=>{
   sel.innerHTML="<option value=''>-- निवडा --</option>";
   products.forEach((p,i)=>{
     if(p.name.toLowerCase().includes(q)){
-      const o=document.createElement('option');
+      const o=document.createElement("option");
       o.value=i;
       o.textContent=p.name;
       sel.appendChild(o);
@@ -365,7 +484,7 @@ el('floatAdd').onclick=addProduct;
 
 function addProduct(){
   const idx=el('productSelect').value;
-  if(idx==="") return alert("कृपया प्रॉडक्ट निवडा");
+  if(idx==="") return alert("प्रॉडक्ट निवडा");
 
   const qty=Math.max(1,+el('qtyInput').value||1);
   const p=products[idx];
@@ -379,34 +498,19 @@ function addProduct(){
 }
 
 /* Popup */
-function showPopup(msg){
+function showPopup(t){
   const p=el('popup');
-  p.innerText="✔ "+msg;
+  p.innerText="✔ "+t;
   p.style.display="block";
-  setTimeout(()=>p.style.display="none",1100);
+  setTimeout(()=>p.style.display="none",1000);
 }
 
-/* Confetti */
-function confetti(){
-  const box=el('confetti');
-  const emojis=['🎉','✨','🎊','💰','⭐'];
-  for(let i=0;i<12;i++){
-    const d=document.createElement('div');
-    d.className='conf';
-    d.style.left=(10+Math.random()*80)+'%';
-    d.style.top='70%';
-    d.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-    box.appendChild(d);
-    setTimeout(()=>d.remove(),1400);
-  }
-}
-
-/* Main Calculation */
+/* CALC */
 function calc(){
   const list=el('productList');
   list.innerHTML="";
 
-  let tQ=0,tM=0,tR=0,tPV=0,tS=0;
+  let TQ=0, TM=0, TR=0, TPV=0, SAVE=0;
 
   order.forEach((it,i)=>{
     const m=it.market*it.qty;
@@ -414,11 +518,11 @@ function calc(){
     const pv=it.pv*it.qty;
     const s=(it.market-it.rcm)*it.qty;
 
-    tQ+=it.qty;
-    tM+=m;
-    tR+=r;
-    tPV+=pv;
-    tS+=s;
+    TQ+=it.qty;
+    TM+=m;
+    TR+=r;
+    TPV+=pv;
+    SAVE+=s;
 
     const div=document.createElement("div");
     div.className="prod-item";
@@ -426,9 +530,10 @@ function calc(){
     div.innerHTML=`
       <div class="prod-left">
         <div class="prod-title">${it.name}</div>
-        <div class="prod-sub">PV: ${it.pv} | M: ₹${it.market} | RCM: ₹${it.rcm}</div>
+        <div class="prod-sub">
+          PV: ${it.pv} | M: ₹${it.market} | RCM: ₹${it.rcm}
+        </div>
       </div>
-
       <div class="prod-right">
         <div class="qty-controls">
           <button class="btn-ghost" data-i="${i}" data-a="minus">-</button>
@@ -442,29 +547,27 @@ function calc(){
     list.appendChild(div);
   });
 
-  el('totalQty').innerText=`Qty: ${tQ}`;
-  el('totalMarket').innerText=`Market: ₹${fmt(tM)}`;
-  el('totalRCM').innerText=`RCM: ₹${fmt(tR)}`;
-  el('totalPV').innerText=`PV: ${fmt(tPV)}`;
+  el('totalQty').innerText="Qty: "+TQ;
+  el('totalMarket').innerText="Market: ₹"+fmt(TM);
+  el('totalRCM').innerText="RCM: ₹"+fmt(TR);
+  el('totalPV').innerText="PV: "+fmt(TPV);
 
-  /* CONSISTENCY */
-  let cons=0;
-  if(tPV<1500) cons=tPV*0.12;
-  else if(tPV<2500) cons=1500*0.1667;
-  else cons=5000*0.1667;
+  /* Consistency */
+  let CONS=0;
+  if(TPV<1500) CONS=TPV*0.12;
+  else if(TPV<2500) CONS=1500*0.1667;
+  else CONS=5000*0.1667;
 
-  const monthly=tS+cons;
+  const MONTH=SAVE+CONS;
 
-  el('cardCons').innerText="₹"+fmt(cons);
-  el('cardMonthly').innerText="₹"+fmt(monthly);
-  el('cardAnnual').innerText="₹"+fmt(monthly*12);
-  el('cardTwenty').innerText="₹"+fmt(monthly*12*20);
+  el('cardCons').innerText="₹"+fmt(CONS);
+  el('cardMonthly').innerText="₹"+fmt(MONTH);
+  el('cardAnnual').innerText="₹"+fmt(MONTH*12);
+  el('cardTwenty').innerText="₹"+fmt(MONTH*12*20);
 
-  /* Button Listeners */
   document.querySelectorAll(".btn-ghost").forEach(btn=>{
     btn.onclick=()=>{
-      const i=btn.dataset.i;
-      const a=btn.dataset.a;
+      const i=btn.dataset.i, a=btn.dataset.a;
       if(a==="plus") order[i].qty++;
       else order[i].qty=Math.max(1,order[i].qty-1);
       calc();
@@ -480,7 +583,49 @@ function calc(){
   });
 }
 
-/* Init */
+/* 4 BUTTON FEATURES */
+
+/* WhatsApp */
+el('waBtn').onclick=()=>{
+  if(order.length===0) return alert("काहीही प्रॉडक्ट नाहीत");
+
+  let msg="*RCM Order Summary*%0A%0A";
+  order.forEach((p,i)=> msg+=`${i+1}. ${p.name} × ${p.qty}%0A`);
+  msg+=`%0ATotal PV: ${fmt(order.reduce((s,x)=>s+x.pv*x.qty,0))}`;
+  msg+=`%0AMonthly Benefit: ${el('cardMonthly').innerText}`;
+
+  window.open("https://wa.me/?text="+msg,"_blank");
+};
+
+/* IMAGE */
+el('imgBtn').onclick=()=>{
+  html2canvas(document.querySelector('.wrap')).then(canvas=>{
+    const a=document.createElement('a');
+    a.href=canvas.toDataURL("image/png");
+    a.download="RCM_Order.png";
+    a.click();
+  });
+};
+
+/* PDF */
+el('pdfBtn').onclick=()=>{
+  if(order.length===0) return alert("Products नाहीत");
+
+  html2pdf()
+    .from(document.querySelector('.wrap'))
+    .set({margin:10,filename:"RCM_Order.pdf",html2canvas:{scale:1.2}})
+    .save();
+};
+
+/* CLEAR */
+el('clearBtn').onclick=()=>{
+  if(confirm("सगळी प्रॉडक्ट लिस्ट साफ करायची का?")){
+    order=[];
+    calc();
+  }
+};
+
+/* INIT */
 window.onload=()=>{
   el('orderDate').valueAsDate=new Date();
   el('nowDate').innerText=new Date().toLocaleString();
@@ -489,8 +634,8 @@ window.onload=()=>{
     el('splash').style.display="none";
     el('app').style.display="block";
     loadProducts();
-  },700);
+  },800);
 };
 </script>
 </body>
-</html>
+   </html>
