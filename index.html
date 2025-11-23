@@ -44,7 +44,7 @@ h1{margin:0;font-family:"Baloo 2";color:#0a5b99}
   box-shadow:0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* GRID (MOBILE FRIENDLY) */
+/* GRID */
 .grid{display:flex;flex-direction:column;gap:16px}
 
 /* INPUTS */
@@ -56,7 +56,7 @@ input,select{
 /* PRODUCT LIST */
 #productList{max-height:340px;overflow:auto;margin-top:12px}
 
-/* SUMMARY BOXES */
+/* SUMMARY */
 .summary{
   display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;
 }
@@ -80,10 +80,9 @@ input,select{
 .card-year{background:linear-gradient(135deg,#4ade80,#22c55e,#0ea44a)}
 .card-life{background:linear-gradient(135deg,#ff9f43,#ff8a00,#ffb84d);color:#000}
 
-/* ---------- 3 BUTTON PREMIUM ROW ---------- */
+/* 4 BUTTON ROW */
 .bottom-actions{
-  display:flex;gap:10px;
-  margin-top:14px;
+  display:flex;gap:10px;margin-top:15px;
 }
 .pbtn{
   flex:1;
@@ -95,8 +94,9 @@ input,select{
   color:#fff;
 }
 .wa{background:#25D366}
-.pdf{background:#FF9800}
-.order{background:#0078FF}
+.pdf{background:#007bff}
+.order{background:#FF9800}
+.clear{background:#E53935}
 
 /* FOOTER */
 footer{text-align:center;margin-top:16px;font-weight:700;color:#222}
@@ -123,10 +123,9 @@ footer{text-align:center;margin-top:16px;font-weight:700;color:#222}
   Loading visitors…
 </div>
 
-
 <div class="grid">
 
-<!-- LEFT PANEL -->
+<!-- LEFT SIDE -->
 <div class="card">
 
   <h3 style="margin:0 0 12px;color:#0a5b99;font-family:'Baloo 2'">ग्राहक माहिती</h3>
@@ -164,8 +163,7 @@ footer{text-align:center;margin-top:16px;font-weight:700;color:#222}
 
 </div>
 
-
-<!-- RIGHT PANEL -->
+<!-- RIGHT SIDE -->
 <div>
 
   <div class="cards">
@@ -192,11 +190,12 @@ footer{text-align:center;margin-top:16px;font-weight:700;color:#222}
 
   </div>
 
-  <!-- BOTTOM PREMIUM 3 BUTTONS -->
+  <!-- 4 BUTTONS -->
   <div class="bottom-actions">
     <button id="waBtn" class="pbtn wa">📲 WhatsApp</button>
     <button id="pdfBtn" class="pbtn pdf">📄 PDF</button>
     <button id="orderBtn" class="pbtn order">🛒 Place Order</button>
+    <button id="clearBtn" class="pbtn clear">🗑 Clear</button>
   </div>
 
 </div>
@@ -288,6 +287,31 @@ async function loadProducts(){
 }
 loadProducts();
 
+/* CONFETTI */
+function showConfetti(){
+  const emojis=["🎉","✨","🎊","💥","💸","🥳","🔥","⭐"];
+  
+  for(let i=0;i<14;i++){
+    const e=document.createElement('div');
+    e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.position='fixed';
+    e.style.left=(10 + Math.random()*80) + '%';
+    e.style.bottom='-40px';
+    e.style.fontSize=(22 + Math.random()*20) + 'px';
+    e.style.opacity='1';
+    e.style.zIndex='99999';
+    e.style.transition='transform 1.6s ease-out, opacity 1.6s';
+    document.body.appendChild(e);
+
+    setTimeout(()=>{
+      e.style.transform="translateY(-350px)";
+      e.style.opacity='0';
+    },60*i);
+
+    setTimeout(()=>e.remove(),2000);
+  }
+}
+
 /* ADD PRODUCT */
 addBtn.onclick=()=>{
   let idx=productSelect.value;
@@ -301,6 +325,7 @@ addBtn.onclick=()=>{
   else order.push({...p,qty});
 
   calc();
+  showConfetti();
 };
 
 /* CALCULATE */
@@ -361,14 +386,18 @@ function calc(){
 }
 
 /* CLEAR */
-clearBtn.onclick=()=>{ order=[]; calc(); };
+clearBtn.onclick=()=>{
+  if(confirm("Order Clear करायचा?")){
+    order=[]; calc();
+  }
+};
 
 /* WHATSAPP SHARE */
 waBtn.onclick=()=>{
   let msg="*RCM Order Summary*\n\n";
   order.forEach((it,i)=> msg+=`${i+1}) ${it.name} — ${it.qty}\n`);
   msg+=`\nTotal PV: ${totalPV.innerText}`;
-  msg+=`\nMonthly: ${cardMonthly.innerText}`;
+  msg+=`\nMonthly Benefit: ${cardMonthly.innerText}`;
 
   window.open("https://wa.me/?text="+encodeURIComponent(msg));
 };
