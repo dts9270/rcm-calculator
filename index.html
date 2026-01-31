@@ -1,434 +1,573 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DS WORLD – RCM Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>क्रांतिकारी वर्ष 2026 (Action Mode)</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-<style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-/* TIRANGA BACKGROUND */
-body{
-  margin:0;
-  font-family:"Poppins",sans-serif;
-  background: linear-gradient(180deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
-  background-attachment: fixed;
-  color:#0f172a;
-}
+    <style>
+        :root { --primary: #000080; --saffron: #FF9933; --green: #138808; --bg-light: #f4f6f8; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(180deg, #FF9933 0%, #ffffff 50%, #138808 100%); min-height: 100vh; padding-bottom: 70px; }
+        
+        #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+        .app-header { background: white; padding: 15px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 0 0 20px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .header-title { font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 1.1rem; }
 
-/* BASIC */
-.wrap{max-width:1150px;margin:auto;padding:18px}
+        /* TOP STATS */
+        .top-stats-container { padding: 15px 20px; display: flex; gap: 15px; justify-content: center; }
+        
+        .today-circle {
+            width: 100px; height: 100px; 
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; cursor: pointer; box-shadow: 0 8px 15px rgba(255, 75, 43, 0.4);
+            border: 3px solid white; transition: transform 0.2s;
+        }
+        .today-circle:active { transform: scale(0.95); }
+        .circle-count { font-size: 32px; font-weight: 800; line-height: 1; }
+        .circle-label { font-size: 10px; font-weight: 700; text-transform: uppercase; }
 
-/* HEADER */
-header{
-  display:flex;justify-content:space-between;align-items:center;
-}
-.logo{
-  width:62px;height:62px;border-radius:14px;overflow:hidden;
-  background:#fff;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 14px rgba(0,0,0,0.18);
-}
-.logo img{width:100%}
-h1{margin:0;font-family:"Baloo 2";color:#0a5b99}
-.now{font-size:13px;color:#444}
+        .upcoming-card {
+            flex: 1; height: 100px;
+            background: linear-gradient(135deg, #56CCF2, #2F80ED);
+            border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; cursor: pointer; box-shadow: 0 8px 15px rgba(47, 128, 237, 0.3);
+            border: 3px solid white; transition: transform 0.2s;
+        }
+        .upcoming-card:active { transform: scale(0.95); }
+        .up-count { font-size: 32px; font-weight: 800; line-height: 1; }
+        .up-label { font-size: 12px; font-weight: 600; }
 
-/* CARDS + FORM BOX */
-.card{
-  background:rgba(255,255,255,0.55);
-  backdrop-filter:blur(14px);
-  border-radius:16px;
-  padding:16px;
-  border:1px solid rgba(255,255,255,0.4);
-  box-shadow:0 8px 20px rgba(0,0,0,0.12);
-}
+        /* DASHBOARD GRID */
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px 20px; }
+        .dash-card { background: white; border-radius: 16px; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.1); height: 110px; transition: transform 0.2s; border: 2px solid white; cursor: pointer; }
+        .dash-card:active { transform: scale(0.95); background: #f0f0f0; }
+        .dash-icon { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 8px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .icon-planner { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .icon-list { background: linear-gradient(135deg, #FF9966, #FF5E62); }
+        .icon-follow { background: linear-gradient(135deg, #56CCF2, #2F80ED); }
+        .icon-sales { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .icon-report { background: linear-gradient(135deg, #8E2DE2, #4A00E0); }
+        .dash-label { font-weight: 700; color: #333; font-size: 12px; text-align: center; }
 
-/* GRID */
-.grid{display:flex;flex-direction:column;gap:16px}
-
-/* INPUTS */
-input,select{
-  width:100%;padding:12px;border-radius:12px;
-  border:1px solid #ddd;font-size:14px;
-}
-
-/* PRODUCT LIST */
-#productList{max-height:340px;overflow:auto;margin-top:12px}
-
-/* SUMMARY */
-.summary{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;
-}
-.sum-box{
-  background:rgba(255,255,255,0.6);
-  border-radius:12px;padding:12px;font-weight:700;text-align:center;
-}
-
-/* 4 PREMIUM CARDS */
-.cards{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;
-}
-.big-card{
-  border-radius:20px;padding:20px;min-height:120px;color:#fff;
-  position:relative;overflow:hidden;font-weight:700;
-}
-.big-card .val{font-size:36px;font-weight:900;margin-top:6px}
-
-.card-saving{background:linear-gradient(135deg,#4ac7ff,#2196f3,#0072ff)}
-.card-cons{background:linear-gradient(135deg,#a259ff,#7b42f6,#d062ff)}
-.card-year{background:linear-gradient(135deg,#4ade80,#22c55e,#0ea44a)}
-.card-life{background:linear-gradient(135deg,#ff9f43,#ff8a00,#ffb84d);color:#000}
-
-/* 4 BUTTON ROW */
-.bottom-actions{
-  display:flex;gap:10px;margin-top:15px;
-}
-.pbtn{
-  flex:1;
-  padding:14px;
-  border:none;
-  border-radius:50px;
-  font-weight:700;
-  font-size:15px;
-  color:#fff;
-}
-.wa{background:#25D366}
-.pdf{background:#007bff}
-.order{background:#FF9800}
-.clear{background:#E53935}
-
-/* FOOTER */
-footer{text-align:center;margin-top:16px;font-weight:700;color:#222}
-
-</style>
+        /* SECTIONS & TABS */
+        .page-section { display: none; padding: 15px; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .custom-card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        .project-tabs { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
+        .project-tab-btn { background: white; border: 1px solid #ddd; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 13px; white-space: nowrap; transition: 0.3s; }
+        .project-tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.05); }
+        .form-control, .form-select { padding: 10px; border-radius: 8px; }
+        .btn-action { width: 100%; padding: 10px; border-radius: 10px; font-weight: bold; color: white; border: none; }
+        .back-btn { background: none; border: none; font-size: 22px; color: var(--primary); margin-right: 15px; }
+        .list-item { background: white; border-radius: 12px; padding: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); }
+        
+        /* CALENDAR */
+        .planner-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; font-size: 14px; }
+        .cal-day { padding: 8px 0; border-radius: 50%; cursor: pointer; }
+        .cal-day:hover { background-color: #f0f0f0; }
+        .cal-today { background-color: var(--saffron); color: white; font-weight: bold; }
+        .cal-event { border: 2px solid var(--primary); font-weight: bold; color: var(--primary); }
+        .meeting-item { background: #fff; border-radius: 10px; padding: 12px; margin-bottom: 10px; border-left: 5px solid #ccc; cursor: pointer; }
+        .status-Pending { border-left-color: #ffc107; background-color: #fffbeb; }
+        .status-Postponed { border-left-color: #dc3545; background-color: #fff5f5; }
+        .status-Done { border-left-color: #198754; background-color: #f0fdf4; opacity: 0.6; }
+        .prospect-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid var(--primary); }
+        .search-box { border-radius: 30px; border: 2px solid var(--primary); padding: 10px 20px; }
+        
+        /* MODAL LIST & ACTIONS */
+        .task-list-item { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .task-list-item:last-child { border-bottom: none; }
+        .task-actions { margin-top: 8px; display: flex; gap: 10px; }
+        .reschedule-box { margin-top: 10px; background: #f9f9f9; padding: 10px; border-radius: 8px; display: none; }
+    </style>
 </head>
-
 <body>
 
-<div class="wrap">
+<div id="loadingOverlay">
+    <div class="spinner-border text-primary" role="status"></div>
+    <b class="mt-3">Connecting...</b>
+</div>
 
-<header>
-  <div style="display:flex;gap:12px;align-items:center">
-    <div class="logo"><img src="logo.png"></div>
-    <div>
-      <h1>RCM बचत कॅल्क्युलेटर</h1>
-      <div class="now" id="nowDate"></div>
+<header class="app-header">
+    <div class="d-flex align-items-center">
+        <button id="backBtn" class="back-btn" onclick="goHome()" style="display:none;"><i class="fas fa-arrow-left"></i></button>
+        <div>
+            <div class="header-title">क्रांतिकारी वर्ष 2026</div>
+            <div style="font-size: 10px; font-weight: 600; color: #666;">Deepak Shengule | Mission</div>
+        </div>
     </div>
-  </div>
+    <span class="badge bg-light text-dark border px-2 py-1" id="statusBadge">Checking...</span>
 </header>
 
-<!-- VISITORS -->
-<div class="card" id="visitorBox" style="margin:12px 0;font-weight:700;font-size:16px">
-  Loading visitors…
-</div>
-
-<div class="grid">
-
-<!-- LEFT SIDE -->
-<div class="card">
-
-  <h3 style="margin:0 0 12px;color:#0a5b99;font-family:'Baloo 2'">ग्राहक माहिती</h3>
-
-  <label>नाव</label>
-  <input id="custName" placeholder="नाव लिहा">
-
-  <label style="margin-top:10px">RCM ID</label>
-  <input id="rcmId" placeholder="ID">
-
-  <label style="margin-top:10px">तारीख</label>
-  <input id="orderDate" type="date">
-
-  <h3 style="margin-top:16px;color:#0a5b99;font-family:'Baloo 2'">प्रॉडक्ट ऍड करा</h3>
-
-  <div style="display:flex;gap:8px">
-    <select id="productSelect" style="flex:1">
-      <option value="">-- प्रॉडक्ट निवडा --</option>
-    </select>
-
-    <input id="qtyInput" type="number" value="1" min="1" style="width:90px">
-    <button id="addBtn" class="pbtn" style="background:#0078FF;border-radius:12px;padding:10px 18px">
-      + ADD
-    </button>
-  </div>
-
-  <div id="productList"></div>
-
-  <div class="summary">
-    <div class="sum-box" id="totalQty">Qty: 0</div>
-    <div class="sum-box" id="totalMarket">Market: ₹0</div>
-    <div class="sum-box" id="totalRCM">RCM: ₹0</div>
-    <div class="sum-box" id="totalPV">PV: 0</div>
-  </div>
-
-</div>
-
-<!-- RIGHT SIDE -->
-<div>
-
-  <div class="cards">
-
-    <div class="big-card card-saving">
-      <div>💰 मासिक फायदा</div>
-      <div class="val" id="cardMonthly">₹0</div>
+<div id="homeSection">
+    <div class="container mt-3">
+        <div class="custom-card p-3 text-center mb-0 bg-light border">
+            <h5 class="fw-bold text-primary mb-0" id="currentDateDisplay"></h5>
+            <small class="text-muted">Welcome Back!</small>
+        </div>
     </div>
 
-    <div class="big-card card-cons">
-      <div>🎯 Consistency</div>
-      <div class="val" id="cardCons">₹0</div>
+    <div class="top-stats-container">
+        <div class="today-circle" onclick="openTaskModal('today')">
+            <div class="circle-count" id="todayTaskCount">0</div>
+            <div class="circle-label">Today</div>
+        </div>
+        <div class="upcoming-card" onclick="openTaskModal('upcoming')">
+            <div class="up-count" id="upcomingTaskCount">0</div>
+            <div class="up-label">पुढील कामे<br>(Upcoming)</div>
+        </div>
     </div>
 
-    <div class="big-card card-year">
-      <div>📅 वार्षिक फायदा</div>
-      <div class="val" id="cardAnnual">₹0</div>
+    <div class="dashboard-grid">
+        <div class="dash-card" onclick="openSection('planner')" style="grid-column: span 2;">
+            <div class="dash-icon icon-planner"><i class="fas fa-calendar-alt"></i></div>
+            <div class="dash-label">Planner & Meetings</div>
+        </div>
+        <div class="dash-card" onclick="openSection('list')">
+            <div class="dash-icon icon-list"><i class="fas fa-user-plus"></i></div>
+            <div class="dash-label">Prospect List</div>
+        </div>
+        <div class="dash-card" onclick="openSection('followup')">
+            <div class="dash-icon icon-follow"><i class="fas fa-phone-volume"></i></div>
+            <div class="dash-label">Follow Up</div>
+        </div>
+        <div class="dash-card" onclick="openSection('sales')">
+            <div class="dash-icon icon-sales"><i class="fas fa-hand-holding-usd"></i></div>
+            <div class="dash-label">Finance/Sales</div>
+        </div>
+        <div class="dash-card" onclick="openSection('reports')">
+            <div class="dash-icon icon-report"><i class="fas fa-file-download"></i></div>
+            <div class="dash-label">Reports</div>
+        </div>
     </div>
+</div>
 
-    <div class="big-card card-life">
-      <div>🏆 20 वर्षांचा फायदा</div>
-      <div class="val" id="cardTwenty">₹0</div>
+<div id="plannerSection" class="page-section">
+    <div class="planner-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="m-0 fw-bold text-primary">🗓️ Monthly Planner</h6>
+            <button class="btn btn-sm btn-primary rounded-pill px-3" onclick="openMeetingModal()">+ Add</button>
+        </div>
+        <div class="text-center fw-bold mb-2" id="calMonthYear"></div>
+        <div class="cal-grid mb-2">
+            <div class="text-muted small">S</div><div class="text-muted small">M</div><div class="text-muted small">T</div><div class="text-muted small">W</div><div class="text-muted small">T</div><div class="text-muted small">F</div><div class="text-muted small">S</div>
+        </div>
+        <div class="cal-grid" id="calendarGrid"></div>
+        <hr>
+        <h6 class="fw-bold text-muted small">UPCOMING MEETINGS:</h6>
+        <div id="plannerMeetingList" class="mt-2"></div>
     </div>
+</div>
 
+<div id="listSection" class="page-section">
+    <div class="project-tabs">
+        <button class="project-tab-btn active" onclick="switchProject('health')">आरोग्य</button>
+        <button class="project-tab-btn" onclick="switchProject('anemia')">ॲनिमिया</button>
+        <button class="project-tab-btn" onclick="switchProject('water')">जलसंचय</button>
+        <button class="project-tab-btn" onclick="switchProject('network')">नेटवर्क</button>
+    </div>
+    <div class="mb-3"><input type="text" id="searchBox" class="form-control search-box" placeholder="🔍 Search Name..." onkeyup="renderCurrentView()"></div>
+    <div class="custom-card">
+        <h6 class="fw-bold text-primary mb-3">नवीन मेंबर</h6>
+        <div class="bg-light p-2 rounded mb-3 border">
+            <button class="btn btn-warning w-100 btn-sm fw-bold text-white mb-2" onclick="pickContact()"><i class="fas fa-address-book"></i> Import</button>
+            <select id="importSelect" class="form-select form-select-sm" onchange="fillFromImport()"><option value="">-- Smart Import --</option></select>
+        </div>
+        <div class="mb-2"><label class="form-label">नाव</label><input type="text" id="pName" class="form-control" placeholder="Name"></div>
+        <div class="row g-2 mb-2">
+            <div class="col-6"><label class="form-label">मोबाईल</label><input type="number" id="pMobile" class="form-control" placeholder="Mobile"></div>
+            <div class="col-6"><label class="form-label">गाव</label><input type="text" id="pVillage" class="form-control" placeholder="Village"></div>
+        </div>
+        <div class="row g-2 mb-3">
+            <div class="col-6"><label class="form-label">व्यवसाय</label><input type="text" id="pProfession" class="form-control" placeholder="Job"></div>
+            <div class="col-6"><label class="form-label">प्रपोजर</label><input type="text" id="pProposer" class="form-control" placeholder="Ref By"></div>
+        </div>
+        <button id="saveBtn" class="btn-action" style="background:var(--primary)" onclick="addPerson()">SAVE DATA</button>
+    </div>
+    <div class="d-flex justify-content-between px-2 mb-2"><span class="fw-bold text-muted">Total: <span id="listCount" class="text-primary">0</span></span></div>
+    <div id="personListContainer" style="padding-bottom: 20px;"></div>
+</div>
+
+<div id="followupSection" class="page-section">
+    <div class="project-tabs">
+        <button class="project-tab-btn active" onclick="switchProject('health')">आरोग्य</button>
+        <button class="project-tab-btn" onclick="switchProject('anemia')">ॲनिमिया</button>
+        <button class="project-tab-btn" onclick="switchProject('water')">जलसंचय</button>
+        <button class="project-tab-btn" onclick="switchProject('network')">नेटवर्क</button>
+    </div>
+    <div class="custom-card">
+        <h6 class="fw-bold text-warning mb-3">फॉलो-अप सेट करा</h6>
+        <label class="form-label">व्यक्ती निवडा:</label><select id="followupPersonSelect" class="form-select mb-3"></select>
+        <label class="form-label">चर्चा:</label><input type="text" id="fRemark" class="form-control mb-3" placeholder="Remark">
+        <label class="form-label">पुढील ३ तारखा:</label>
+        <div class="d-flex gap-2 mb-3"><input type="date" id="fDate1" class="form-control"><input type="date" id="fDate2" class="form-control"><input type="date" id="fDate3" class="form-control"></div>
+        <button class="btn-action" style="background:var(--saffron)" onclick="addFollowup()">SAVE REMINDER</button>
+    </div>
+    <div id="followupHistoryList"></div>
+</div>
+
+<div id="salesSection" class="page-section">
+    <div class="project-tabs">
+        <button class="project-tab-btn active" onclick="switchProject('health')">आरोग्य</button>
+        <button class="project-tab-btn" onclick="switchProject('anemia')">ॲनिमिया</button>
+        <button class="project-tab-btn" onclick="switchProject('water')">जलसंचय</button>
+        <button class="project-tab-btn" onclick="switchProject('network')">नेटवर्क</button>
+    </div>
+    <div class="custom-card">
+        <h6 class="fw-bold text-success mb-3">नवीन विक्री (Invoice)</h6>
+        <label class="form-label">ग्राहक:</label><select id="salePersonSelect" class="form-select mb-3"></select>
+        <label class="form-label">प्रॉडक्ट:</label>
+        <select id="productSelect" class="form-select mb-3">
+            <option value="none">-- Select --</option>
+            <option value="राईस ब्रान तेल 5 लिटर">राईस ब्रान तेल 5L</option><option value="न्यूट्रिलाइट">न्यूट्रिलाइट</option><option value="nutricharge woman">Nutricharge Woman</option><option value="Other">Other</option>
+        </select>
+        <label class="form-label">तारीख:</label><input type="date" id="saleDate" class="form-control mb-3">
+        <button class="btn-action" style="background:var(--green)" onclick="addSale()">SALE ENTRY</button>
+    </div>
+    <div id="salesList"></div>
+</div>
+
+<div id="reportsSection" class="page-section">
+    <ul class="nav nav-pills mb-3 justify-content-center" id="reportTabs">
+        <li class="nav-item"><button class="nav-link active" onclick="showReportTab('consolidated')">📊 Consolidated</button></li>
+        <li class="nav-item"><button class="nav-link" onclick="showReportTab('segment')">📑 Segment</button></li>
+        <li class="nav-item"><button class="nav-link" onclick="showReportTab('meetings')">🗓️ Meetings</button></li>
+    </ul>
+    <div id="tab-consolidated">
+        <div class="row g-2 mb-3">
+            <div class="col-6"><div class="stat-card bg-total"><div class="stat-num" id="repTotalMem">0</div><div class="stat-label">Members</div></div></div>
+            <div class="col-6"><div class="stat-card bg-sales"><div class="stat-num" id="repTotalSale">0</div><div class="stat-label">Sales</div></div></div>
+        </div>
+        <div class="custom-card text-center py-3 mb-3 border-warning">
+            <h6 class="mb-2 text-warning"><i class="fas fa-shield-alt"></i> Data Backup</h6>
+            <button class="btn btn-sm btn-dark me-2" onclick="backupAllData()">Download</button>
+            <button class="btn btn-sm btn-outline-dark" onclick="document.getElementById('restoreFile').click()">Restore</button>
+            <input type="file" id="restoreFile" style="display:none" onchange="restoreBackup(this.files[0])">
+        </div>
+        <div class="custom-card">
+            <h6 class="text-primary fw-bold mb-3">Master Summary</h6>
+            <div class="table-responsive"><table class="table table-sm table-bordered" id="fullTableConsolidated"><thead class="table-light"><tr><th>Name</th><th>Project</th><th>Village</th><th>Sales</th></tr></thead><tbody id="tblConsolidated"></tbody></table></div>
+            <div class="d-flex justify-content-center gap-2 mt-3"><button class="btn btn-sm btn-success" onclick="downloadExcel('consolidated')">Excel</button><button class="btn btn-sm btn-danger" onclick="downloadPDF('consolidated')">PDF</button></div>
+        </div>
+    </div>
+    <div id="tab-segment" style="display:none;">
+        <select id="reportSegmentSelect" class="form-select mb-3" onchange="renderSegmentReport()"><option value="health">आरोग्य अभियान</option><option value="anemia">ॲनिमिया मुक्त</option><option value="water">जलसंचय</option><option value="network">नेटवर्क</option></select>
+        <div class="custom-card">
+            <div class="table-responsive"><table class="table table-sm table-striped" id="fullTableSegment"><thead><tr><th>Name</th><th>Mobile</th><th>Village</th><th>Ref</th></tr></thead><tbody id="tblSegment"></tbody></table></div>
+            <div class="d-flex justify-content-center gap-2 mt-3"><button class="btn btn-sm btn-success" onclick="downloadExcel('segment')">Excel</button><button class="btn btn-sm btn-danger" onclick="downloadPDF('segment')">PDF</button></div>
+        </div>
+    </div>
+    <div id="tab-meetings" style="display:none;">
+        <div class="custom-card">
+            <div class="table-responsive"><table class="table table-sm table-bordered" id="fullTableMeetings"><thead><tr><th>Date</th><th>Title</th><th>Status</th><th>Remark</th></tr></thead><tbody id="tblMeetings"></tbody></table></div>
+            <div class="d-flex justify-content-center gap-2 mt-3"><button class="btn btn-sm btn-success" onclick="downloadExcel('meetings')">Excel</button><button class="btn btn-sm btn-danger" onclick="downloadPDF('meetings')">PDF</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="meetingModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white"><h5 class="modal-title">🗓️ Meeting Details</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <input type="hidden" id="meetId">
+        <label>Title:</label><input type="text" id="meetTitle" class="form-control mb-2">
+        <label>Date:</label><input type="date" id="meetDate" class="form-control mb-2">
+        <label>Time:</label><input type="time" id="meetTime" class="form-control mb-2">
+        <label>Status:</label><select id="meetStatus" class="form-select mb-2"><option value="Pending">Pending</option><option value="Done">Done</option><option value="Postponed">Postponed</option></select>
+        <label>Remark:</label><textarea id="meetRemark" class="form-control mb-2"></textarea>
+        <button class="btn btn-primary w-100" onclick="saveMeeting()">Save</button>
+        <button class="btn btn-danger w-100 mt-2" onclick="deleteMeeting()">Delete</button>
+      </div>
+    </div>
   </div>
-
-  <!-- 4 BUTTONS -->
-  <div class="bottom-actions">
-    <button id="waBtn" class="pbtn wa">📲 WhatsApp</button>
-    <button id="pdfBtn" class="pbtn pdf">📄 PDF</button>
-    <button id="orderBtn" class="pbtn order">🛒 Place Order</button>
-    <button id="clearBtn" class="pbtn clear">🗑 Clear</button>
-  </div>
-
 </div>
 
-</div>
-
-<footer>Designed by DS WORLD 🌍 | 7020970727</footer>
-
-</div>
-<!-- POPUP -->
-<div id="orderPopup" style="
-  position:fixed;left:0;top:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.45);
-  display:none;align-items:center;justify-content:center;
-  backdrop-filter:blur(4px);z-index:9999;
-">
-  <div style="
-    width:90%;max-width:360px;background:white;
-    padding:20px;border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.25);
-  ">
-
-    <h2 style="text-align:center;margin:0 0 12px;color:#0078FF">
-      🛒 Place Order
-    </h2>
-
-    <label>नाव</label>
-    <input id="oName" required style="margin-bottom:10px">
-
-    <label>मोबाइल नंबर</label>
-    <input id="oMob" required style="margin-bottom:10px">
-
-    <label>पत्ता</label>
-    <input id="oAddr" required style="margin-bottom:14px">
-
-    <button id="sendOrder" class="pbtn order" style="width:100%;margin-bottom:10px">
-      Send Order
-    </button>
-
-    <button onclick="orderPopup.style.display='none'" class="pbtn pdf" style="width:100%">
-      Cancel
-    </button>
-
+<div class="modal fade" id="invoiceModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white"><h5 class="modal-title">🧾 Invoice</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" id="invoiceContent" style="font-family: monospace;"></div>
+      <div class="modal-footer"><button class="btn btn-primary" onclick="printInvoice()">Print</button></div>
+    </div>
   </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
+<div class="modal fade" id="taskPopup" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header" id="taskPopupHeader"><h5 class="modal-title text-white">Tasks</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" id="taskPopupBody" class="modal-list-group"></div>
+      <div class="modal-footer justify-content-center"><button class="btn btn-dark btn-sm rounded-pill px-4" data-bs-dismiss="modal">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    const firebaseConfig = { apiKey: "AIzaSyCny9svhGUs3Ja5OrTHfH5Kqj05GW2S0RE", authDomain: "dsworldcrm.firebaseapp.com", projectId: "dsworldcrm", storageBucket: "dsworldcrm.firebasestorage.app", messagingSenderId: "449729131508", appId: "1:449729131508:web:61cdd1de17b151717c3fa1" };
+    firebase.initializeApp(firebaseConfig);
+    const dbRef = firebase.firestore();
+    const DOC_ID = "mainData"; const COL_NAME = "crm_data"; 
 
-function $(id){return document.getElementById(id);}
-function fmt(n){return Math.round(n).toLocaleString("en-IN");}
+    let db = { meetings: [], currentProject: 'health', projects: { 'health': { title: 'आरोग्य अभियान', people: [], followups: [], sales: [] }, 'anemia': { title: 'ॲनिमिया मुक्त', people: [], followups: [], sales: [] }, 'water': { title: 'जलसंचय', people: [], followups: [], sales: [] }, 'network': { title: 'नेटवर्क', people: [], followups: [], sales: [] } } };
+    let editIndex = null;
+    let currentView = 'home';
+    let globalTodayList = [];
+    let globalUpcomingList = [];
 
-/* DATE */
-orderDate.valueAsDate = new Date();
-
-/* VISIT COUNTER */
-let vc = localStorage.getItem("VISITS") || 0;
-vc++; localStorage.setItem("VISITS",vc);
-visitorBox.innerHTML = "Total Visits: <b>"+vc+"</b>";
-
-/* LOAD PRODUCTS */
-let products=[];
-let order=[];
-
-const SHEET_URL =
-"https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json";
-
-async function loadProducts(){
-  try{
-    let r=await fetch(SHEET_URL);
-    let t=await r.text();
-    let j=JSON.parse(t.substring(47,t.length-2));
-    products=j.table.rows.map(r=>({
-      name:r.c[0]?.v||"",
-      market:+r.c[1]?.v||0,
-      rcm:+r.c[2]?.v||0,
-      pv:+r.c[3]?.v||0
-    }));
-  }catch(e){
-    products=[{name:"टाटा मीठ",market:30,rcm:20,pv:7}];
-  }
-
-  products.forEach((p,i)=>{
-    let o=document.createElement("option");
-    o.value=i; o.textContent=p.name;
-    productSelect.appendChild(o);
-  });
-}
-loadProducts();
-
-/* CONFETTI */
-function showConfetti(){
-  const emojis=["🎉","✨","🎊","💥","💸","🥳","🔥","⭐"];
-  
-  for(let i=0;i<14;i++){
-    const e=document.createElement('div');
-    e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-    e.style.position='fixed';
-    e.style.left=(10 + Math.random()*80) + '%';
-    e.style.bottom='-40px';
-    e.style.fontSize=(22 + Math.random()*20) + 'px';
-    e.style.opacity='1';
-    e.style.zIndex='99999';
-    e.style.transition='transform 1.6s ease-out, opacity 1.6s';
-    document.body.appendChild(e);
-
-    setTimeout(()=>{
-      e.style.transform="translateY(-350px)";
-      e.style.opacity='0';
-    },60*i);
-
-    setTimeout(()=>e.remove(),2000);
-  }
-}
-
-/* ADD PRODUCT */
-addBtn.onclick=()=>{
-  let idx=productSelect.value;
-  if(idx==="") return alert("Product निवडा!");
-
-  let qty=Math.max(1,parseInt(qtyInput.value)||1);
-  let p=products[idx];
-
-  let ex=order.find(o=>o.name===p.name);
-  if(ex) ex.qty+=qty;
-  else order.push({...p,qty});
-
-  calc();
-  showConfetti();
-};
-
-/* CALCULATE */
-function calc(){
-  productList.innerHTML="";
-  let tQ=0,tM=0,tR=0,tPV=0,tSave=0;
-
-  order.forEach((it,i)=>{
-    let m=it.market*it.qty;
-    let r=it.rcm*it.qty;
-    let pv=it.pv*it.qty;
-    let s=(it.market-it.rcm)*it.qty;
-
-    tQ+=it.qty; tM+=m; tR+=r; tPV+=pv; tSave+=s;
-
-    const row=document.createElement("div");
-    row.style=`display:flex;justify-content:space-between;
-      padding:12px;margin-bottom:10px;
-      background:white;border-radius:12px`;
-
-    row.innerHTML=`
-      <div style="flex:1">
-        <b>${it.name}</b><br>
-        <span style="font-size:13px">PV:${it.pv} | M:₹${it.market} | RCM:₹${it.rcm}</span>
-      </div>
-
-      <div style="text-align:right">
-        <input type="number" data-i="${i}" value="${it.qty}" min="1"
-        style="width:60px;padding:6px;border-radius:10px">
-        <div style="margin-top:6px;font-weight:700;color:green">₹${fmt(s)}</div>
-      </div>
-    `;
-
-    productList.appendChild(row);
-  });
-
-  totalQty.innerText="Qty: "+tQ;
-  totalMarket.innerText="Market: ₹"+fmt(tM);
-  totalRCM.innerText="RCM: ₹"+fmt(tR);
-  totalPV.innerText="PV: "+fmt(tPV);
-
-  let cons = tPV < 1500 ? tPV*0.12 :
-             tPV < 2500 ? 1500*0.1667 : 5000*0.1667;
-
-  let monthly = tSave + cons;
-
-  cardMonthly.innerText="₹"+fmt(monthly);
-  cardCons.innerText="₹"+fmt(cons);
-  cardAnnual.innerText="₹"+fmt(monthly*12);
-  cardTwenty.innerText="₹"+fmt(monthly*12*20);
-
-  document.querySelectorAll("input[data-i]").forEach(inp=>{
-    inp.onchange=()=>{
-      order[inp.dataset.i].qty = Math.max(1,parseInt(inp.value)||1);
-      calc();
+    window.onload = function() {
+        document.getElementById('saleDate').valueAsDate = new Date();
+        document.getElementById('currentDateDisplay').innerText = new Date().toDateString();
+        loadFromFirebase();
     };
-  });
-}
 
-/* CLEAR */
-clearBtn.onclick=()=>{
-  if(confirm("Order Clear करायचा?")){
-    order=[]; calc();
-  }
-};
+    function loadFromFirebase() {
+        dbRef.collection(COL_NAME).doc(DOC_ID).get().then((doc) => {
+            if (doc.exists) { db = doc.data(); if(!db.meetings) db.meetings=[]; } else { saveToFirebase(); }
+            updateStatus("Online", "success");
+        }).catch(() => { updateStatus("Offline", "danger"); }).finally(() => {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            calculateTasks(); renderCalendar(); renderMeetingsList();
+            if(globalTodayList.length > 0) openTaskModal('today', true);
+            updateDailyStats();
+        });
+    }
 
-/* WHATSAPP SHARE */
-waBtn.onclick=()=>{
-  let msg="*RCM Order Summary*\n\n";
-  order.forEach((it,i)=> msg+=`${i+1}) ${it.name} — ${it.qty}\n`);
-  msg+=`\nTotal PV: ${totalPV.innerText}`;
-  msg+=`\nMonthly Benefit: ${cardMonthly.innerText}`;
+    function saveToFirebase() {
+        updateStatus("Saving...", "warning");
+        dbRef.collection(COL_NAME).doc(DOC_ID).set(db).then(() => {
+            updateStatus("Online", "success");
+            if(currentView==='home') calculateTasks();
+            else if(currentView === 'planner') { renderCalendar(); renderMeetingsList(); } 
+            else if(currentView === 'reports') { renderAllReports(); } 
+            else if(currentView !== 'home') renderCurrentView();
+            updateDailyStats();
+        }).catch(() => updateStatus("Error", "danger"));
+    }
+    function updateStatus(msg, type) { const b = document.getElementById('statusBadge'); b.innerText = msg; b.className = `badge bg-${type} text-${type==='warning'?'dark':'white'} border px-2 py-1`; }
 
-  window.open("https://wa.me/?text="+encodeURIComponent(msg));
-};
+    // --- TASK LOGIC (UPDATED) ---
+    function calculateTasks() {
+        const today = new Date().toISOString().split('T')[0];
+        globalTodayList = []; globalUpcomingList = [];
 
-/* PDF DOWNLOAD */
-pdfBtn.onclick=()=>{
-  html2pdf().from(document.querySelector(".wrap")).save("RCM_Bill.pdf");
-};
+        // MEETINGS
+        db.meetings.forEach(m => {
+            if(m.status === 'Done') return;
+            let item = { id: m.id, type: 'MEET', title: m.title, sub: m.remark || '', date: m.date, time: m.time, mobile: '' };
+            if(m.date === today) globalTodayList.push(item);
+            else if(m.date > today) globalUpcomingList.push(item);
+        });
 
-/* PLACE ORDER POPUP */
-orderBtn.onclick=()=> orderPopup.style.display="flex";
+        // FOLLOWUPS
+        for(let k in db.projects) {
+            db.projects[k].followups.forEach((f, idx) => {
+                f.dates.forEach(d => {
+                    let item = { id: idx, pKey: k, type: 'CALL', title: f.personName, sub: f.remark, date: d, time: '', mobile: f.mobile };
+                    if(d === today) globalTodayList.push(item);
+                    else if(d > today) globalUpcomingList.push(item);
+                });
+            });
+        }
 
-sendOrder.onclick=()=>{
+        document.getElementById('todayTaskCount').innerText = globalTodayList.length;
+        document.getElementById('upcomingTaskCount').innerText = globalUpcomingList.length;
+    }
 
-  let n=oName.value.trim();
-  let m=oMob.value.trim();
-  let a=oAddr.value.trim();
+    function openTaskModal(type, auto) {
+        const list = type === 'today' ? globalTodayList : globalUpcomingList;
+        const header = document.getElementById('taskPopupHeader');
+        header.className = type === 'today' ? 'modal-header bg-danger' : 'modal-header bg-primary';
+        header.innerHTML = `<h5 class="modal-title text-white">${type==='today'?'🔔 आजची कामे (Today)':'📅 पुढील कामे (Upcoming)'}</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>`;
+        
+        if(list.length === 0) { if(!auto) alert("सध्या कोणतेही काम पेंडिंग नाही! 🎉"); return; }
 
-  if(!n||!m||!a) return alert("सर्व माहिती भरा!");
+        let html = '<ul class="list-group">';
+        list.sort((a,b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+            // Unique ID for reschedule box
+            const uid = t.type + '-' + t.id + (t.type==='CALL' ? '-'+t.pKey : ''); 
+            
+            html += `
+            <li class="task-list-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="badge ${t.type==='MEET'?'bg-primary':'bg-warning text-dark'}">${t.type==='MEET'?'MEETING':'CALL'}</span> 
+                        <strong> ${t.title}</strong><br>
+                        <small class="text-muted">${t.date} | ${t.sub}</small>
+                    </div>
+                    ${t.mobile ? `<a href="tel:${t.mobile}" class="btn btn-sm btn-outline-success rounded-circle"><i class="fas fa-phone"></i></a>` : ''}
+                </div>
+                
+                <div class="task-actions">
+                    <button class="btn btn-sm btn-success flex-fill" onclick="markTaskDone('${t.type}', '${t.id}', '${t.pKey||''}', '${t.date}')"><i class="fas fa-check"></i> Done</button>
+                    <button class="btn btn-sm btn-primary flex-fill" onclick="document.getElementById('resch-${uid}').style.display='block'"><i class="fas fa-calendar-alt"></i> Next</button>
+                </div>
 
-  let msg="*New Order*\n\n";
-  msg+=`नाव: ${n}\nमोबाइल: ${m}\nपत्ता: ${a}\n\n`;
+                <div id="resch-${uid}" class="reschedule-box">
+                    <div class="input-group input-group-sm">
+                        <input type="date" id="date-${uid}" class="form-control">
+                        <button class="btn btn-primary" onclick="rescheduleTask('${t.type}', '${t.id}', '${t.pKey||''}', '${t.date}', 'date-${uid}')">Save</button>
+                    </div>
+                </div>
+            </li>`;
+        });
+        html += '</ul>';
+        document.getElementById('taskPopupBody').innerHTML = html;
+        new bootstrap.Modal(document.getElementById('taskPopup')).show();
+    }
 
-  order.forEach((it,i)=> msg+=`${i+1}) ${it.name} — ${it.qty}\n`);
+    // --- ACTIONS: DONE & RESCHEDULE ---
+    window.markTaskDone = function(type, id, pKey, date) {
+        if(type === 'MEET') {
+            const m = db.meetings.find(x => String(x.id) === String(id));
+            if(m) m.status = 'Done';
+        } else {
+            // Remove specific date from followup
+            const f = db.projects[pKey].followups[id];
+            if(f) f.dates = f.dates.filter(d => d !== date);
+        }
+        saveToFirebase();
+        bootstrap.Modal.getInstance(document.getElementById('taskPopup')).hide();
+    }
 
-  msg+=`\nTotal PV: ${totalPV.innerText}`;
-  msg+=`\nMonthly Benefit: ${cardMonthly.innerText}`;
+    window.rescheduleTask = function(type, id, pKey, oldDate, inputId) {
+        const newDate = document.getElementById(inputId).value;
+        if(!newDate) return alert("Select Date");
 
-  window.open("https://wa.me/7020970727?text="+encodeURIComponent(msg));
+        if(type === 'MEET') {
+            const m = db.meetings.find(x => String(x.id) === String(id));
+            if(m) { m.date = newDate; m.status = 'Postponed'; }
+        } else {
+            const f = db.projects[pKey].followups[id];
+            if(f) {
+                f.dates = f.dates.filter(d => d !== oldDate); // Remove old
+                f.dates.push(newDate); // Add new
+            }
+        }
+        saveToFirebase();
+        bootstrap.Modal.getInstance(document.getElementById('taskPopup')).hide();
+    }
 
-  orderPopup.style.display="none";
-};
+    // --- NAVIGATION & VIEWS ---
+    window.openSection = function(sec) {
+        currentView = sec;
+        document.getElementById('homeSection').style.display = 'none';
+        document.getElementById('backBtn').style.display = 'block';
+        ['listSection', 'followupSection', 'salesSection', 'reportsSection', 'plannerSection'].forEach(id => document.getElementById(id).style.display = 'none');
+        if(sec === 'planner') { document.getElementById('plannerSection').style.display = 'block'; renderCalendar(); renderMeetingsList(); }
+        else if(sec === 'reports') { document.getElementById('reportsSection').style.display = 'block'; renderAllReports(); }
+        else { document.getElementById(sec + 'Section').style.display = 'block'; renderCurrentView(); }
+    }
+    window.goHome = function() {
+        currentView = 'home';
+        ['listSection', 'followupSection', 'salesSection', 'reportsSection', 'plannerSection'].forEach(id => document.getElementById(id).style.display = 'none');
+        document.getElementById('homeSection').style.display = 'block';
+        document.getElementById('backBtn').style.display = 'none';
+        calculateTasks();
+    }
+    window.switchProject = function(key) {
+        db.currentProject = key;
+        const map = {'health':0,'anemia':1,'water':2,'network':3};
+        document.querySelectorAll('.project-tabs').forEach(grp => {
+            Array.from(grp.children).forEach(b => b.classList.remove('active'));
+            grp.children[map[key]].classList.add('active');
+        });
+        renderCurrentView();
+    }
 
+    // --- RENDER VIEWS ---
+    function renderCurrentView() {
+        if(currentView === 'home' || currentView === 'reports' || currentView === 'planner') return;
+        const proj = db.projects[db.currentProject];
+        
+        if(currentView === 'list') {
+            document.getElementById('listCount').innerText = proj.people.length;
+            const container = document.getElementById('personListContainer'); container.innerHTML = '';
+            const searchVal = document.getElementById('searchBox').value.toLowerCase();
+            proj.people.map((p,i)=>({...p, oIdx:i})).reverse().forEach(p => {
+                if(p.name.toLowerCase().includes(searchVal) || String(p.mobile).includes(searchVal)) {
+                    container.innerHTML += `
+                    <div class="prospect-card">
+                        <div style="display:flex;align-items:center;margin-bottom:10px;">
+                            <div style="width:45px;height:45px;background:#eee;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#555;margin-right:15px;">${p.name.charAt(0)}</div>
+                            <div><h6 style="margin:0;font-weight:bold;">${p.name}</h6><small>${p.village} | ${p.mobile}</small></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;border-top:1px solid #eee;padding-top:10px;">
+                            <a href="tel:${p.mobile}" class="btn btn-sm btn-success flex-fill me-1"><i class="fas fa-phone"></i> Call</a>
+                            <a href="https://wa.me/91${p.mobile}" class="btn btn-sm btn-success flex-fill me-1"><i class="fab fa-whatsapp"></i> WA</a>
+                            <button class="btn btn-sm btn-warning me-1" onclick="editPerson(${p.oIdx})"><i class="fas fa-pen"></i></button>
+                            <button class="btn btn-sm btn-danger" onclick="delPerson(${p.oIdx})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+                }
+            });
+            loadImportOptions();
+        }
+        if(currentView === 'followup') {
+            const sel = document.getElementById('followupPersonSelect'); sel.innerHTML='<option value="">Select</option>';
+            proj.people.forEach((p,i)=> sel.innerHTML+=`<option value="${i}">${p.name}</option>`);
+            const h = document.getElementById('followupHistoryList'); h.innerHTML='';
+            proj.followups.slice().reverse().forEach(f => {
+                h.innerHTML+=`<div class="list-item" style="border-left-color:var(--saffron)"><div><h6>${f.personName}</h6><small>${f.remark}</small></div><small class="text-muted">${f.entryDate}</small></div>`;
+            });
+        }
+        if(currentView === 'sales') {
+            const sel = document.getElementById('salePersonSelect'); sel.innerHTML='<option value="">Select</option>';
+            proj.people.forEach((p,i)=> sel.innerHTML+=`<option value="${i}">${p.name}</option>`);
+            const h = document.getElementById('salesList'); h.innerHTML='';
+            proj.sales.slice().reverse().forEach(s => {
+                h.innerHTML+=`<div class="list-item" style="border-left-color:var(--green)"><div><h6>${s.personName}</h6><small>${s.product}</small></div><div><small class="d-block text-end">${s.date}</small><button class="btn btn-sm btn-outline-dark py-0" onclick='generateInvoice(${JSON.stringify(s)})'>🧾</button></div></div>`;
+            });
+        }
+    }
+
+    // --- PRO FEATURES ---
+    function generateInvoice(sale) { document.getElementById('invoiceContent').innerHTML = `<div style="text-align:center; padding:10px;"><h3>INVOICE</h3><hr><p><b>Customer:</b> ${sale.personName}</p><p><b>Item:</b> ${sale.product}</p><p><b>Date:</b> ${sale.date}</p><hr><p>Thank you!</p></div>`; new bootstrap.Modal(document.getElementById('invoiceModal')).show(); }
+    function printInvoice() { const c = document.getElementById('invoiceContent').innerHTML; const w = window.open(); w.document.write(c); w.print(); w.close(); }
+    window.backupAllData = function() { const blob = new Blob([JSON.stringify(db)], {type: "application/json"}); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Mission2026_Backup.json"; a.click(); }
+    window.restoreBackup = function(file) { const reader = new FileReader(); reader.onload = e => { db = JSON.parse(e.target.result); saveToFirebase(); alert("Restored!"); location.reload(); }; reader.readAsText(file); }
+
+    // --- ACTIONS ---
+    window.addPerson = function() { const p = {name:document.getElementById('pName').value, mobile:document.getElementById('pMobile').value, village:document.getElementById('pVillage').value, profession:document.getElementById('pProfession').value, proposer:document.getElementById('pProposer').value}; if(!p.name || !p.mobile) return alert("Required"); if(editIndex!==null) db.projects[db.currentProject].people[editIndex]=p; else db.projects[db.currentProject].people.push(p); saveToFirebase(); resetForm(); }
+    window.editPerson = function(idx) { const p = db.projects[db.currentProject].people[idx]; document.getElementById('pName').value=p.name; document.getElementById('pMobile').value=p.mobile; document.getElementById('pVillage').value=p.village; document.getElementById('pProfession').value=p.profession; document.getElementById('pProposer').value=p.proposer; editIndex=idx; document.getElementById('saveBtn').innerText="UPDATE"; window.scrollTo(0,0); }
+    function resetForm(){ ['pName','pMobile','pVillage','pProfession','pProposer'].forEach(id=>document.getElementById(id).value=''); editIndex=null; document.getElementById('saveBtn').innerText="SAVE DATA"; }
+    window.delPerson = function(idx) { if(confirm("Del?")) { db.projects[db.currentProject].people.splice(idx,1); saveToFirebase(); }}
+    function loadImportOptions() { const sel = document.getElementById('importSelect'); sel.innerHTML='<option>Smart Import</option>'; const cur = db.projects[db.currentProject].people.map(p=>String(p.mobile)); for(let k in db.projects) { if(k===db.currentProject) continue; db.projects[k].people.forEach(p=>{ if(!cur.includes(String(p.mobile))) sel.innerHTML+=`<option value='${JSON.stringify(p)}'>${p.name} (${db.projects[k].title})</option>`; }); } }
+    window.fillFromImport = function() { const v = document.getElementById('importSelect').value; if(v && v.includes('{')) { const p=JSON.parse(v); document.getElementById('pName').value=p.name; document.getElementById('pMobile').value=p.mobile; document.getElementById('pVillage').value=p.village; } }
+    window.addFollowup = function() { const i=document.getElementById('followupPersonSelect').value; if(i==="")return; const p=db.projects[db.currentProject].people[i]; let dates=[]; ['fDate1','fDate2','fDate3'].forEach(d=>{if(document.getElementById(d).value)dates.push(document.getElementById(d).value)}); db.projects[db.currentProject].followups.push({personName:p.name,mobile:p.mobile,remark:document.getElementById('fRemark').value,dates:dates,entryDate:new Date().toISOString().split('T')[0]}); saveToFirebase(); alert("Saved"); }
+    window.addSale = function() { const i=document.getElementById('salePersonSelect').value; if(i==="")return; const p=db.projects[db.currentProject].people[i]; const pr=document.getElementById('productSelect').value; db.projects[db.currentProject].sales.push({personName:p.name,product:pr,date:document.getElementById('saleDate').value}); saveToFirebase(); alert("Saved"); }
+    
+    // --- MEETINGS ---
+    function renderCalendar() { const g=document.getElementById('calendarGrid'); const n=new Date(); document.getElementById('calMonthYear').innerText=n.toLocaleString('default',{month:'long'})+" "+n.getFullYear(); let h=''; ['S','M','T','W','T','F','S'].forEach(d=>h+=`<b>${d}</b>`); for(let i=1;i<=new Date(n.getFullYear(),n.getMonth()+1,0).getDate();i++){ let d=`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`; let cls=db.meetings.some(m=>m.date===d)?'cal-event':(i===n.getDate()?'cal-today':'cal-day'); h+=`<div class="${cls}" onclick="openMeetingModal(null,'${d}')">${i}</div>`; } g.innerHTML=h; }
+    function renderMeetingsList() { const l=document.getElementById('plannerMeetingList'); l.innerHTML=''; const sorted=db.meetings.sort((a,b)=> {const m={'Pending':1,'Postponed':2,'Done':3}; return (m[a.status]||4)-(m[b.status]||4)}); sorted.forEach(m=>{ let st=`status-${m.status||'Pending'}`; l.innerHTML+=`<div class="meeting-item ${st} d-flex justify-content-between align-items-center"><div onclick='openMeetingModal(${JSON.stringify(m)})' style="flex-grow:1"><div class="d-flex justify-content-between"><strong>${m.title}</strong><span class="badge bg-secondary" style="font-size:10px">${m.status}</span></div><small>${m.date} ${m.time||''} | ${m.remark||''}</small></div><button class="btn btn-sm text-danger ms-2" onclick="deleteMeetingDirect(${m.id})"><i class="fas fa-trash"></i></button></div>`; }); }
+    function openMeetingModal(m,d) { if(m){document.getElementById('meetId').value=m.id; document.getElementById('meetTitle').value=m.title; document.getElementById('meetDate').value=m.date; document.getElementById('meetTime').value=m.time; document.getElementById('meetStatus').value=m.status; document.getElementById('meetRemark').value=m.remark;} else { document.getElementById('meetId').value=''; document.getElementById('meetTitle').value=''; document.getElementById('meetDate').value=d||''; } new bootstrap.Modal(document.getElementById('meetingModal')).show(); }
+    function saveMeeting() { const id=document.getElementById('meetId').value; const obj={id:id?id:Date.now(),title:document.getElementById('meetTitle').value,date:document.getElementById('meetDate').value,time:document.getElementById('meetTime').value,status:document.getElementById('meetStatus').value,remark:document.getElementById('meetRemark').value}; if(!obj.title) return alert("Title?"); if(id){const idx=db.meetings.findIndex(m=>m.id==id);if(idx!==-1)db.meetings[idx]=obj;}else{db.meetings.push(obj);} saveToFirebase(); bootstrap.Modal.getInstance(document.getElementById('meetingModal')).hide(); }
+    window.deleteMeetingDirect = function(id) { if(confirm("Del?")){db.meetings=db.meetings.filter(m=>m.id!=id); saveToFirebase();} }
+    function deleteMeeting() { deleteMeetingDirect(document.getElementById('meetId').value); bootstrap.Modal.getInstance(document.getElementById('meetingModal')).hide(); }
+
+    // --- REPORTS ---
+    function renderAllReports() { let tm=0, ts=0, tc=0; let mr=''; for(let k in db.projects){ tm+=db.projects[k].people.length; ts+=db.projects[k].sales.length; tc+=db.projects[k].followups.length; db.projects[k].people.forEach(p=>{ let s=db.projects[k].sales.filter(x=>x.personName===p.name).length; mr+=`<tr><td>${p.name}</td><td>${db.projects[k].title}</td><td>${p.village}</td><td>${s}</td></tr>`; }); } document.getElementById('repTotalMem').innerText=tm; document.getElementById('repTotalSale').innerText=ts; document.getElementById('tblConsolidated').innerHTML=mr; renderSegmentReport(); let mRow=''; db.meetings.forEach(m=>{ mRow+=`<tr><td>${m.date}</td><td>${m.title}</td><td>${m.status}</td><td>${m.remark}</td></tr>`; }); document.getElementById('tblMeetings').innerHTML=mRow; }
+    window.showReportTab=function(t){ ['consolidated','segment','meetings'].forEach(x=>document.getElementById('tab-'+x).style.display='none'); document.getElementById('tab-'+t).style.display='block'; renderAllReports(); }
+    window.renderSegmentReport=function(){ const k=document.getElementById('reportSegmentSelect').value; const p=db.projects[k]; document.getElementById('segTotalMem').innerText=p.people.length; document.getElementById('segTotalSale').innerText=p.sales.length; let r=''; p.people.forEach(x=> r+=`<tr><td>${x.name}</td><td>${x.mobile}</td><td>${x.village}</td><td>${x.proposer}</td></tr>`); document.getElementById('tblSegment').innerHTML=r; }
+    window.downloadExcel=function(t){ const tbl=(t==='meetings')?'fullTableMeetings':(t==='segment'?'fullTableSegment':'fullTableConsolidated'); const wb=XLSX.utils.table_to_book(document.getElementById(tbl),{sheet:"Data"}); XLSX.writeFile(wb, t+"_Report.xlsx"); }
+    window.downloadPDF=function(t){ let id=(t==='meetings')?'tab-meetings':(t==='segment'?'tab-segment':'tab-consolidated'); html2pdf().from(document.getElementById(id)).save(); }
+    
+    function updateDailyStats() { const today=new Date().toISOString().split('T')[0]; let s=0; for(let k in db.projects) s+=db.projects[k].sales.filter(x=>x.date===today).length; if(s>0) document.getElementById('statusBadge').innerText += ` | Today Sales: ${s}`; }
+    window.pickContact = async function() { try{const c = await navigator.contacts.select(['name','tel'],{multiple:false}); if(c.length){document.getElementById('pName').value=c[0].name[0]; document.getElementById('pMobile').value=c[0].tel[0];}}catch(e){} }
 </script>
+
+</body>
+</html>
