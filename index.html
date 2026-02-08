@@ -272,6 +272,31 @@
     };
 
     $('clearBtn').onclick = () => { if(confirm("सर्व लिस्ट साफ करायची का?")) { order=[]; localStorage.removeItem("rcm_order"); update(); } };
+    // --- हा कोड लाईन २७५ च्या वर पेस्ट करा ---
+async function updateVisits() {
+    const key = "dsworld_rcm_final_2026"; 
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const todayKey = key + "_" + todayStr;
+
+    try {
+        // एकूण व्हिजिटर्स (Total)
+        const resTotal = await fetch(`https://api.countapi.xyz/hit/${key}/total`);
+        const dataTotal = await resTotal.json();
+        $('totalVisit').innerText = dataTotal.value || 0;
+
+        // आजचे व्हिजिटर्स (Today)
+        const resToday = await fetch(`https://api.countapi.xyz/hit/${todayKey}/today`);
+        const dataToday = await resToday.json();
+        $('todayVisit').innerText = dataToday.value || 0;
+        
+    } catch (e) {
+        console.log("Counter Error:", e);
+        // बॅकअप (जर API काम करत नसेल तर)
+        $('totalVisit').innerText = "LIVE";
+        $('todayVisit').innerText = "LIVE";
+    }
+}
+// ---------------------------------------
     load();
     updateVisits();
 </script>
