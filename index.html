@@ -3,116 +3,78 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DS WORLD – RCM Pro Calculator</title>
+    <title>DS WORLD – RCM Pro AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* FULL SCREEN TOP-DOWN TIRANGA ANIMATION */
+        /* TOP-DOWN TIRANGA ANIMATION */
         body {
-            margin: 0;
-            font-family: "Poppins", sans-serif;
+            margin: 0; font-family: "Poppins", sans-serif;
             background: linear-gradient(180deg, #FF9933, #FFFFFF, #138808, #FF9933);
-            background-size: 100% 400%;
-            animation: flowDown 8s linear infinite;
-            background-attachment: fixed;
-            color: #1e293b;
-            overflow-x: hidden;
+            background-size: 100% 400%; animation: flowDown 10s linear infinite;
+            background-attachment: fixed; color: #1e293b;
         }
+        @keyframes flowDown { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
 
-        @keyframes flowDown {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 0% 100%; }
-        }
+        .wrap { max-width: 1000px; margin: auto; padding: 10px; }
 
-        /* WATERMARK FOR PDF */
-        #watermark {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 60px;
-            color: rgba(0, 0, 0, 0.05);
-            font-weight: 800;
-            z-index: -1;
-            white-space: nowrap;
-        }
-
-        .wrap { max-width: 1000px; margin: auto; padding: 10px; position: relative; }
-
-        /* COMPACT GLASS UI */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 10px; background: rgba(255, 255, 255, 0.8);
-            padding: 8px 15px; border-radius: 15px; backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.85); padding: 10px 15px;
+            border-radius: 15px; backdrop-filter: blur(10px); margin-bottom: 12px;
         }
-        .logo { width: 45px; height: 45px; border-radius: 10px; background: #fff; display: flex; align-items: center; justify-content: center; }
+        .logo { width: 45px; height: 45px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .logo img { width: 85%; }
-        h1 { margin: 0; font-family: "Baloo 2"; color: #0a5b99; font-size: 18px; }
 
-        .card {
-            background: rgba(255, 255, 255, 0.9); border-radius: 18px;
-            padding: 12px; border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1); margin-bottom: 10px;
-        }
-
-        .grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 10px; align-items: start; }
+        .card { background: rgba(255,255,255,0.92); border-radius: 18px; padding: 15px; margin-bottom: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 12px; }
         @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
 
-        label { font-size: 10px; font-weight: 700; color: #444; text-transform: uppercase; margin-left: 2px; }
-        input, select { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd; font-size: 13px; margin-bottom: 5px; box-sizing: border-box; }
+        input, select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; font-size: 14px; margin-bottom: 8px; box-sizing: border-box; }
 
-        /* RESULT CARDS */
-        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .big-card { border-radius: 15px; padding: 10px; text-align: center; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-        .big-card .val { font-size: 22px; font-weight: 800; line-height: 1.1; }
-        .big-card span { font-size: 9px; font-weight: 600; text-transform: uppercase; }
-
+        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .big-card { border-radius: 15px; padding: 12px; text-align: center; color: #fff; }
+        .big-card .val { font-size: 24px; font-weight: 800; }
+        .big-card span { font-size: 10px; text-transform: uppercase; font-weight: 600; }
         .card-saving { background: linear-gradient(135deg, #0ea5e9, #2563eb); }
         .card-cons { background: linear-gradient(135deg, #9333ea, #7c3aed); }
         .card-year { background: linear-gradient(135deg, #16a34a, #15803d); }
         .card-life { background: linear-gradient(135deg, #FF9933, #e65100); }
 
-        /* BUTTONS */
-        .bottom-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .pbtn { padding: 12px; border: none; border-radius: 10px; font-weight: 700; font-size: 13px; color: #fff; cursor: pointer; transition: 0.2s; }
-        .pbtn:active { transform: scale(0.95); }
+        .pbtn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-weight: 700; color: #fff; cursor: pointer; margin-top: 5px; }
         .wa { background: #128C7E; } .pdf { background: #334155; } .order { background: #FF9800; } .clear { background: #dc2626; }
 
-        /* LIST ITEM */
-        .list-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 6px 10px; border-radius: 8px; margin-bottom: 4px; border-left: 3px solid #0ea5e9; font-size: 12px; }
-
-        footer { text-align: center; padding: 10px; font-size: 11px; font-weight: 800; color: #1e293b; }
+        /* PDF HIDDEN TEMPLATE */
+        #pdfReport { display: none; padding: 30px; background: #fff; color: #000; font-family: 'Poppins', sans-serif; }
+        .pdf-header { border-bottom: 3px solid #FF9933; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; }
+        .pdf-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .pdf-table th, .pdf-table td { border: 1px solid #eee; padding: 10px; text-align: left; }
+        .pdf-table th { background: #f8fafc; }
+        .ai-box { background: #f0f7ff; border-left: 5px solid #2563eb; padding: 15px; margin-top: 20px; border-radius: 8px; }
     </style>
 </head>
 <body>
 
-<div id="watermark">7020970727</div>
-
-<div class="wrap" id="billArea">
+<div class="wrap">
     <header>
-        <div style="display:flex; gap:8px; align-items:center">
-            <div class="logo"><img src="logo.png" alt="RCM"></div>
-            <h1>RCM Pro कॅल्क्युलेटर</h1>
+        <div style="display:flex; gap:10px; align-items:center">
+            <div class="logo"><img src="logo.png"></div>
+            <h1 style="margin:0; font-family:'Baloo 2'; font-size:22px; color:#0a5b99">RCM Pro AI</h1>
         </div>
-        <div id="visitorBox" style="font-size:11px; font-weight:700; color:#138808"></div>
+        <div id="visitorBox" style="font-size:12px; font-weight:700"></div>
     </header>
 
     <div class="grid">
         <div class="card">
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px">
-                <div><label>नाव</label><input id="custName" placeholder="नाव"></div>
-                <div><label>RCM ID</label><input id="rcmId" placeholder="ID"></div>
+            <label>ग्राहक तपशील</label>
+            <input id="custName" placeholder="नाव">
+            <input id="rcmId" placeholder="RCM ID">
+            <label>प्रॉडक्ट निवडा</label>
+            <select id="productSelect"></select>
+            <div style="display:flex; gap:8px">
+                <input id="qtyInput" type="number" value="1" style="flex:1; text-align:center">
+                <button id="addBtn" class="pbtn" style="background:#0a5b99; flex:2; margin-top:0">+ ADD</button>
             </div>
-            <div style="margin-top:5px">
-                <label>प्रॉडक्ट निवडा</label>
-                <select id="productSelect"></select>
-                <div style="display:flex; gap:5px">
-                    <input id="qtyInput" type="number" value="1" min="1" style="flex:0.6; text-align:center">
-                    <button id="addBtn" class="pbtn" style="background:#0a5b99; flex:2">+ ADD</button>
-                </div>
-            </div>
-            <div id="productList" style="max-height: 160px; overflow-y:auto; margin-top:8px"></div>
+            <div id="productList" style="margin-top:15px; max-height:200px; overflow-y:auto"></div>
         </div>
 
         <div>
@@ -120,128 +82,150 @@
                 <div class="big-card card-saving"><span>मासिक बचत</span><div class="val" id="cardMonthly">₹0</div></div>
                 <div class="big-card card-cons"><span>कन्सिस्टन्सी</span><div class="val" id="cardCons">₹0</div></div>
                 <div class="big-card card-year"><span>वार्षिक बचत</span><div class="val" id="cardAnnual">₹0</div></div>
-                <div class="big-card card-life"><span>20 वर्षांचा फायदा</span><div class="val" id="cardTwenty">₹0</div></div>
+                <div class="big-card card-life"><span>२० वर्षांचा फायदा</span><div class="val" id="cardTwenty">₹0</div></div>
             </div>
-
-            <div class="card" style="margin-top:10px; padding:10px">
-                <div style="display:flex; justify-content:space-around; text-align:center">
-                    <div><small>Market</small><div id="totalMarket" style="font-weight:700">₹0</div></div>
-                    <div><small>RCM</small><div id="totalRCM" style="font-weight:700; color:#0a5b99">₹0</div></div>
-                    <div><small>Total PV</small><div id="totalPV" style="font-weight:700; color:#138808">0</div></div>
-                </div>
-            </div>
-
-            <div class="bottom-actions">
-                <button id="waBtn" class="pbtn wa">WhatsApp</button>
-                <button id="pdfBtn" class="pbtn pdf">Download PDF</button>
-                <button id="orderBtn" class="pbtn order">Place Order</button>
-                <button id="clearBtn" class="pbtn clear">Clear All</button>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px">
+                <button id="pdfBtn" class="pbtn pdf">📄 AI Report (PDF)</button>
+                <button id="waBtn" class="pbtn wa">📲 WhatsApp</button>
+                <button id="orderBtn" class="pbtn order">🛒 Place Order</button>
+                <button id="clearBtn" class="pbtn clear">🗑 Clear</button>
             </div>
         </div>
     </div>
-    <footer>Designed by DS WORLD | 7020970727</footer>
+    <footer style="text-align:center; padding:15px; font-weight:800">Designed by DS WORLD | 7020970727</footer>
+</div>
+
+<div id="pdfReport">
+    <div class="pdf-header">
+        <div>
+            <h1 style="color:#FF9933; margin:0">RCM SMART SAVINGS</h1>
+            <p style="margin:2px 0">बचत क्रांती अहवाल</p>
+        </div>
+        <div style="text-align:right">
+            <h3 style="margin:0" id="pdfCustName">Customer</h3>
+            <p id="pdfDate"></p>
+        </div>
+    </div>
+
+    <table class="pdf-table">
+        <thead>
+            <tr>
+                <th>प्रॉडक्ट नाव</th>
+                <th>नग (Qty)</th>
+                <th>Market Price</th>
+                <th>RCM Price</th>
+                <th>तुमची बचत</th>
+            </tr>
+        </thead>
+        <tbody id="pdfTableBody"></tbody>
+    </table>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
+        <div class="ai-box">
+            <h4 style="margin-top:0; color:#2563eb">🤖 DS WORLD AI Analysis:</h4>
+            <div id="aiAnalysisText" style="font-size:14px; line-height:1.5"></div>
+        </div>
+        <div style="background:#fff9f0; padding:15px; border-radius:8px; border-right:5px solid #FF9800">
+            <h4 style="margin-top:0; color:#e65100">💰 बचत सारांश:</h4>
+            <p>वर्षाची बचत: <b id="pdfYear">₹0</b></p>
+            <p>२० वर्षांचा एकूण फायदा: <b id="pdfLife">₹0</b></p>
+            <p>एकूण PV: <b id="pdfPV">0</b></p>
+        </div>
+    </div>
+
+    <div style="margin-top:40px; text-align:center; border-top:1px solid #eee; padding-top:20px; color:#666">
+        <p>अधिक माहितीसाठी संपर्क: <b>7020970727</b></p>
+        <p style="font-size:10px; opacity:0.5">Watermark: 7020970727 | AI Generated Report</p>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 <script>
-    function $(id){return document.getElementById(id);}
-    function fmt(n){return Math.round(n).toLocaleString("en-IN");}
+    const $ = (id) => document.getElementById(id);
+    const fmt = (n) => Math.round(n).toLocaleString("en-IN");
+    
+    let products = [], order = [];
 
-    let products = [];
-    let order = [];
-
-    /* 1. GOOGLE SHEET LOADING */
-    const SHEET_ID = "1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k";
-    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-
-    async function loadProducts(){
+    // LOAD SHEET
+    async function loadData(){
+        const url = "https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json";
         try {
-            let r = await fetch(SHEET_URL);
+            let r = await fetch(url);
             let t = await r.text();
-            let j = JSON.parse(t.substring(47, t.length - 2));
-            products = j.table.rows.map(r => ({
-                name: r.c[0]?.v || "",
-                market: +r.c[1]?.v || 0,
-                rcm: +r.c[2]?.v || 0,
-                pv: +r.c[3]?.v || 0
-            }));
-            fillSelect();
-        } catch (e) {
-            console.error("Sheet Error", e);
-            products = [{name: "No Data Found", market: 0, rcm: 0, pv: 0}];
-            fillSelect();
-        }
+            let j = JSON.parse(t.substring(47, t.length-2));
+            products = j.table.rows.map(r => ({ name: r.c[0]?.v, market: +r.c[1]?.v, rcm: +r.c[2]?.v, pv: +r.c[3]?.v }));
+            $('productSelect').innerHTML = '<option value="">-- प्रॉडक्ट निवडा --</option>' + 
+                products.map((p,i) => `<option value="${i}">${p.name}</option>`).join('');
+        } catch(e) { alert("Sheet Error!"); }
     }
 
-    function fillSelect(){
-        $('productSelect').innerHTML = '<option value="">-- निवडा --</option>';
-        products.forEach((p, i) => {
-            let o = document.createElement("option");
-            o.value = i; o.textContent = p.name;
-            $('productSelect').appendChild(o);
-        });
-    }
-
-    /* 2. LOGIC */
     $('addBtn').onclick = () => {
         let idx = $('productSelect').value;
-        if(idx === "") return alert("Product निवडा!");
-        let qty = parseInt($('qtyInput').value) || 1;
+        if(!idx) return;
         let p = products[idx];
+        let qty = parseInt($('qtyInput').value) || 1;
         let ex = order.find(o => o.name === p.name);
         if(ex) ex.qty += qty; else order.push({...p, qty});
-        calc();
+        updateUI();
     };
 
-    function calc(){
-        $('productList').innerHTML = "";
+    function updateUI(){
         let tM=0, tR=0, tPV=0, tS=0;
-        order.forEach((it, i) => {
-            tM += it.market * it.qty; tR += it.rcm * it.qty;
-            tPV += it.pv * it.qty; tS += (it.market - it.rcm) * it.qty;
-            let div = document.createElement("div");
-            div.className = "list-item";
-            div.innerHTML = `<div><b>${it.name}</b><br><small>Qty: ${it.qty}</small></div><b>₹${fmt((it.market-it.rcm)*it.qty)}</b>`;
-            $('productList').appendChild(div);
-        });
-
-        $('totalMarket').innerText = "₹" + fmt(tM);
-        $('totalRCM').innerText = "₹" + fmt(tR);
-        $('totalPV').innerText = fmt(tPV);
+        $('productList').innerHTML = order.map(it => {
+            tM += it.market*it.qty; tR += it.rcm*it.qty; tPV += it.pv*it.qty; tS += (it.market-it.rcm)*it.qty;
+            return `<div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #eee">
+                <span>${it.name} (x${it.qty})</span><b>₹${fmt(it.rcm*it.qty)}</b>
+            </div>`;
+        }).join('');
 
         let cons = tPV < 1500 ? tPV*0.12 : tPV < 2500 ? 1500*0.1667 : 5000*0.1667;
         let monthly = tS + cons;
-        $('cardMonthly').innerText = "₹" + fmt(monthly);
-        $('cardCons').innerText = "₹" + fmt(cons);
-        $('cardAnnual').innerText = "₹" + fmt(monthly * 12);
-        $('cardTwenty').innerText = "₹" + fmt(monthly * 12 * 20);
+        $('cardMonthly').innerText = "₹"+fmt(monthly);
+        $('cardCons').innerText = "₹"+fmt(cons);
+        $('cardAnnual').innerText = "₹"+fmt(monthly*12);
+        $('cardTwenty').innerText = "₹"+fmt(monthly*12*20);
     }
 
-    /* 3. PDF WITH WATERMARK */
+    // PDF GENERATION WITH AI ANALYSIS
     $('pdfBtn').onclick = () => {
-        $('watermark').style.display = 'block';
-        const element = $('billArea');
-        html2pdf().from(element).set({
-            margin: 5, filename: 'RCM_Report.pdf',
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).save().then(() => { $('watermark').style.display = 'none'; });
+        if(order.length === 0) return alert("लिस्ट रिकामी आहे!");
+        
+        $('pdfCustName').innerText = $('custName').value || "सन्माननीय ग्राहक";
+        $('pdfDate').innerText = new Date().toLocaleDateString('mr-IN');
+        $('pdfYear').innerText = $('cardAnnual').innerText;
+        $('pdfLife').innerText = $('cardTwenty').innerText;
+        $('pdfPV').innerText = fmt(order.reduce((s,i)=>s+(i.pv*i.qty),0));
+
+        $('pdfTableBody').innerHTML = order.map(it => `
+            <tr>
+                <td>${it.name}</td>
+                <td>${it.qty}</td>
+                <td>₹${it.market}</td>
+                <td>₹${it.rcm}</td>
+                <td style="color:green; font-weight:700">₹${(it.market-it.rcm)*it.qty}</td>
+            </tr>
+        `).join('');
+
+        // AI Logic
+        let lifeSaving = parseInt($('cardTwenty').innerText.replace(/\D/g,''));
+        let aiText = `जर तुम्ही ही बचत अशीच सुरू ठेवली, तर २० वर्षात तुम्ही <b>₹${fmt(lifeSaving)}</b> वाचवू शकता. <br><br>
+            💡 <b>AI टीप:</b> ही रक्कम तुम्ही तुमच्या मुलांच्या उच्च शिक्षणासाठी किंवा स्वतःचे हक्काचे घर घेण्यासाठी 'Down Payment' म्हणून वापरू शकता. RCM मुळे तुम्हाला फक्त शुद्ध प्रॉडक्ट्स मिळत नाहीत, तर एक मोठी संपत्ती निर्माण करण्याची संधी मिळते!`;
+        $('aiAnalysisText').innerHTML = aiText;
+
+        const report = $('pdfReport');
+        report.style.display = 'block';
+        html2pdf().from(report).set({ margin: 10, filename: 'RCM_AI_Report.pdf', html2canvas: { scale: 2 } }).save().then(()=> report.style.display='none');
     };
 
-    /* 4. OTHER ACTIONS */
     $('waBtn').onclick = () => {
-        let msg = `*RCM बचत रिपोर्ट*\nPV: ${$('totalPV').innerText}\nमासिक बचत: ${$('cardMonthly').innerText}`;
-        window.open("https://wa.me/?text=" + encodeURIComponent(msg));
+        let msg = `*RCM बचत रिपोर्ट*\nग्राहक: ${$('custName').value}\nमासिक बचत: ${$('cardMonthly').innerText}\n२० वर्षांचा फायदा: ${$('cardTwenty').innerText}\n*DS WORLD AI Analysis*`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
     };
 
-    $('clearBtn').onclick = () => { if(confirm("Clear करायचे?")) { order = []; calc(); } };
-
-    // Visit Counter
-    let v = localStorage.getItem("rcm_v") || 0; v++;
-    localStorage.setItem("rcm_v", v);
-    $('visitorBox').innerText = "भेटी: " + v;
-
-    loadProducts();
+    $('clearBtn').onclick = () => { order = []; updateUI(); };
+    loadData();
 </script>
+
 </body>
 </html>
