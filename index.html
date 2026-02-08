@@ -6,94 +6,123 @@
     <title>RCM नये भारत का निर्माण</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* DYNAMIC FLOATING BACKGROUND: BOTTOM-LEFT TO TOP-RIGHT */
         body {
             margin: 0; font-family: "Poppins", "Baloo 2", sans-serif;
-            background: linear-gradient(180deg, #FF9933, #FFFFFF, #138808, #FF9933);
-            background-size: 100% 400%; animation: flowDown 12s linear infinite;
-            background-attachment: fixed; color: #1e293b; overflow-x: hidden;
+            background: linear-gradient(45deg, #FF9933, #FFFFFF, #138808, #FFFFFF, #FF9933);
+            background-size: 400% 400%;
+            animation: moveGradient 10s ease-in-out infinite;
+            background-attachment: fixed;
+            color: #1e293b; overflow-x: hidden;
         }
-        @keyframes flowDown { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
 
         .wrap { max-width: 1000px; margin: auto; padding: 8px; position: relative; }
         
+        /* HEADER WITH LOGO AND WAVE FLAGS */
         header { 
             display: flex; justify-content: space-between; align-items: center; 
-            background: rgba(255, 255, 255, 0.9); padding: 10px; 
-            border-radius: 12px; margin-bottom: 8px; backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9); padding: 8px 12px; 
+            border-radius: 15px; margin-bottom: 10px; backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        .flag { font-size: 22px; animation: floatFlag 2s ease-in-out infinite alternate; }
-        @keyframes floatFlag { from { transform: translateY(0); } to { transform: translateY(-5px); } }
-        h1 { margin: 0; font-family: 'Baloo 2'; font-size: 17px; color: #0a5b99; text-align: center; flex: 1; }
+        .logo-box { width: 50px; height: 50px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-box img { width: 90%; height: auto; }
 
-        #voiceToggle { background: #f0f0f0; border: 1px solid #ccc; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 18px; }
+        .flag-wave { font-size: 26px; display: inline-block; animation: waveFlag 2.5s ease-in-out infinite; }
+        @keyframes waveFlag {
+            0%, 100% { transform: rotate(-5deg) translateY(0); }
+            50% { transform: rotate(10deg) translateY(-8px); }
+        }
+        
+        h1 { margin: 0; font-family: 'Baloo 2'; font-size: 18px; color: #0a5b99; text-align: center; flex: 1; padding: 0 5px; }
 
-        .card { background: rgba(255,255,255,0.92); border-radius: 16px; padding: 12px; margin-bottom: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-        .grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 8px; }
+        #voiceToggle { background: #f0f0f0; border: none; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* CARDS */
+        .card { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 15px; margin-bottom: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.5); }
+        .grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px; }
         @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
 
-        input, select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; font-size: 14px; margin-bottom: 8px; box-sizing: border-box; }
+        input, select { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; font-size: 14px; margin-bottom: 10px; outline: none; transition: 0.3s; }
+        input:focus { border-color: #0a5b99; box-shadow: 0 0 5px rgba(10,91,153,0.2); }
 
+        /* NEON SAVINGS POPUP */
         .savings-popup {
             position: fixed; top: 15%; left: 50%; transform: translateX(-50%);
-            background: #fff; border: 3px solid #39FF14; padding: 12px 25px;
-            border-radius: 50px; box-shadow: 0 0 15px #39FF14, 0 10px 30px rgba(0,0,0,0.2);
+            background: #fff; border: 3px solid #39FF14; padding: 15px 35px;
+            border-radius: 50px; box-shadow: 0 0 20px #39FF14, 0 10px 40px rgba(0,0,0,0.3);
             z-index: 10000; display: none; text-align: center;
         }
-        .fade-in { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .fade-in { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .fade-out { animation: popOut 0.8s ease-out forwards; }
-        @keyframes popIn { 0% { opacity: 0; transform: translate(-50%, -20px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
-        @keyframes popOut { 0% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, -50px); } }
+        @keyframes popIn { 0% { opacity: 0; transform: translate(-50%, -30px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
+        @keyframes popOut { 0% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, -60px); } }
 
-        /* PRODUCT ROW WITH BACHAT */
-        .prod-row { background: #fff; padding: 8px 10px; border-radius: 10px; margin-bottom: 5px; border-left: 4px solid #0a5b99; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
-        .prod-info { flex: 1; }
-        .prod-save { font-weight: 700; color: #138808; background: #e8f5e9; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
+        /* PRODUCT ROW */
+        .prod-row { background: #fff; padding: 10px 15px; border-radius: 12px; margin-bottom: 6px; border-left: 5px solid #0a5b99; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .prod-save-badge { background: #e8f5e9; color: #138808; font-weight: 800; padding: 4px 10px; border-radius: 20px; font-size: 13px; }
         
-        .total-row { background: #0a5b99; color: #fff; padding: 10px; border-radius: 10px; margin-top: 5px; display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; }
+        .total-row { background: #0a5b99; color: #fff; padding: 12px; border-radius: 12px; margin-top: 10px; display: flex; justify-content: space-between; font-weight: 800; font-size: 15px; }
 
-        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .big-card { border-radius: 12px; padding: 10px; text-align: center; color: #fff; }
-        .big-card .val { font-size: 22px; font-weight: 800; font-family: 'Baloo 2'; }
-        
+        /* RESULT BOXES */
+        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .big-card { border-radius: 18px; padding: 12px; text-align: center; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; }
+        .big-card:hover { transform: translateY(-3px); }
+        .big-card .val { font-size: 24px; font-weight: 800; margin-top: 2px; }
+        .big-card span { font-size: 11px; font-weight: 600; text-transform: uppercase; }
+
         .card-saving { background: linear-gradient(135deg, #0ea5e9, #2563eb); }
         .card-cons { background: linear-gradient(135deg, #9333ea, #7c3aed); }
         .card-year { background: linear-gradient(135deg, #16a34a, #15803d); }
         .card-life { background: linear-gradient(135deg, #FF9933, #e65100); }
 
-        .pbtn { width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 700; color: #fff; cursor: pointer; transition: 0.2s; font-size: 13px; }
+        .pbtn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-weight: 700; color: #fff; cursor: pointer; transition: 0.2s; font-size: 14px; margin-top: 5px; }
         .wa { background: #128C7E; } .pdf { background: #334155; } .order { background: #FF9800; } .clear { background: #dc2626; }
 
-        #pdfReport { display: none; padding: 30px; background: #fff; position: relative; color: #000; }
-        .pdf-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 70px; color: rgba(0,0,0,0.05); font-weight: 900; pointer-events: none; }
+        /* PDF HIDDEN SECTION */
+        #pdfReport { display: none; padding: 40px; background: #fff; position: relative; color: #000; font-family: 'Poppins', 'Baloo 2', sans-serif; }
+        .pdf-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 80px; color: rgba(0,0,0,0.06); font-weight: 900; white-space: nowrap; pointer-events: none; }
+        .pdf-table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+        .pdf-table th, .pdf-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .pdf-table th { background: #f8fafc; }
+        .ai-box { background: #f0f7ff; border-left: 6px solid #2563eb; padding: 20px; border-radius: 10px; margin-top: 25px; }
     </style>
 </head>
 <body>
 
 <div id="savePopup" class="savings-popup">
-    <span style="font-size: 13px; color: #333;">तुमची बचत:</span>
-    <h2 id="saveAmount" style="margin:5px 0; color:#138808; font-size: 30px; font-family:'Baloo 2'">₹0</h2>
+    <span style="font-size: 14px; color: #333; font-weight: 600;">तुमची बचत:</span>
+    <h2 id="saveAmount" style="margin:5px 0; color:#138808; font-size: 34px; font-family:'Baloo 2'">₹0</h2>
+    <span style="font-size: 20px;">🥳 ✨ 🎉</span>
 </div>
 
 <div class="wrap" id="mainApp">
     <header>
-        <div class="flag">🇮🇳</div>
+        <div class="logo-box"><img src="logo.png" alt="RCM Logo"></div>
+        <div class="flag-wave">🇮🇳</div>
         <h1>RCM नये भारत का निर्माण</h1>
-        <div class="flag">🇮🇳</div>
+        <div class="flag-wave">🇮🇳</div>
         <button id="voiceToggle">🔊</button>
     </header>
 
     <div class="grid">
         <div class="card">
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px">
-                <input id="cName" placeholder="नाव">
-                <input id="cId" placeholder="ID">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
+                <input id="cName" placeholder="नाव लिहा">
+                <input id="cId" placeholder="ID लिहा">
             </div>
             <select id="pSelect"></select>
-            <div style="display:flex; gap:6px">
+            <div style="display:flex; gap:8px">
                 <input id="qInput" type="number" value="1" min="1" style="flex:0.5; text-align:center">
-                <button id="addBtn" class="pbtn" style="background:#0a5b99; flex:1.5;">+ जोडा</button>
+                <button id="addBtn" class="pbtn" style="background:#0a5b99; flex:1.5; margin-top:0">+ जोडा</button>
             </div>
-            <div id="pList" style="margin-top:10px; max-height:220px; overflow-y:auto"></div>
+            <div id="pList" style="margin-top:12px; max-height:250px; overflow-y:auto"></div>
             <div id="totalSection"></div>
         </div>
 
@@ -104,11 +133,11 @@
                 <div class="big-card card-year"><span>वार्षिक बचत</span><div class="val" id="ySave">₹0</div></div>
                 <div class="big-card card-life"><span>20 वर्षांचा फायदा</span><div class="val" id="lSave">₹0</div></div>
             </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:10px">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:12px">
                 <button id="waBtn" class="pbtn wa">📲 WhatsApp Report</button>
-                <button id="pdfBtn" class="pbtn pdf">📄 PDF रिपोर्ट</button>
+                <button id="pdfBtn" class="pbtn pdf">📄 AI PDF रिपोर्ट</button>
                 <button id="orderBtn" class="pbtn order">🛒 Place Order</button>
-                <button id="clearBtn" class="pbtn clear">🗑 Clear</button>
+                <button id="clearBtn" class="pbtn clear">🗑 Clear List</button>
             </div>
         </div>
     </div>
@@ -117,12 +146,26 @@
 
 <div id="pdfReport">
     <div class="pdf-watermark">7020970727</div>
-    <h2 style="color:#FF9933;">RCM स्मार्ट बचत अहवाल</h2>
-    <p id="pdfName"></p>
-    <div id="pdfTableContent"></div>
-    <div style="background:#f0f7ff; padding:10px; border-radius:8px; margin-top:15px;">
-        <h4>🤖 AI विश्लेषण:</h4>
-        <p id="aiText"></p>
+    <div style="border-bottom: 4px solid #FF9933; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1 style="color:#FF9933; margin:0; font-size: 28px;">RCM स्मार्ट बचत अहवाल</h1>
+            <p style="margin:5px 0; font-weight: 600;">नये भारत का निर्माण</p>
+        </div>
+        <div style="text-align:right">
+            <h3 id="pdfCustomerName" style="margin:0"></h3>
+            <p id="pdfReportDate" style="margin:5px 0"></p>
+        </div>
+    </div>
+    <table class="pdf-table">
+        <thead><tr><th>अ.क्र.</th><th>प्रॉडक्ट नाव</th><th>नग</th><th>मार्केट किंमत</th><th>RCM किंमत</th><th>तुमची बचत</th></tr></thead>
+        <tbody id="pdfTableBody"></tbody>
+    </table>
+    <div class="ai-box">
+        <h3 style="margin:0 0 10px; color:#2563eb">🤖 AI स्मार्ट विश्लेषण:</h3>
+        <p id="pdfAiAnalysis" style="font-size:16px; line-height:1.6;"></p>
+    </div>
+    <div style="margin-top:50px; text-align:center; border-top:1px solid #eee; padding-top:20px;">
+        <p style="font-size: 18px; font-weight: 800; color: #0a5b99; margin: 0;">संपर्क: 7020970727 | DS WORLD</p>
     </div>
 </div>
 
@@ -133,12 +176,20 @@
     let products = [], order = JSON.parse(localStorage.getItem("rcm_order")) || [];
     let isVoiceOn = true;
 
-    $('voiceToggle').onclick = () => { isVoiceOn = !isVoiceOn; $('voiceToggle').innerText = isVoiceOn ? "🔊" : "🔇"; };
+    $('voiceToggle').onclick = () => {
+        isVoiceOn = !isVoiceOn;
+        $('voiceToggle').innerText = isVoiceOn ? "🔊" : "🔇";
+    };
 
     function speak(txt) {
         if (!isVoiceOn) return;
+        window.speechSynthesis.cancel(); 
         let msg = new SpeechSynthesisUtterance(txt);
-        msg.lang = 'mr-IN'; msg.pitch = 1.2; msg.rate = 1.0; window.speechSynthesis.speak(msg);
+        msg.lang = 'mr-IN';
+        msg.pitch = 1.3; 
+        msg.rate = 0.9; 
+        msg.volume = 1.0;
+        window.speechSynthesis.speak(msg);
     }
 
     async function load(){
@@ -158,7 +209,9 @@
         let bachat = (p.mkt - p.rcm) * qty;
         order.push({...p, qty});
         localStorage.setItem("rcm_order", JSON.stringify(order));
-        speak(`Abhinandan! Tumachi ${bachat} rupaye bachat jhali ahe!`);
+        
+        speak(`वाह! अभिनंदन! तुमची ${bachat} रुपये बचत झाली आहे! खूपच छान!`);
+        
         showPopup(bachat); update();
     };
 
@@ -172,10 +225,13 @@
         let tM=0, tR=0, tPV=0, tS=0;
         $('pList').innerHTML = order.map((it, i) => {
             let b = (it.mkt - it.rcm) * it.qty; tM += it.mkt*it.qty; tR += it.rcm*it.qty; tPV += it.pv*it.qty; tS += b;
-            return `<div class="prod-row"><div class="prod-info"><b>${i+1}. ${it.name} (x${it.qty})</b></div><div class="prod-save">बचत: ₹${fmt(b)}</div></div>`;
+            return `<div class="prod-row">
+                <div style="flex:1"><b>${i+1}. ${it.name}</b><br><small>MRP: ₹${fmt(it.mkt*it.qty)} | RCM: ₹${fmt(it.rcm*it.qty)}</small></div>
+                <div class="prod-save-badge">बचत: ₹${fmt(b)}</div>
+            </div>`;
         }).join('');
         if(order.length > 0) {
-            $('totalSection').innerHTML = `<div class="total-row"><span>एकूण MRP: ₹${fmt(tM)}</span><span>RCM: ₹${fmt(tR)}</span></div>`;
+            $('totalSection').innerHTML = `<div class="total-row"><span>एकूण MRP: ₹${fmt(tM)}</span><span>एकूण RCM: ₹${fmt(tR)}</span></div>`;
         } else { $('totalSection').innerHTML = ""; }
         let cons = tPV < 1500 ? tPV*0.12 : tPV < 2500 ? 1500*0.1667 : 5000*0.1667;
         let m = tS + cons;
@@ -184,31 +240,53 @@
     }
 
     $('waBtn').onclick = () => {
-        if(!order.length) return alert("List rikami ahe!");
-        let msg = `*RCM स्मार्ट बचत रिपोर्ट*\n--------------------------\n*ग्राहक:* ${$('cName').value || "सन्माननीय ग्राहक"}\n\n*बचत तपशील:*\n`;
-        order.forEach((it, i) => msg += `${i+1}) ${it.name} (x${it.qty}) - बचत ₹${fmt((it.mkt-it.rcm)*it.qty)}\n`);
-        msg += `\n*मासिक बचत:* ${$('mSave').innerText}\n*वार्षिक बचत:* ${$('ySave').innerText}\n*२० वर्षांचा फायदा:* ${$('lSave').innerText}\n--------------------------\n*DS WORLD | 7020970727*`;
+        if(!order.length) return alert("लिस्ट रिकामी आहे!");
+        let n = $('cName').value || "सन्माननीय ग्राहक";
+        let msg = `*RCM स्मार्ट बचत अहवाल*\n--------------------------\n*नाव:* ${n}\n\n*ऑर्डर तपशील:*\n`;
+        order.forEach((it, i) => msg += `${i+1}) ${it.name} (x${it.qty})\n   MRP: ₹${fmt(it.mkt*it.qty)} | RCM: ₹${fmt(it.rcm*it.qty)}\n   *बचत: ₹${fmt((it.mkt-it.rcm)*it.qty)}*\n`);
+        msg += `\n--------------------------\n*मासिक बचत:* ${$('mSave').innerText}\n*वार्षिक बचत:* ${$('ySave').innerText}\n*२० वर्षांचा फायदा:* ${$('lSave').innerText}\n--------------------------\n*DS WORLD | 7020970727*`;
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
     };
 
     $('orderBtn').onclick = () => {
-        if(!order.length) return alert("Order sathi product joda!");
-        let msg = `*NEW RCM ORDER*\n--------------------------\n*Customer:* ${$('cName').value || "Guest"}\n\n*Product List:*\n`;
-        order.forEach((it, i) => msg += `▪️ ${it.name} - ${it.qty} Qty\n`);
-        msg += `\n*Total RCM Price:* ₹${$('totalSection').innerText.split('₹')[2]}\n--------------------------\nPlz Confirm Order.`;
+        if(!order.length) return alert("ऑर्डर देण्यासाठी लिस्टमध्ये प्रॉडक्ट जोडा!");
+        let n = $('cName').value || "ग्राहक";
+        let msg = `*नवीन RCM ऑर्डर*\n--------------------------\n*नाव:* ${n}\n\n*प्रॉडक्ट यादी:*\n`;
+        order.forEach((it, i) => msg += `▪️ ${it.name} - ${it.qty} नग\n`);
+        msg += `\n*एकूण RCM किंमत:* ₹${$('mSave').parentElement.parentElement.innerText.includes('RCM किंमत') ? 'तपासा' : fmt(order.reduce((s,i)=>s+(i.rcm*i.qty),0))}\n--------------------------\nकृपया ही ऑर्डर कन्फर्म करावी.`;
         window.open(`https://wa.me/7020970727?text=${encodeURIComponent(msg)}`);
     };
 
     $('pdfBtn').onclick = () => {
-        if(!order.length) return;
-        $('pdfName').innerText = "नाव: " + ($('cName').value || "ग्राहक");
-        $('aiText').innerText = `Tumchi varshik bachat ${$('ySave').innerText} ahe. 20 varshat hi rakkan ${$('lSave').innerText} hoil.`;
+        if(!order.length) return alert("लिस्ट रिकामी आहे!");
+        $('pdfCustomerName').innerText = "नाव: " + ($('cName').value || "सन्माननीय ग्राहक");
+        $('pdfReportDate').innerText = "तारीख: " + new Date().toLocaleDateString('mr-IN');
+        $('pdfTableBody').innerHTML = order.map((it, i) => `
+            <tr>
+                <td>${i+1}</td>
+                <td>${it.name}</td>
+                <td>${it.qty}</td>
+                <td>₹${fmt(it.mkt*it.qty)}</td>
+                <td>₹${fmt(it.rcm*it.qty)}</td>
+                <td style="color:green; font-weight:bold;">₹${fmt((it.mkt-it.rcm)*it.qty)}</td>
+            </tr>
+        `).join('');
+        
+        let lifeGain = $('lSave').innerText;
+        $('pdfAiAnalysis').innerHTML = `तुमच्या या स्मार्ट खरेदीमुळे तुम्ही दरवर्षी मोठी बचत करत आहात. जर तुम्ही अशीच खरेदी सुरू ठेवली, तर २० वर्षांत तुमची एकूण संपत्ती <b>${lifeGain}</b> ने वाढेल. ही रक्कम तुमच्या मुलांचे उच्च शिक्षण किंवा स्वप्नातील घरासाठी एक भक्कम आधार ठरेल! RCM शी जोडले जाणे हा तुमचा सर्वात चांगला निर्णय आहे.`;
+
         const rep = $('pdfReport'); rep.style.display = 'block';
-        html2pdf().from(rep).set({ margin: 10, filename: 'RCM_Report.pdf' }).save().then(()=> rep.style.display='none');
+        html2pdf().from(rep).set({ 
+            margin: 5, 
+            filename: 'RCM_Smart_Bachat_Report.pdf', 
+            html2canvas: { scale: 3 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).save().then(()=> rep.style.display='none');
     };
 
-    $('clearBtn').onclick = () => { if(confirm("List clear karaychi ka?")) { order=[]; localStorage.removeItem("rcm_order"); update(); } };
+    $('clearBtn').onclick = () => { if(confirm("सर्व लिस्ट साफ करायची का?")) { order=[]; localStorage.removeItem("rcm_order"); update(); } };
     load();
 </script>
+
 </body>
 </html>
