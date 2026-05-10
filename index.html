@@ -76,7 +76,36 @@ return `${n?n+' जी, ':''}बधाई हो! आपने ${cleanAmount} �
 
 return `${n?n+' जी, ':''}अभिनंदन! तुम्ही ${cleanAmount} रुपये बचत केली आहे. स्मार्ट खरेदी, स्मार्ट बचत!`;
 }
-function speak(txt){if(!isVoiceOn||!('speechSynthesis'in window))return;window.speechSynthesis.cancel();loadVoices();let msg=new SpeechSynthesisUtterance(txt);msg.lang=selectedVoice?.lang||(currentLang==='mr'?'mr-IN':currentLang==='hi'?'hi-IN':'en-IN');if(selectedVoice)msg.voice=selectedVoice;const style=$('voiceStyle').value;msg.pitch=style==='madam'?1.25:style==='male'?.9:style==='rural'?1.05:1.15;msg.rate=style==='host'?.78:.84;msg.volume=1;window.speechSynthesis.speak(msg)}
+function speak(txt){
+if(!isVoiceOn||!('speechSynthesis' in window)) return;
+window.speechSynthesis.cancel();
+
+const voices=speechSynthesis.getVoices();
+let selected=null;
+
+if(currentLang==='mr'){
+selected=voices.find(v=>v.lang==='mr-IN');
+}
+if(currentLang==='hi' && !selected){
+selected=voices.find(v=>v.lang==='hi-IN');
+}
+if(currentLang==='en' && !selected){
+selected=voices.find(v=>v.lang.startsWith('en'));
+}
+
+if(!selected){
+selected=voices.find(v=>v.lang==='en-IN')||voices[0];
+}
+
+let msg=new SpeechSynthesisUtterance(txt);
+msg.lang=currentLang==='mr'?'mr-IN':currentLang==='hi'?'hi-IN':'en-IN';
+msg.voice=selected;
+msg.pitch=1;
+msg.rate=.82;
+msg.volume=1;
+
+window.speechSynthesis.speak(msg);
+}
 function popCoins(){const box=$('coins');box.innerHTML='';for(let i=0;i<18;i++){let c=document.createElement('div');c.className='coin';c.textContent=i%3===0?'💰':i%3===1?'🪙':'✨';c.style.left=(18+Math.random()*64)+'%';c.style.top=(42+Math.random()*28)+'%';c.style.animationDelay=(Math.random()*.28)+'s';box.appendChild(c)}setTimeout(()=>box.innerHTML='',1700)}
 function showPopup(amount){$('popTitle').innerText=L[currentLang].congrats;$('popupAmount').innerText='₹'+fmt(amount);$('popupText').innerText=L[currentLang].saved.replace('{amt}',fmt(amount));const p=$('savePopup');p.classList.remove('show');void p.offsetWidth;p.classList.add('show');popCoins();clearTimeout(window.__popupTimer);window.__popupTimer=setTimeout(()=>p.classList.remove('show'),3000)}
 async function loadProducts(){try{const res=await fetch(sheetUrl),text=await res.text(),json=JSON.parse(text.substring(text.indexOf('{'),text.lastIndexOf('}')+1));products=json.table.rows.map(r=>({name:r.c[0]?.v||'Unnamed Product',mkt:Number(r.c[1]?.v||0),rcm:Number(r.c[2]?.v||0),pv:Number(r.c[3]?.v||0)})).filter(p=>p.name&&p.rcm>0);$('pSelect').innerHTML='<option value="">-- प्रॉडक्ट निवडा --</option>'+products.map((p,i)=>`<option value="${i}">${p.name} | बचत ₹${fmt(p.mkt-p.rcm)}</option>`).join('')}catch(e){$('pSelect').innerHTML='<option value="">Products load झाले नाहीत</option>'}update()}
