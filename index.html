@@ -2,20 +2,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>RCM AI Smart Savings Pro</title>  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>RCM AI Smart Savings Pro - Fixed</title>  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>  <style>
     :root{--saffron:#ff8a00;--green:#138808;--blue:#0a5b99;--dark:#102033;--muted:#64748b;--glass:rgba(255,255,255,.88);--shadow:0 18px 50px rgba(15,23,42,.15);--radius:24px}
-    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent} body{margin:0;font-family:"Mukta","Poppins",sans-serif;color:var(--dark);min-height:100vh;background:radial-gradient(circle at 15% 15%,rgba(255,138,0,.35),transparent 28%),radial-gradient(circle at 85% 20%,rgba(19,136,8,.22),transparent 30%),radial-gradient(circle at 50% 90%,rgba(10,91,153,.18),transparent 35%),linear-gradient(135deg,#fff7ed,#fff,#ecfdf5);background-attachment:fixed;overflow-x:hidden}
-    body:before{content:"";position:fixed;inset:0;background:linear-gradient(120deg,rgba(255,153,51,.16),rgba(255,255,255,.35),rgba(19,136,8,.14));background-size:300% 300%;animation:moveBg 9s ease-in-out infinite;pointer-events:none;z-index:-1}@keyframes moveBg{0%,100%{background-position:0 0}50%{background-position:100% 100%}}
-    .wrap{max-width:1180px;margin:auto;padding:12px}.topbar{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:12px;border-radius:26px;background:rgba(255,255,255,.84);backdrop-filter:blur(18px);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.75);position:sticky;top:8px;z-index:20}.brand{display:flex;align-items:center;gap:10px;min-width:0}.logo{width:56px;height:56px;border-radius:18px;background:#fff;display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(255,138,0,.16),0 8px 22px rgba(0,0,0,.08);overflow:hidden;flex:none}.logo img{width:86%}.title{min-width:0}.title h1{margin:0;font-family:"Baloo 2";font-size:clamp(18px,4vw,30px);line-height:1;color:var(--blue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.title p{margin:4px 0 0;color:var(--muted);font-weight:800;font-size:13px}.flag{font-size:24px;animation:wave 2.4s infinite ease-in-out;display:inline-block}@keyframes wave{0%,100%{transform:rotate(-8deg) translateY(0)}50%{transform:rotate(10deg) translateY(-5px)}}.iconBtn{border:0;border-radius:18px;background:#f8fafc;color:var(--dark);width:48px;height:48px;display:grid;place-items:center;font-size:22px;font-weight:900;box-shadow:0 8px 20px rgba(0,0,0,.08);cursor:pointer}.topControls{display:flex;align-items:center;gap:8px;flex:none}.topSelect{width:auto;min-width:118px;margin:0;padding:10px 12px;border-radius:15px;font-size:13px;background:#fff;font-weight:900}@media(max-width:700px){.topbar{flex-wrap:wrap}.topControls{width:100%;justify-content:flex-end}.topSelect{min-width:105px;font-size:12px;padding:9px 10px}}
-    .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;margin-top:14px}@media(max-width:880px){.hero{grid-template-columns:1fr}.topbar{align-items:flex-start}.title h1{white-space:normal}.flag{display:none}}
-    .panel{background:var(--glass);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.75);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}.panelHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.panelHead h2{margin:0;font-family:"Baloo 2";font-size:23px;color:var(--dark)}.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 11px;background:#ecfdf5;color:var(--green);font-weight:900;font-size:13px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:520px){.formGrid{grid-template-columns:1fr}}label{display:block;font-weight:900;font-size:13px;color:#334155;margin:0 0 5px 2px}input,select{width:100%;border:1px solid #e2e8f0;background:rgba(255,255,255,.95);border-radius:16px;padding:13px 14px;outline:none;font:700 15px "Mukta",sans-serif;color:var(--dark);box-shadow:0 4px 14px rgba(15,23,42,.04)}input:focus,select:focus{border-color:#38bdf8;box-shadow:0 0 0 4px rgba(56,189,248,.15)}.addRow{display:grid;grid-template-columns:1fr 88px 140px;gap:10px;margin-top:10px;align-items:end}@media(max-width:680px){.addRow{grid-template-columns:1fr}.qtyBox{width:100%}}
-    .btn{border:0;border-radius:17px;padding:13px 16px;font:900 15px "Mukta",sans-serif;cursor:pointer;color:white;box-shadow:0 12px 28px rgba(15,23,42,.16);transition:.2s transform;min-height:49px}.btn:active{transform:scale(.98)}.btnBlue{background:linear-gradient(135deg,#0284c7,#0a5b99)}.btnGreen{background:linear-gradient(135deg,#16a34a,#138808)}.btnDark{background:linear-gradient(135deg,#475569,#0f172a)}.btnOrange{background:linear-gradient(135deg,#ffb020,#f97316)}.btnRed{background:linear-gradient(135deg,#ef4444,#b91c1c)}.btnPurple{background:linear-gradient(135deg,#a855f7,#6d28d9)}.btnGhost{background:#fff;color:#0f172a;border:1px solid #e2e8f0;box-shadow:none}
-    .toolGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin:12px 0}@media(max-width:760px){.toolGrid{grid-template-columns:1fr}}.list{margin-top:14px;display:grid;gap:9px;max-height:380px;overflow:auto;padding-right:2px}.empty{border:2px dashed #cbd5e1;border-radius:20px;padding:22px;text-align:center;background:rgba(255,255,255,.45);color:#64748b;font-weight:800}.item{background:#fff;border-radius:20px;padding:12px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-left:6px solid var(--blue);box-shadow:0 8px 22px rgba(15,23,42,.08)}.item b{font-size:16px}.item small{display:block;color:#64748b;font-weight:700;margin-top:3px}.saveBadge{background:#ecfdf5;color:var(--green);font-weight:1000;padding:7px 10px;border-radius:999px;white-space:nowrap;text-align:center}.itemActions{display:flex;gap:6px;justify-content:flex-end;margin-top:7px}.mini{border:0;border-radius:11px;padding:6px 9px;font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a}
-    .dash{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{border-radius:24px;padding:16px;color:#fff;position:relative;overflow:hidden;min-height:118px;box-shadow:0 14px 36px rgba(15,23,42,.18)}.metric:after{content:"";position:absolute;right:-28px;bottom:-28px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.16)}.metric span{font-weight:900}.metric .val{font-family:"Baloo 2";font-size:31px;font-weight:900;line-height:1.1;margin-top:12px}.m1{background:linear-gradient(135deg,#0ea5e9,#2563eb)}.m2{background:linear-gradient(135deg,#a855f7,#6d28d9)}.m3{background:linear-gradient(135deg,#22c55e,#15803d)}.m4{background:linear-gradient(135deg,#fb923c,#ea580c)}.summary{margin-top:12px;display:grid;gap:8px}.totalRow{display:flex;justify-content:space-between;gap:10px;border-radius:18px;background:#0f172a;color:#fff;padding:12px 14px;font-weight:900}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}@media(max-width:520px){.actions{grid-template-columns:1fr}.dash{grid-template-columns:1fr 1fr}}.visitor{margin-top:12px;text-align:right;font-size:13px;font-weight:900;color:#334155}.visitor span{display:inline-block;background:#fff;color:var(--green);border-radius:999px;padding:3px 9px;margin-left:4px}footer{text-align:center;padding:18px 8px;font-weight:900;color:#334155}
-    .aiCard{margin-top:12px;background:#fff;border-radius:22px;padding:14px;border-left:7px solid #2563eb;box-shadow:0 8px 22px rgba(15,23,42,.08)}.aiCard h3{margin:0 0 7px;font-family:"Baloo 2";font-size:22px}.aiCard p{margin:0;color:#334155;font-weight:800;line-height:1.5}.suggestions{display:grid;gap:8px;margin-top:10px}.sug{background:#f8fafc;border:1px solid #e2e8f0;border-radius:15px;padding:10px;font-weight:900;display:flex;justify-content:space-between;gap:8px;align-items:center}.sug button{border:0;border-radius:12px;background:#0a5b99;color:#fff;font-weight:900;padding:8px 10px;cursor:pointer;white-space:nowrap}
-    .visitorModal{position:fixed;inset:0;background:rgba(15,23,42,.58);backdrop-filter:blur(10px);z-index:100000;display:none;align-items:center;justify-content:center;padding:18px}.visitorCard{width:min(92vw,420px);background:#fff;border-radius:28px;padding:24px;box-shadow:0 25px 80px rgba(0,0,0,.3);text-align:center;border:2px solid rgba(255,255,255,.8)}.visitorCard h2{margin:0;font-family:"Baloo 2";font-size:30px;color:#0a5b99}.visitorCard p{font-weight:900;color:#334155}.visitorCard small{display:block;margin-top:10px;color:#64748b;font-weight:800}.popup{position:fixed;left:50%;top:16%;transform:translateX(-50%);width:min(92vw,430px);z-index:9999;display:none;border-radius:30px;padding:18px;background:#fff;text-align:center;box-shadow:0 0 0 4px rgba(34,197,94,.12),0 0 36px rgba(34,197,94,.55),0 24px 70px rgba(0,0,0,.28);border:2px solid #86efac}.popup.show{display:block;animation:pop .45s cubic-bezier(.18,.89,.32,1.28)}@keyframes pop{from{opacity:0;transform:translate(-50%,-28px) scale(.92)}to{opacity:1;transform:translate(-50%,0) scale(1)}}.popup h3{margin:0;color:var(--green);font-family:"Baloo 2";font-size:27px}.popup .amt{font-family:"Baloo 2";font-size:43px;color:#16a34a;font-weight:900;line-height:1}.popup p{margin:7px 0 0;font-weight:900;color:#334155}.coins{position:fixed;inset:0;pointer-events:none;z-index:9998}.coin{position:absolute;font-size:26px;animation:coinFly 1.4s ease-out forwards}@keyframes coinFly{0%{opacity:0;transform:translateY(0) scale(.4) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-180px) scale(1.3) rotate(360deg)}}
-    #pdfReport{display:none;background:#fff;color:#111;padding:34px;font-family:"Mukta",sans-serif;width:794px;min-height:1122px;position:fixed;left:0;top:0;z-index:99999;overflow:visible}.pdfOnly{background:#fff!important;color:#111!important;display:block!important;position:relative!important;width:794px!important;min-height:1122px!important;box-shadow:none!important;opacity:1!important;visibility:visible!important}.wm{position:absolute;inset:0;display:grid;place-items:center;font-size:76px;font-weight:1000;color:rgba(0,0,0,.055);transform:rotate(-35deg);pointer-events:none;white-space:nowrap}.pdfTop{display:flex;justify-content:space-between;gap:20px;border-radius:18px;padding:18px 20px;position:relative;z-index:1;background:linear-gradient(135deg,#0a5b99,#138808);color:#fff}.pdfTop h1{margin:0;color:#fff;font-family:"Baloo 2";font-size:31px;line-height:1.1}.pdfTop p{margin:4px 0;font-weight:800;color:#fff}.pdfMeta{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:10px 12px}.pdfTable{width:100%;border-collapse:separate;border-spacing:0;margin:24px 0;position:relative;z-index:1;border:1px solid #dbe3ee;border-radius:16px;overflow:hidden}.pdfTable th{background:#102033;color:#fff;font-size:13px}.pdfTable th,.pdfTable td{border-bottom:1px solid #e2e8f0;padding:11px 10px;text-align:left;font-weight:800}.pdfTable tr:last-child td{border-bottom:0}.pdfTable tbody tr:nth-child(even){background:#f8fafc}.aiBox{position:relative;z-index:1;border-left:7px solid #2563eb;background:linear-gradient(135deg,#eff6ff,#ffffff);border-radius:16px;padding:18px;font-weight:800;line-height:1.55;box-shadow:0 8px 24px rgba(15,23,42,.08)}.pdfTotals{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;z-index:1;margin-bottom:18px}.pdfTotal{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;font-weight:900;box-shadow:0 5px 16px rgba(15,23,42,.06)}.pdfTotal:nth-child(5),.pdfTotal:nth-child(7){background:#ecfdf5;border-color:#bbf7d0;color:#166534}.pdfFooter{position:relative;z-index:1;text-align:center;margin-top:34px;padding:14px;border-top:2px solid #e2e8f0;font-weight:900;color:#334155}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    body{margin:0;font-family:"Mukta","Poppins",sans-serif;color:var(--dark);min-height:100vh;background:radial-gradient(circle at 15% 15%,rgba(255,138,0,.35),transparent 28%),radial-gradient(circle at 85% 20%,rgba(19,136,8,.22),transparent 30%),radial-gradient(circle at 50% 90%,rgba(10,91,153,.18),transparent 35%),linear-gradient(135deg,#fff7ed,#fff,#ecfdf5);background-attachment:fixed;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;background:linear-gradient(120deg,rgba(255,153,51,.16),rgba(255,255,255,.35),rgba(19,136,8,.14));background-size:300% 300%;animation:moveBg 9s ease-in-out infinite;pointer-events:none;z-index:-1}
+    @keyframes moveBg{0%,100%{background-position:0 0}50%{background-position:100% 100%}}
+    .wrap{max-width:1180px;margin:auto;padding:12px}
+    .topbar{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:12px;border-radius:26px;background:rgba(255,255,255,.84);backdrop-filter:blur(18px);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.75);position:sticky;top:8px;z-index:20}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}.logo{width:56px;height:56px;border-radius:18px;background:#fff;display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(255,138,0,.16),0 8px 22px rgba(0,0,0,.08);overflow:hidden;flex:none}.logo img{width:86%}
+    .title{min-width:0}.title h1{margin:0;font-family:"Baloo 2";font-size:clamp(18px,4vw,30px);line-height:1;color:var(--blue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.title p{margin:4px 0 0;color:var(--muted);font-weight:800;font-size:13px}
+    .iconBtn{border:0;border-radius:18px;background:#f8fafc;color:var(--dark);width:48px;height:48px;display:grid;place-items:center;font-size:22px;font-weight:900;box-shadow:0 8px 20px rgba(0,0,0,.08);cursor:pointer}.topControls{display:flex;align-items:center;gap:8px;flex:none}.topSelect{width:auto;min-width:118px;margin:0;padding:10px 12px;border-radius:15px;font-size:13px;background:#fff;font-weight:900;border:1px solid #e2e8f0}
+    @media(max-width:700px){.topbar{flex-wrap:wrap}.topControls{width:100%;justify-content:flex-end}.topSelect{min-width:105px;font-size:12px;padding:9px 10px}}
+    .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;margin-top:14px}@media(max-width:880px){.hero{grid-template-columns:1fr}.topbar{align-items:flex-start}.title h1{white-space:normal}}
+    .panel{background:var(--glass);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.75);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}.panelHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.panelHead h2{margin:0;font-family:"Baloo 2";font-size:23px;color:var(--dark)}.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 11px;background:#ecfdf5;color:var(--green);font-weight:900;font-size:13px}
+    .formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:520px){.formGrid{grid-template-columns:1fr}}
+    label{display:block;font-weight:900;font-size:13px;color:#334155;margin:0 0 5px 2px}input,select{width:100%;border:1px solid #e2e8f0;background:rgba(255,255,255,.95);border-radius:16px;padding:13px 14px;outline:none;font:700 15px "Mukta",sans-serif;color:var(--dark);box-shadow:0 4px 14px rgba(15,23,42,.04)}input:focus,select:focus{border-color:#38bdf8;box-shadow:0 0 0 4px rgba(56,189,248,.15)}
+    .addRow{display:grid;grid-template-columns:1fr 88px 140px;gap:10px;margin-top:10px;align-items:end}@media(max-width:680px){.addRow{grid-template-columns:1fr}.qtyBox{width:100%}}
+    .btn{border:0;border-radius:17px;padding:13px 16px;font:900 15px "Mukta",sans-serif;cursor:pointer;color:white;box-shadow:0 12px 28px rgba(15,23,42,.16);transition:.2s transform;min-height:49px}.btn:active{transform:scale(.98)}.btnBlue{background:linear-gradient(135deg,#0284c7,#0a5b99)}.btnGreen{background:linear-gradient(135deg,#16a34a,#138808)}.btnDark{background:linear-gradient(135deg,#475569,#0f172a)}.btnOrange{background:linear-gradient(135deg,#ffb020,#f97316)}.btnRed{background:linear-gradient(135deg,#ef4444,#b91c1c)}.btnGhost{background:#fff;color:#0f172a;border:1px solid #e2e8f0;box-shadow:none}
+    .toolGrid{display:grid;grid-template-columns:1fr;gap:9px;margin:12px 0}.list{margin-top:14px;display:grid;gap:9px;max-height:380px;overflow:auto;padding-right:2px}.empty{border:2px dashed #cbd5e1;border-radius:20px;padding:22px;text-align:center;background:rgba(255,255,255,.45);color:#64748b;font-weight:800}.item{background:#fff;border-radius:20px;padding:12px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-left:6px solid var(--blue);box-shadow:0 8px 22px rgba(15,23,42,.08)}.item b{font-size:16px}.item small{display:block;color:#64748b;font-weight:700;margin-top:3px}.saveBadge{background:#ecfdf5;color:var(--green);font-weight:1000;padding:7px 10px;border-radius:999px;white-space:nowrap;text-align:center}.itemActions{display:flex;gap:6px;justify-content:flex-start;margin-top:7px;flex-wrap:wrap}.mini{border:0;border-radius:11px;padding:6px 9px;font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a}
+    .dash{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{border-radius:24px;padding:16px;color:#fff;position:relative;overflow:hidden;min-height:118px;box-shadow:0 14px 36px rgba(15,23,42,.18)}.metric:after{content:"";position:absolute;right:-28px;bottom:-28px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.16)}.metric span{font-weight:900}.metric .val{font-family:"Baloo 2";font-size:31px;font-weight:900;line-height:1.1;margin-top:12px}.m1{background:linear-gradient(135deg,#0ea5e9,#2563eb)}.m2{background:linear-gradient(135deg,#a855f7,#6d28d9)}.m3{background:linear-gradient(135deg,#22c55e,#15803d)}.m4{background:linear-gradient(135deg,#fb923c,#ea580c)}.summary{margin-top:12px;display:grid;gap:8px}.totalRow{display:flex;justify-content:space-between;gap:10px;border-radius:18px;background:#0f172a;color:#fff;padding:12px 14px;font-weight:900}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}@media(max-width:520px){.actions{grid-template-columns:1fr}.dash{grid-template-columns:1fr 1fr}}
+    .visitor{margin-top:12px;text-align:right;font-size:13px;font-weight:900;color:#334155}.visitor span{display:inline-block;background:#fff;color:var(--green);border-radius:999px;padding:3px 9px;margin-left:4px}footer{text-align:center;padding:18px 8px;font-weight:900;color:#334155}.aiCard{margin-top:12px;background:#fff;border-radius:22px;padding:14px;border-left:7px solid #2563eb;box-shadow:0 8px 22px rgba(15,23,42,.08)}.aiCard h3{margin:0 0 7px;font-family:"Baloo 2";font-size:22px}.aiCard p{margin:0;color:#334155;font-weight:800;line-height:1.5}.suggestions{display:grid;gap:8px;margin-top:10px}.sug{background:#f8fafc;border:1px solid #e2e8f0;border-radius:15px;padding:10px;font-weight:900;display:flex;justify-content:space-between;gap:8px;align-items:center}.sug button{border:0;border-radius:12px;background:#0a5b99;color:#fff;font-weight:900;padding:8px 10px;cursor:pointer;white-space:nowrap}
+    .visitorModal{position:fixed;inset:0;background:rgba(15,23,42,.58);backdrop-filter:blur(10px);z-index:100000;display:none;align-items:center;justify-content:center;padding:18px}.visitorCard{width:min(92vw,420px);background:#fff;border-radius:28px;padding:24px;box-shadow:0 25px 80px rgba(0,0,0,.3);text-align:center;border:2px solid rgba(255,255,255,.8)}.visitorCard h2{margin:0;font-family:"Baloo 2";font-size:30px;color:#0a5b99}.visitorCard p{font-weight:900;color:#334155}.visitorCard small{display:block;margin-top:10px;color:#64748b;font-weight:800}.visitorCard .btn{width:100%;margin-top:10px}
+    .popup{position:fixed;left:50%;top:16%;transform:translateX(-50%);width:min(92vw,430px);z-index:9999;display:none;border-radius:30px;padding:18px;background:#fff;text-align:center;box-shadow:0 0 0 4px rgba(34,197,94,.12),0 0 36px rgba(34,197,94,.55),0 24px 70px rgba(0,0,0,.28);border:2px solid #86efac}.popup.show{display:block;animation:pop .45s cubic-bezier(.18,.89,.32,1.28)}@keyframes pop{from{opacity:0;transform:translate(-50%,-28px) scale(.92)}to{opacity:1;transform:translate(-50%,0) scale(1)}}.popup h3{margin:0;color:var(--green);font-family:"Baloo 2";font-size:27px}.popup .amt{font-family:"Baloo 2";font-size:43px;color:#16a34a;font-weight:900;line-height:1}.popup p{margin:7px 0 0;font-weight:900;color:#334155}.coins{position:fixed;inset:0;pointer-events:none;z-index:9998}.coin{position:absolute;font-size:26px;animation:coinFly 1.4s ease-out forwards}@keyframes coinFly{0%{opacity:0;transform:translateY(0) scale(.4) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-180px) scale(1.3) rotate(360deg)}}
+    #pdfReport{display:none;background:#fff;color:#111;padding:34px;font-family:"Mukta",sans-serif;width:794px;min-height:1122px;position:absolute;left:-99999px;top:0;z-index:-1;overflow:visible}.pdfOnly{display:block!important;position:absolute!important;left:0!important;top:0!important;z-index:99999!important;width:794px!important;min-height:1122px!important;box-shadow:none!important;opacity:1!important;visibility:visible!important}.wm{position:absolute;inset:0;display:grid;place-items:center;font-size:76px;font-weight:1000;color:rgba(0,0,0,.055);transform:rotate(-35deg);pointer-events:none;white-space:nowrap}.pdfTop{display:flex;justify-content:space-between;gap:20px;border-radius:18px;padding:18px 20px;position:relative;z-index:1;background:linear-gradient(135deg,#0a5b99,#138808);color:#fff}.pdfTop h1{margin:0;color:#fff;font-family:"Baloo 2";font-size:31px;line-height:1.1}.pdfTop p{margin:4px 0;font-weight:800;color:#fff}.pdfMeta{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:10px 12px}.pdfTable{width:100%;border-collapse:separate;border-spacing:0;margin:24px 0;position:relative;z-index:1;border:1px solid #dbe3ee;border-radius:16px;overflow:hidden}.pdfTable th{background:#102033;color:#fff;font-size:13px}.pdfTable th,.pdfTable td{border-bottom:1px solid #e2e8f0;padding:11px 10px;text-align:left;font-weight:800}.pdfTable tr:last-child td{border-bottom:0}.pdfTable tbody tr:nth-child(even){background:#f8fafc}.aiBox{position:relative;z-index:1;border-left:7px solid #2563eb;background:linear-gradient(135deg,#eff6ff,#ffffff);border-radius:16px;padding:18px;font-weight:800;line-height:1.55;box-shadow:0 8px 24px rgba(15,23,42,.08)}.pdfTotals{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;z-index:1;margin-bottom:18px}.pdfTotal{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;font-weight:900;box-shadow:0 5px 16px rgba(15,23,42,.06)}.pdfTotal:nth-child(5),.pdfTotal:nth-child(7){background:#ecfdf5;border-color:#bbf7d0;color:#166534}.pdfFooter{position:relative;z-index:1;text-align:center;margin-top:34px;padding:14px;border-top:2px solid #e2e8f0;font-weight:900;color:#334155}
   </style></head>
 <body>
   <div class="coins" id="coins"></div>
@@ -40,123 +51,322 @@
     <div class="toolGrid"><button class="btn btnGhost" id="analysisSpeakBtn">🔊 AI Analysis ऐका</button></div>
     <div class="list" id="pList"></div><div class="summary" id="totalSection"></div>
   </div>
+
   <div class="panel">
     <div class="panelHead"><h2 id="dashHead">📊 बचत डॅशबोर्ड</h2><span class="pill" id="itemCount">0 Items</span></div>
     <div class="dash"><div class="metric m1"><span id="mLbl">मासिक बचत</span><div class="val" id="mSave">₹0</div></div><div class="metric m2"><span id="cLbl">कन्सिस्टन्सी</span><div class="val" id="cSave">₹0</div></div><div class="metric m3"><span id="yLbl">वार्षिक बचत</span><div class="val" id="ySave">₹0</div></div><div class="metric m4"><span id="lLbl">20 वर्षांचा फायदा</span><div class="val" id="lSave">₹0</div></div></div>
     <div class="aiCard"><h3 id="aiHead">🤖 AI स्मार्ट विश्लेषण</h3><p id="aiAnalysis">प्रॉडक्ट जोडा, मग AI तुमची बचत आणि पुढील smart buying suggestion दाखवेल.</p><div class="suggestions" id="suggestions"></div></div>
-    <div class="actions"><button id="waBtn" class="btn btnGreen">📲 WhatsApp Report</button><button id="pdfBtn" class="btn btnDark">📄 AI PDF रिपोर्ट</button><button id="orderBtn" class="btn btnOrange">🛒 Place Order</button><button id="clearBtn" class="btn btnRed">🗑 Clear List</button></div>
+    <div class="actions"><button id="waBtn" class="btn btnGreen">📲 WhatsApp Report</button><button id="pdfBtn" class="btn btnDark">📄 AI PDF रिपोर्ट</button><button id="saveBtn" class="btn btnBlue">💾 Save List</button><button id="orderBtn" class="btn btnOrange">🛒 Place Order</button><button id="clearBtn" class="btn btnRed">🗑 Clear List</button></div>
     <div class="visitor">आजचे भेट देणारे: <span id="todayVisit">0</span> | एकूण भेट देणारे: <span id="totalVisit">0</span></div>
   </div>
-</section><footer>Designed by DS WORLD | 7020970727</footer>
+</section>
+<footer>Designed by DS WORLD | 7020970727</footer>
 
-  </main>  <section id="pdfReport"><div class="wm">DS WORLD 7020970727</div><div class="pdfTop"><div><h1>RCM स्मार्ट बचत अहवाल</h1><p>नये भारत का निर्माण | Smart Buying Analysis</p></div><div class="pdfMeta" style="text-align:right"><h3 id="pdfCustomerName" style="margin:0"></h3><p id="pdfCustomerId"></p><p id="pdfReportDate"></p></div></div><table class="pdfTable"><thead><tr><th>अ.क्र.</th><th>प्रॉडक्ट नाव</th><th>नग</th><th>MRP</th><th>RCM</th><th>बचत</th></tr></thead><tbody id="pdfTableBody"></tbody></table><div class="pdfTotals" id="pdfTotals"></div><div class="aiBox"><h3 style="margin-top:0">🤖 AI स्मार्ट विश्लेषण</h3><p id="pdfAiAnalysis"></p></div><div class="pdfFooter">संपर्क: 7020970727 | Designed by DS WORLD</div></section><script>
-const $=id=>document.getElementById(id);const fmt=n=>Math.round(Number(n||0)).toLocaleString('en-IN');let products=[],order=JSON.parse(localStorage.getItem('rcm_order_ai_pro')||'[]'),isVoiceOn=localStorage.getItem('rcm_voice')!=='off',selectedVoice=null,currentLang=localStorage.getItem('rcm_lang')||'mr';
-// Google Sheet report साठी Apps Script Web App URL इथे paste करा.
-// URL रिकामा असेल तर नाव फक्त त्या device मध्ये local save होईल.
-const VISITOR_WEB_APP_URL='https://script.google.com/macros/s/AKfycbzUfIT-OhsDCmNqBtjw71hYpaIUIIHuP-P50z5h37NATfqXQhU_TguP-73u0viOtPrw/exec';
-const sheetUrl='https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json';
-const L={mr:{add:'+ जोडा',empty:'अजून प्रॉडक्ट जोडलेले नाहीत.',analysisEmpty:'प्रॉडक्ट जोडा, मग AI तुमची बचत आणि पुढील smart buying suggestion दाखवेल.',congrats:'🎉 अभिनंदन!',saved:'तुम्ही {amt} रुपये बचत केली.',voice:'अभिनंदन! तुम्ही {amt} रुपये बचत केली आहे. स्मार्ट खरेदी, स्मार्ट बचत!',monthly:'मासिक बचत',cons:'कन्सिस्टन्सी',year:'वार्षिक बचत',life:'20 वर्षांचा फायदा'},hi:{add:'+ जोड़ें',empty:'अभी कोई प्रॉडक्ट जोड़ा नहीं है.',analysisEmpty:'प्रॉडक्ट जोड़ें, फिर AI आपकी बचत और smart buying suggestion दिखाएगा.',congrats:'🎉 बधाई!',saved:'आपने {amt} रुपये बचत की.',voice:'बधाई हो! आपने {amt} रुपये की बचत की है। स्मार्ट खरीदारी, स्मार्ट बचत!',monthly:'मासिक बचत',cons:'कन्सिस्टन्सी',year:'वार्षिक बचत',life:'20 साल का फायदा'},en:{add:'+ Add',empty:'No products added yet.',analysisEmpty:'Add products and AI will show savings analysis and smart suggestions.',congrats:'🎉 Congratulations!',saved:'You saved ₹{amt}.',voice:'Congratulations! You saved rupees {amt}. Smart shopping, smart savings!',monthly:'Monthly Saving',cons:'Consistency',year:'Yearly Saving',life:'20 Year Benefit'}};
-function setLang(){currentLang=$('langSelect').value;localStorage.setItem('rcm_lang',currentLang);$('addBtn').innerText=L[currentLang].add;$('mLbl').innerText=L[currentLang].monthly;$('cLbl').innerText=L[currentLang].cons;$('yLbl').innerText=L[currentLang].year;$('lLbl').innerText=L[currentLang].life;update()}
-function getVisitorId(){let id=localStorage.getItem('visitor_id');if(!id){id='V'+Date.now()+Math.random().toString(36).slice(2,8);localStorage.setItem('visitor_id',id)}return id}
-async function saveVisitorName(name){localStorage.setItem('visitor_name',name);$('cName').value=name;const row={type:'visit',visitorId:getVisitorId(),name:name,date:new Date().toLocaleString('en-IN'),page:'RCM Smart Savings',userAgent:navigator.userAgent};let local=JSON.parse(localStorage.getItem('visitor_logs_local')||'[]');local.push(row);localStorage.setItem('visitor_logs_local',JSON.stringify(local.slice(-100)));if(VISITOR_WEB_APP_URL){try{await fetch(VISITOR_WEB_APP_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(row)})}catch(e){console.log('Visitor sheet save error',e)}}}
-function askVisitorName(){const saved=localStorage.getItem('visitor_name');if(saved){$('cName').value=saved;return}const modal=$('visitorModal');modal.style.display='flex';setTimeout(()=>$('visitorNameInput').focus(),200)}
-$('visitorStartBtn').onclick=async()=>{const name=$('visitorNameInput').value.trim();if(!name)return alert('कृपया नाव लिहा.');await saveVisitorName(name);$('visitorModal').style.display='none'};
-function setVoiceButton(){$('voiceToggle').innerText=isVoiceOn?'🔊':'🔇';localStorage.setItem('rcm_voice',isVoiceOn?'on':'off')}function loadVoices(){const v=speechSynthesis.getVoices();const lang=currentLang==='mr'?'mr-IN':currentLang==='hi'?'hi-IN':'en-IN';selectedVoice=v.find(x=>x.lang===lang)||v.find(x=>x.lang.startsWith(currentLang==='en'?'en':'hi'))||v.find(x=>x.lang.startsWith('en-IN'))||v[0]||null}if('speechSynthesis'in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
-function voiceText(amount){
-const n=$('cName').value.trim();
-const cleanAmount=Math.round(Number(amount||0)).toString();
+  </main>  <section id="pdfReport"><div class="wm">DS WORLD 7020970727</div><div class="pdfTop"><div><h1>RCM स्मार्ट बचत अहवाल</h1><p>नये भारत का निर्माण | Smart Buying Analysis</p></div><div class="pdfMeta" style="text-align:right"><h3 id="pdfCustomerName" style="margin:0"></h3><p id="pdfCustomerId"></p><p id="pdfReportDate"></p></div></div><table class="pdfTable"><thead><tr><th>अ.क्र.</th><th>प्रॉडक्ट नाव</th><th>नग</th><th>MRP</th><th>RCM</th><th>बचत</th></tr></thead><tbody id="pdfTableBody"></tbody></table><div class="pdfTotals" id="pdfTotals"></div><div class="aiBox"><h3 style="margin-top:0">🤖 AI स्मार्ट विश्लेषण</h3><p id="pdfAiAnalysis"></p></div><div class="pdfFooter">संपर्क: 7020970727 | Designed by DS WORLD</div></section>  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const $ = id => document.getElementById(id);
+      const fmt = n => Math.round(Number(n || 0)).toLocaleString('en-IN');
 
-if(currentLang==='en'){
-return `${n?n+', ':''}Congratulations! You saved rupees ${cleanAmount}. Smart shopping, smart savings.`;
-}
+      const VISITOR_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzUfIT-OhsDCmNqBtjw71hYpaIUIIHuP-P50z5h37NATfqXQhU_TguP-73u0viOtPrw/exec';
+      const sheetUrl = 'https://docs.google.com/spreadsheets/d/1eR5THz-4AV3HkfnNJ5Un48ksz0I0jrepJSED3qHFg6k/gviz/tq?tqx=out:json';
 
-if(currentLang==='hi'){
-return `${n?n+' जी, ':''}बधाई हो! आपने ${cleanAmount} रुपये की बचत की है। स्मार्ट खरीदारी, स्मार्ट बचत!`;
-}
+      let products = [];
+      // प्रत्येक नवीन visitor/login वेळी जुनी temporary list दिसू नये म्हणून सुरुवातीला रिकामी ठेवली आहे.
+      // Save केल्याशिवाय order localStorage मध्ये कायम राहणार नाही.
+      let order = [];
+      let isVoiceOn = localStorage.getItem('rcm_voice') !== 'off';
+      let currentLang = localStorage.getItem('rcm_lang') || 'mr';
 
-return `${n?n+' जी, ':''}अभिनंदन! तुम्ही ${cleanAmount} रुपये बचत केली आहे. स्मार्ट खरेदी, स्मार्ट बचत!`;
-}
-function speak(txt){
-if(!isVoiceOn||!('speechSynthesis' in window)) return;
-window.speechSynthesis.cancel();
+      const L = {
+        mr:{add:'+ जोडा',empty:'अजून प्रॉडक्ट जोडलेले नाहीत.',analysisEmpty:'प्रॉडक्ट जोडा, मग AI तुमची बचत आणि पुढील smart buying suggestion दाखवेल.',congrats:'🎉 अभिनंदन!',saved:'तुम्ही {amt} रुपये बचत केली.',monthly:'मासिक बचत',cons:'कन्सिस्टन्सी',year:'वार्षिक बचत',life:'20 वर्षांचा फायदा'},
+        hi:{add:'+ जोड़ें',empty:'अभी कोई प्रॉडक्ट जोड़ा नहीं है.',analysisEmpty:'प्रॉडक्ट जोड़ें, फिर AI आपकी बचत और smart buying suggestion दिखाएगा.',congrats:'🎉 बधाई!',saved:'आपने {amt} रुपये बचत की.',monthly:'मासिक बचत',cons:'कन्सिस्टन्सी',year:'वार्षिक बचत',life:'20 साल का फायदा'},
+        en:{add:'+ Add',empty:'No products added yet.',analysisEmpty:'Add products and AI will show savings analysis and smart suggestions.',congrats:'🎉 Congratulations!',saved:'You saved ₹{amt}.',monthly:'Monthly Saving',cons:'Consistency',year:'Yearly Saving',life:'20 Year Benefit'}
+      };
 
-const voices=speechSynthesis.getVoices();
-let selected=null;
+      function safeJSON(text, fallback){ try { return text ? JSON.parse(text) : fallback; } catch(e){ return fallback; } }
+      function textSafe(s){ return String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
 
-if(currentLang==='mr'){
-selected=voices.find(v=>v.lang==='mr-IN');
-}
-if(currentLang==='hi' && !selected){
-selected=voices.find(v=>v.lang==='hi-IN');
-}
-if(currentLang==='en' && !selected){
-selected=voices.find(v=>v.lang.startsWith('en'));
-}
+      function setLang(){
+        currentLang = $('langSelect').value;
+        localStorage.setItem('rcm_lang', currentLang);
+        $('addBtn').innerText = L[currentLang].add;
+        $('mLbl').innerText = L[currentLang].monthly;
+        $('cLbl').innerText = L[currentLang].cons;
+        $('yLbl').innerText = L[currentLang].year;
+        $('lLbl').innerText = L[currentLang].life;
+        update();
+      }
 
-if(!selected){
-selected=voices.find(v=>v.lang==='en-IN')||voices[0];
-}
+      function getVisitorId(){
+        let id = localStorage.getItem('visitor_id');
+        if(!id){ id = 'V' + Date.now() + Math.random().toString(36).slice(2,8); localStorage.setItem('visitor_id', id); }
+        return id;
+      }
 
-let msg=new SpeechSynthesisUtterance(txt);
-msg.lang=currentLang==='mr'?'mr-IN':currentLang==='hi'?'hi-IN':'en-IN';
-msg.voice=selected;
-msg.pitch=1;
-msg.rate=.82;
-msg.volume=1;
+      async function saveVisitorName(name){
+        localStorage.setItem('visitor_name', name);
+        $('cName').value = name;
+        const row = {type:'visit', visitorId:getVisitorId(), name, date:new Date().toLocaleString('en-IN'), page:'RCM Smart Savings', userAgent:navigator.userAgent};
+        let local = safeJSON(localStorage.getItem('visitor_logs_local'), []);
+        local.push(row);
+        localStorage.setItem('visitor_logs_local', JSON.stringify(local.slice(-100)));
+        if(VISITOR_WEB_APP_URL){
+          try{ await fetch(VISITOR_WEB_APP_URL, {method:'POST', mode:'no-cors', body:JSON.stringify(row)}); }catch(e){ console.log('Visitor sheet save error', e); }
+        }
+      }
 
-window.speechSynthesis.speak(msg);
-}
-function popCoins(){const box=$('coins');box.innerHTML='';for(let i=0;i<18;i++){let c=document.createElement('div');c.className='coin';c.textContent=i%3===0?'💰':i%3===1?'🪙':'✨';c.style.left=(18+Math.random()*64)+'%';c.style.top=(42+Math.random()*28)+'%';c.style.animationDelay=(Math.random()*.28)+'s';box.appendChild(c)}setTimeout(()=>box.innerHTML='',1700)}
-function showPopup(amount){$('popTitle').innerText=L[currentLang].congrats;$('popupAmount').innerText='₹'+fmt(amount);$('popupText').innerText=L[currentLang].saved.replace('{amt}',fmt(amount));const p=$('savePopup');p.classList.remove('show');void p.offsetWidth;p.classList.add('show');popCoins();clearTimeout(window.__popupTimer);window.__popupTimer=setTimeout(()=>p.classList.remove('show'),3000)}
-async function loadProducts(){try{const res=await fetch(sheetUrl),text=await res.text(),json=JSON.parse(text.substring(text.indexOf('{'),text.lastIndexOf('}')+1));products=json.table.rows.map(r=>({name:r.c[0]?.v||'Unnamed Product',mkt:Number(r.c[1]?.v||0),rcm:Number(r.c[2]?.v||0),pv:Number(r.c[3]?.v||0)})).filter(p=>p.name&&p.rcm>0);$('pSelect').innerHTML='<option value="">-- प्रॉडक्ट निवडा --</option>'+products.map((p,i)=>`<option value="${i}">${p.name} | बचत ₹${fmt(p.mkt-p.rcm)}</option>`).join('')}catch(e){$('pSelect').innerHTML='<option value="">Products load झाले नाहीत</option>'}update()}
-function totals(){return order.reduce((a,it)=>{a.mrp+=it.mkt*it.qty;a.rcm+=it.rcm*it.qty;a.pv+=it.pv*it.qty;a.save+=(it.mkt-it.rcm)*it.qty;a.qty+=it.qty;return a},{mrp:0,rcm:0,pv:0,save:0,qty:0})}function consistency(pv){if(pv<=0)return 0;if(pv<1500)return pv*.12;if(pv<2500)return 1500*.1667;return 5000*.1667}function saveOrder(){localStorage.setItem('rcm_order_ai_pro',JSON.stringify(order))}
-function aiAnalysis(){const t=totals(),cons=consistency(t.pv),monthly=t.save+cons;if(!order.length)return L[currentLang].analysisEmpty;let top=order.slice().sort((a,b)=>((b.mkt-b.rcm)*b.qty)-((a.mkt-a.rcm)*a.qty))[0];if(currentLang==='hi')return `आपकी कुल प्रत्यक्ष बचत ₹${fmt(t.save)} है। कन्सिस्टन्सी के साथ मासिक फायदा ₹${fmt(monthly)} हो सकता है। सबसे ज्यादा बचत ${top.name} से दिख रही है। अगर यह buying हर महीने रखी, तो yearly फायदा ₹${fmt(monthly*12)} तक जा सकता है।`;if(currentLang==='en')return `Your direct saving is ₹${fmt(t.save)}. With consistency benefit, estimated monthly benefit is ₹${fmt(monthly)}. Highest saving is visible from ${top.name}. If repeated monthly, yearly benefit may reach ₹${fmt(monthly*12)}.`;return `तुमची प्रत्यक्ष बचत ₹${fmt(t.save)} आहे. कन्सिस्टन्सी धरून मासिक फायदा ₹${fmt(monthly)} दिसतो. सर्वाधिक बचत ${top.name} मधून दिसत आहे. अशी buying दर महिन्याला ठेवली, तर वार्षिक फायदा ₹${fmt(monthly*12)} पर्यंत जाऊ शकतो.`}
-function buildSuggestions(){const box=$('suggestions');box.innerHTML='';if(!order.length||!products.length)return;const names=order.map(x=>x.name.toLowerCase());const keys=['oil','tea','soap','tooth','health','rice','shampoo','detergent','powder'];let picks=products.filter(p=>!names.includes(p.name.toLowerCase())&&keys.some(k=>p.name.toLowerCase().includes(k))).slice(0,3);if(!picks.length)picks=products.filter(p=>!names.includes(p.name.toLowerCase())).slice(0,3);box.innerHTML=picks.map(p=>`<div class="sug"><span>💡 ${p.name}<br><small>अंदाजे बचत ₹${fmt(p.mkt-p.rcm)}</small></span><button onclick="addProductByName('${encodeURIComponent(p.name)}')">Add</button></div>`).join('')}
-window.addProductByName=function(n){const name=decodeURIComponent(n),p=products.find(x=>x.name===name);if(!p)return;const saving=p.mkt-p.rcm;order.push({...p,qty:1});saveOrder();update();showPopup(saving);speak(voiceText(saving))}
-function update(){const t=totals(),cons=consistency(t.pv),monthly=t.save+cons;$('itemCount').innerText=`${order.length} Items`;$('mSave').innerText='₹'+fmt(monthly);$('cSave').innerText='₹'+fmt(cons);$('ySave').innerText='₹'+fmt(monthly*12);$('lSave').innerText='₹'+fmt(monthly*12*20);$('aiAnalysis').innerText=aiAnalysis();buildSuggestions();if(!order.length){$('pList').innerHTML=`<div class="empty">${L[currentLang].empty}<br>प्रॉडक्ट निवडा आणि “${L[currentLang].add}” क्लिक करा.</div>`;$('totalSection').innerHTML='';return}$('pList').innerHTML=order.map((it,i)=>{const b=(it.mkt-it.rcm)*it.qty;return `<div class="item"><div><b>${i+1}. ${it.name}</b><small>नग: ${it.qty} | MRP: ₹${fmt(it.mkt*it.qty)} | RCM: ₹${fmt(it.rcm*it.qty)} | PV: ${fmt(it.pv*it.qty)}</small><div class="itemActions"><button class="mini" onclick="changeQty(${i},-1)">−</button><button class="mini" onclick="changeQty(${i},1)">+</button><button class="mini" onclick="removeItem(${i})">काढा</button></div></div><div class="saveBadge">बचत<br>₹${fmt(b)}</div></div>`}).join('');$('totalSection').innerHTML=`<div class="totalRow"><span>एकूण MRP</span><span>₹${fmt(t.mrp)}</span></div><div class="totalRow"><span>एकूण RCM</span><span>₹${fmt(t.rcm)}</span></div><div class="totalRow"><span>एकूण प्रत्यक्ष बचत</span><span>₹${fmt(t.save)}</span></div>`}
-window.changeQty=function(i,d){order[i].qty+=d;if(order[i].qty<=0)order.splice(i,1);saveOrder();update()};window.removeItem=function(i){order.splice(i,1);saveOrder();update()};
-$('addBtn').onclick=()=>{const idx=$('pSelect').value;if(idx==='')return alert('कृपया प्रॉडक्ट निवडा.');const qty=Math.max(1,parseInt($('qInput').value||'1')),p=products[idx],saving=(p.mkt-p.rcm)*qty;order.push({...p,qty});saveOrder();update();showPopup(saving);speak(voiceText(saving));$('qInput').value=1};$('voiceToggle').onclick=()=>{isVoiceOn=!isVoiceOn;setVoiceButton()};$('analysisSpeakBtn').onclick=()=>speak($('aiAnalysis').innerText);$('smartSuggestBtn').onclick=()=>{buildSuggestions();speak(currentLang==='mr'?'AI ने तुमच्यासाठी smart product suggestions तयार केले आहेत.':currentLang==='hi'?'AI ने आपके लिए smart product suggestions तैयार किए हैं.':'AI smart suggestions are ready.')};$('langSelect').onchange=setLang;$('voiceStyle').onchange=()=>speak(voiceText(999));
-$('waBtn').onclick=()=>{if(!order.length)return alert('लिस्ट रिकामी आहे!');const n=$('cName').value.trim()||'सन्माननीय ग्राहक',id=$('cId').value.trim(),t=totals(),cons=consistency(t.pv),monthly=t.save+cons;let msg=`*RCM स्मार्ट बचत अहवाल*\n━━━━━━━━━━━━━━\n*नाव:* ${n}\n${id?`*ID/Mobile:* ${id}\n`:''}*ऑर्डर तपशील:*\n`;order.forEach((it,i)=>msg+=`${i+1}) ${it.name} x ${it.qty} - बचत ₹${fmt((it.mkt-it.rcm)*it.qty)}\n`);msg+=`\n*एकूण MRP:* ₹${fmt(t.mrp)}\n*एकूण RCM:* ₹${fmt(t.rcm)}\n*प्रत्यक्ष बचत:* ₹${fmt(t.save)}\n*कन्सिस्टन्सी:* ₹${fmt(cons)}\n\n*मासिक फायदा:* ₹${fmt(monthly)}\n*वार्षिक फायदा:* ₹${fmt(monthly*12)}\n*20 वर्षांचा फायदा:* ₹${fmt(monthly*12*20)}\n\n🤖 ${aiAnalysis()}\n━━━━━━━━━━━━━━\n*DS WORLD | 7020970727*`;window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank')};
-$('orderBtn').onclick=()=>{if(!order.length)return alert('लिस्ट रिकामी आहे!');const n=$('cName').value.trim()||'ग्राहक',id=$('cId').value.trim();let msg=`*नवीन RCM ऑर्डर*\nनाव: ${n}\n${id?`ID/Mobile: ${id}\n`:''}\n`;order.forEach((it,i)=>msg+=`${i+1}) ${it.name} - ${it.qty} नग\n`);window.open(`https://wa.me/917020970727?text=${encodeURIComponent(msg)}`,'_blank')};
-$('pdfBtn').onclick=async()=>{if(!order.length)return alert('लिस्ट रिकामी आहे!');const n=$('cName').value.trim()||'सन्माननीय ग्राहक',id=$('cId').value.trim(),t=totals(),cons=consistency(t.pv),monthly=t.save+cons;$('pdfCustomerName').innerText='नाव: '+n;$('pdfCustomerId').innerText=id?'ID/Mobile: '+id:'';$('pdfReportDate').innerText='तारीख: '+new Date().toLocaleDateString('mr-IN');$('pdfTableBody').innerHTML=order.map((it,i)=>`<tr><td>${i+1}</td><td>${it.name}</td><td>${it.qty}</td><td>₹${fmt(it.mkt*it.qty)}</td><td>₹${fmt(it.rcm*it.qty)}</td><td>₹${fmt((it.mkt-it.rcm)*it.qty)}</td></tr>`).join('');$('pdfTotals').innerHTML=`<div class="pdfTotal">एकूण MRP: ₹${fmt(t.mrp)}</div><div class="pdfTotal">एकूण RCM: ₹${fmt(t.rcm)}</div><div class="pdfTotal">प्रत्यक्ष बचत: ₹${fmt(t.save)}</div><div class="pdfTotal">कन्सिस्टन्सी: ₹${fmt(cons)}</div><div class="pdfTotal">मासिक फायदा: ₹${fmt(monthly)}</div><div class="pdfTotal">वार्षिक फायदा: ₹${fmt(monthly*12)}</div><div class="pdfTotal">20 वर्षांचा फायदा: ₹${fmt(monthly*12*20)}</div><div class="pdfTotal">एकूण PV: ${fmt(t.pv)}</div>`;$('pdfAiAnalysis').innerHTML=aiAnalysis();const rep=$('pdfReport');rep.style.display='block';rep.classList.add('pdfOnly');await new Promise(r=>setTimeout(r,600));html2pdf().set({margin:[10,10,10,10],filename:`RCM-Smart-Savings-${n.replace(/\s+/g,'-')}.pdf`,image:{type:'jpeg',quality:1},html2canvas:{scale:3,useCORS:true,backgroundColor:'#ffffff',scrollX:0,scrollY:0,letterRendering:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(rep).save().then(()=>{rep.style.display='none';rep.classList.remove('pdfOnly')}).catch(e=>{rep.style.display='none';rep.classList.remove('pdfOnly');console.error(e);alert('PDF तयार करताना error आला. पुन्हा प्रयत्न करा.')})};
-$('clearBtn').onclick=()=>{if(confirm('सर्व लिस्ट साफ करायची का?')){order=[];saveOrder();update()}};async function updateVisits(){
-  const key='dsworld_rcm_ai_pro_2026';
-  const todayStr=new Date().toISOString().slice(0,10);
-  const localTodayKey='visited_today_'+todayStr;
-  const localTotalKey='visited_total_once';
+      function askVisitorName(){
+        const saved = localStorage.getItem('visitor_name');
+        if(saved){ $('cName').value = saved; return; }
+        $('visitorModal').style.display = 'flex';
+        setTimeout(() => $('visitorNameInput').focus(), 200);
+      }
 
-  const alreadyVisitedToday=localStorage.getItem(localTodayKey)==='yes';
-  const alreadyVisitedTotal=localStorage.getItem(localTotalKey)==='yes';
+      function setVoiceButton(){
+        $('voiceToggle').innerText = isVoiceOn ? '🔊' : '🔇';
+        localStorage.setItem('rcm_voice', isVoiceOn ? 'on' : 'off');
+      }
 
-  try{
-    if(!alreadyVisitedTotal){
-      const tr=await fetch(`https://api.countapi.xyz/hit/${key}/total_unique`);
-      const td=await tr.json();
-      $('totalVisit').innerText=td.value||0;
-      localStorage.setItem(localTotalKey,'yes');
-      localStorage.setItem('last_total_count',td.value||0);
-    }else{
-      $('totalVisit').innerText=localStorage.getItem('last_total_count')||'LIVE';
-    }
+      function getBestVoice(){
+        const voices = speechSynthesis.getVoices();
+        if(currentLang === 'mr') return voices.find(v => v.lang === 'mr-IN') || voices.find(v => v.lang.startsWith('hi')) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+        if(currentLang === 'hi') return voices.find(v => v.lang === 'hi-IN') || voices.find(v => v.lang.startsWith('hi')) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+        return voices.find(v => v.lang.startsWith('en-IN')) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+      }
 
-    if(!alreadyVisitedToday){
-      const dr=await fetch(`https://api.countapi.xyz/hit/${key}_${todayStr}/today_unique`);
-      const dd=await dr.json();
-      $('todayVisit').innerText=dd.value||0;
-      localStorage.setItem(localTodayKey,'yes');
-      localStorage.setItem('last_today_count_'+todayStr,dd.value||0);
-    }else{
-      $('todayVisit').innerText=localStorage.getItem('last_today_count_'+todayStr)||'LIVE';
-    }
-  }catch(e){
-    let total=Number(localStorage.getItem('local_total_unique')||0);
-    let today=Number(localStorage.getItem('local_today_unique_'+todayStr)||0);
-    if(!alreadyVisitedTotal){total++;localStorage.setItem('local_total_unique',total);localStorage.setItem(localTotalKey,'yes')}
-    if(!alreadyVisitedToday){today++;localStorage.setItem('local_today_unique_'+todayStr,today);localStorage.setItem(localTodayKey,'yes')}
-    $('totalVisit').innerText=total;
-    $('todayVisit').innerText=today;
-  }
-}
-$('langSelect').value=currentLang;setVoiceButton();setLang();askVisitorName();loadProducts();updateVisits();
-</script></body>
+      function voiceText(amount){
+        const n = $('cName').value.trim();
+        const cleanAmount = Math.round(Number(amount || 0)).toString();
+        if(currentLang === 'en') return `${n ? n + ', ' : ''}Congratulations! You saved rupees ${cleanAmount}. Smart shopping, smart savings.`;
+        if(currentLang === 'hi') return `${n ? n + ' जी, ' : ''}बधाई हो! आपने ${cleanAmount} रुपये की बचत की है। स्मार्ट खरीदारी, स्मार्ट बचत!`;
+        return `${n ? n + ' जी, ' : ''}अभिनंदन! तुम्ही ${cleanAmount} रुपये बचत केली आहे. स्मार्ट खरेदी, स्मार्ट बचत!`;
+      }
+
+      function speak(txt){
+        if(!isVoiceOn || !('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(txt);
+        msg.lang = currentLang === 'mr' ? 'mr-IN' : currentLang === 'hi' ? 'hi-IN' : 'en-IN';
+        msg.voice = getBestVoice();
+        msg.pitch = 1;
+        msg.rate = .82;
+        msg.volume = 1;
+        window.speechSynthesis.speak(msg);
+      }
+
+      function popCoins(){
+        const box = $('coins'); box.innerHTML = '';
+        for(let i=0;i<18;i++){
+          let c = document.createElement('div');
+          c.className = 'coin'; c.textContent = i%3===0?'💰':i%3===1?'🪙':'✨';
+          c.style.left = (18 + Math.random()*64) + '%'; c.style.top = (42 + Math.random()*28) + '%'; c.style.animationDelay = (Math.random()*.28) + 's';
+          box.appendChild(c);
+        }
+        setTimeout(()=>box.innerHTML='',1700);
+      }
+
+      function showPopup(amount){
+        $('popTitle').innerText = L[currentLang].congrats;
+        $('popupAmount').innerText = '₹' + fmt(amount);
+        $('popupText').innerText = L[currentLang].saved.replace('{amt}', fmt(amount));
+        const p = $('savePopup'); p.classList.remove('show'); void p.offsetWidth; p.classList.add('show');
+        popCoins(); clearTimeout(window.__popupTimer); window.__popupTimer = setTimeout(()=>p.classList.remove('show'),3000);
+      }
+
+      async function loadProducts(){
+        try{
+          const res = await fetch(sheetUrl, {cache:'no-store'});
+          const text = await res.text();
+          const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+          products = json.table.rows.map(r => ({
+            name: r.c[0]?.v || 'Unnamed Product',
+            mkt: Number(r.c[1]?.v || 0),
+            rcm: Number(r.c[2]?.v || 0),
+            pv: Number(r.c[3]?.v || 0)
+          })).filter(p => p.name && p.rcm > 0);
+          $('pSelect').innerHTML = '<option value="">-- प्रॉडक्ट निवडा --</option>' + products.map((p,i)=>`<option value="${i}">${textSafe(p.name)} | बचत ₹${fmt(p.mkt-p.rcm)}</option>`).join('');
+        }catch(e){
+          console.error(e);
+          $('pSelect').innerHTML = '<option value="">Products load झाले नाहीत</option>';
+        }
+        update();
+      }
+
+      function totals(){
+        return order.reduce((a,it)=>{ a.mrp += it.mkt*it.qty; a.rcm += it.rcm*it.qty; a.pv += it.pv*it.qty; a.save += (it.mkt-it.rcm)*it.qty; a.qty += it.qty; return a; }, {mrp:0,rcm:0,pv:0,save:0,qty:0});
+      }
+
+      function consistency(pv){ if(pv <= 0) return 0; if(pv < 1500) return pv*.12; if(pv < 2500) return 1500*.1667; return 5000*.1667; }
+      function saveOrder(){
+        // Auto-save बंद: product add/change केल्यावर data फक्त current session मध्ये राहील.
+        sessionStorage.setItem('rcm_order_ai_pro_temp', JSON.stringify(order));
+      }
+
+      function permanentSaveOrder(){
+        localStorage.setItem('rcm_order_ai_pro_saved', JSON.stringify(order));
+        alert('✅ Order सेव झाली आहे. आता ही list या device मध्ये राहील.');
+      }
+
+      function clearTempOrderOnFreshVisit(){
+        sessionStorage.removeItem('rcm_order_ai_pro_temp');
+        localStorage.removeItem('rcm_order_ai_pro');
+        order = [];
+      }
+
+      function addToOrder(p, qty=1){
+        const existing = order.find(x => x.name === p.name && x.rcm === p.rcm);
+        if(existing) existing.qty += qty;
+        else order.push({...p, qty});
+        saveOrder(); update();
+        const saving = (p.mkt - p.rcm) * qty;
+        showPopup(saving); speak(voiceText(saving));
+      }
+
+      function aiAnalysis(){
+        const t = totals(), cons = consistency(t.pv), monthly = t.save + cons;
+        if(!order.length) return L[currentLang].analysisEmpty;
+        let top = order.slice().sort((a,b)=>((b.mkt-b.rcm)*b.qty)-((a.mkt-a.rcm)*a.qty))[0];
+        if(currentLang === 'hi') return `आपकी कुल प्रत्यक्ष बचत ₹${fmt(t.save)} है। कन्सिस्टन्सी के साथ मासिक फायदा ₹${fmt(monthly)} हो सकता है। सबसे ज्यादा बचत ${top.name} से दिख रही है। अगर यह buying हर महीने रखी, तो yearly फायदा ₹${fmt(monthly*12)} तक जा सकता है।`;
+        if(currentLang === 'en') return `Your direct saving is ₹${fmt(t.save)}. With consistency benefit, estimated monthly benefit is ₹${fmt(monthly)}. Highest saving is visible from ${top.name}. If repeated monthly, yearly benefit may reach ₹${fmt(monthly*12)}.`;
+        return `तुमची प्रत्यक्ष बचत ₹${fmt(t.save)} आहे. कन्सिस्टन्सी धरून मासिक फायदा ₹${fmt(monthly)} दिसतो. सर्वाधिक बचत ${top.name} मधून दिसत आहे. अशी buying दर महिन्याला ठेवली, तर वार्षिक फायदा ₹${fmt(monthly*12)} पर्यंत जाऊ शकतो.`;
+      }
+
+      function buildSuggestions(){
+        const box = $('suggestions'); box.innerHTML = '';
+        if(!order.length || !products.length) return;
+        const names = order.map(x => x.name.toLowerCase());
+        const keys = ['oil','tea','soap','tooth','health','rice','shampoo','detergent','powder','ऑईल','तेल','चहा','साबण'];
+        let picks = products.filter(p => !names.includes(p.name.toLowerCase()) && keys.some(k => p.name.toLowerCase().includes(k))).slice(0,3);
+        if(!picks.length) picks = products.filter(p => !names.includes(p.name.toLowerCase())).slice(0,3);
+        box.innerHTML = picks.map(p => `<div class="sug"><span>💡 ${textSafe(p.name)}<br><small>अंदाजे बचत ₹${fmt(p.mkt-p.rcm)}</small></span><button data-product-name="${textSafe(p.name)}">Add</button></div>`).join('');
+        box.querySelectorAll('button[data-product-name]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const p = products.find(x => x.name === btn.dataset.productName);
+            if(p) addToOrder(p, 1);
+          });
+        });
+      }
+
+      function update(){
+        const t = totals(), cons = consistency(t.pv), monthly = t.save + cons;
+        $('itemCount').innerText = `${order.length} Items`;
+        $('mSave').innerText = '₹' + fmt(monthly);
+        $('cSave').innerText = '₹' + fmt(cons);
+        $('ySave').innerText = '₹' + fmt(monthly*12);
+        $('lSave').innerText = '₹' + fmt(monthly*12*20);
+        $('aiAnalysis').innerText = aiAnalysis();
+        buildSuggestions();
+
+        if(!order.length){
+          $('pList').innerHTML = `<div class="empty">${L[currentLang].empty}<br>प्रॉडक्ट निवडा आणि “${L[currentLang].add}” क्लिक करा.</div>`;
+          $('totalSection').innerHTML = '';
+          return;
+        }
+
+        $('pList').innerHTML = order.map((it,i)=>{
+          const b = (it.mkt-it.rcm)*it.qty;
+          return `<div class="item"><div><b>${i+1}. ${textSafe(it.name)}</b><small>नग: ${it.qty} | MRP: ₹${fmt(it.mkt*it.qty)} | RCM: ₹${fmt(it.rcm*it.qty)} | PV: ${fmt(it.pv*it.qty)}</small><div class="itemActions"><button class="mini" data-act="minus" data-i="${i}">−</button><button class="mini" data-act="plus" data-i="${i}">+</button><button class="mini" data-act="remove" data-i="${i}">काढा</button></div></div><div class="saveBadge">बचत<br>₹${fmt(b)}</div></div>`;
+        }).join('');
+
+        $('pList').querySelectorAll('button[data-act]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const i = Number(btn.dataset.i), act = btn.dataset.act;
+            if(act === 'plus') order[i].qty += 1;
+            if(act === 'minus') order[i].qty -= 1;
+            if(act === 'remove' || order[i].qty <= 0) order.splice(i,1);
+            saveOrder(); update();
+          });
+        });
+
+        $('totalSection').innerHTML = `<div class="totalRow"><span>एकूण MRP</span><span>₹${fmt(t.mrp)}</span></div><div class="totalRow"><span>एकूण RCM</span><span>₹${fmt(t.rcm)}</span></div><div class="totalRow"><span>एकूण प्रत्यक्ष बचत</span><span>₹${fmt(t.save)}</span></div>`;
+      }
+
+      function buildWhatsAppReport(){
+        const n = $('cName').value.trim() || 'सन्माननीय ग्राहक', id = $('cId').value.trim(), t = totals(), cons = consistency(t.pv), monthly = t.save + cons;
+        let msg = `*RCM स्मार्ट बचत अहवाल*\n━━━━━━━━━━━━━━\n*नाव:* ${n}\n${id ? `*ID/Mobile:* ${id}\n` : ''}*ऑर्डर तपशील:*\n`;
+        order.forEach((it,i)=> msg += `${i+1}) ${it.name} x ${it.qty} - बचत ₹${fmt((it.mkt-it.rcm)*it.qty)}\n`);
+        msg += `\n*एकूण MRP:* ₹${fmt(t.mrp)}\n*एकूण RCM:* ₹${fmt(t.rcm)}\n*प्रत्यक्ष बचत:* ₹${fmt(t.save)}\n*कन्सिस्टन्सी:* ₹${fmt(cons)}\n\n*मासिक फायदा:* ₹${fmt(monthly)}\n*वार्षिक फायदा:* ₹${fmt(monthly*12)}\n*20 वर्षांचा फायदा:* ₹${fmt(monthly*12*20)}\n\n🤖 ${aiAnalysis()}\n━━━━━━━━━━━━━━\n*DS WORLD | 7020970727*`;
+        return msg;
+      }
+
+      async function updateVisits(){
+        const todayStr = new Date().toISOString().slice(0,10);
+        let visitData = safeJSON(localStorage.getItem('visit_counts_local'), {total:0, todayDate:todayStr, today:0, totalDone:false, todayDone:false});
+        if(visitData.todayDate !== todayStr){ visitData.todayDate = todayStr; visitData.today = 0; visitData.todayDone = false; }
+        if(!visitData.totalDone){ visitData.total += 1; visitData.totalDone = true; }
+        if(!visitData.todayDone){ visitData.today += 1; visitData.todayDone = true; }
+        localStorage.setItem('visit_counts_local', JSON.stringify(visitData));
+        $('totalVisit').innerText = visitData.total;
+        $('todayVisit').innerText = visitData.today;
+      }
+
+      $('visitorStartBtn').addEventListener('click', async () => {
+        const name = $('visitorNameInput').value.trim();
+        if(!name) return alert('कृपया नाव लिहा.');
+        await saveVisitorName(name);
+        $('visitorModal').style.display = 'none';
+      });
+      $('visitorNameInput').addEventListener('keydown', e => { if(e.key === 'Enter') $('visitorStartBtn').click(); });
+
+      $('addBtn').addEventListener('click', () => {
+        const idx = $('pSelect').value;
+        if(idx === '') return alert('कृपया प्रॉडक्ट निवडा.');
+        const qty = Math.max(1, parseInt($('qInput').value || '1', 10));
+        const p = products[Number(idx)];
+        if(!p) return alert('Product data मिळाला नाही.');
+        addToOrder(p, qty);
+        $('qInput').value = 1;
+      });
+
+      $('voiceToggle').addEventListener('click', () => { isVoiceOn = !isVoiceOn; setVoiceButton(); });
+      $('analysisSpeakBtn').addEventListener('click', () => speak($('aiAnalysis').innerText));
+      $('smartSuggestBtn').addEventListener('click', () => { buildSuggestions(); speak(currentLang==='mr'?'AI ने तुमच्यासाठी smart product suggestions तयार केले आहेत.':currentLang==='hi'?'AI ने आपके लिए smart product suggestions तैयार किए हैं.':'AI smart suggestions are ready.'); });
+      $('langSelect').addEventListener('change', setLang);
+      $('voiceStyle').addEventListener('change', () => speak(voiceText(999)));
+
+      $('waBtn').addEventListener('click', () => {
+        if(!order.length) return alert('लिस्ट रिकामी आहे!');
+        window.open(`https://wa.me/?text=${encodeURIComponent(buildWhatsAppReport())}`, '_blank');
+      });
+
+      $('saveBtn').addEventListener('click', () => {
+        if(!order.length) return alert('सेव करण्यासाठी list मध्ये product जोडा.');
+        permanentSaveOrder();
+      });
+
+      $('orderBtn').addEventListener('click', () => {
+        if(!order.length) return alert('लिस्ट रिकामी आहे!');
+        const n = $('cName').value.trim() || 'ग्राहक', id = $('cId').value.trim();
+        let msg = `*नवीन RCM ऑर्डर*\nनाव: ${n}\n${id ? `ID/Mobile: ${id}\n` : ''}\n`;
+        order.forEach((it,i)=> msg += `${i+1}) ${it.name} - ${it.qty} नग\n`);
+        window.open(`https://wa.me/917020970727?text=${encodeURIComponent(msg)}`, '_blank');
+      });
+
+      $('pdfBtn').addEventListener('click', async () => {
+        if(!order.length) return alert('लिस्ट रिकामी आहे!');
+        const n = $('cName').value.trim() || 'सन्माननीय ग्राहक', id = $('cId').value.trim(), t = totals(), cons = consistency(t.pv), monthly = t.save + cons;
+        $('pdfCustomerName').innerText = 'नाव: ' + n;
+        $('pdfCustomerId').innerText = id ? 'ID/Mobile: ' + id : '';
+        $('pdfReportDate').innerText = 'तारीख: ' + new Date().toLocaleDateString('mr-IN');
+        $('pdfTableBody').innerHTML = order.map((it,i)=>`<tr><td>${i+1}</td><td>${textSafe(it.name)}</td><td>${it.qty}</td><td>₹${fmt(it.mkt*it.qty)}</td><td>₹${fmt(it.rcm*it.qty)}</td><td>₹${fmt((it.mkt-it.rcm)*it.qty)}</td></tr>`).join('');
+        $('pdfTotals').innerHTML = `<div class="pdfTotal">एकूण MRP: ₹${fmt(t.mrp)}</div><div class="pdfTotal">एकूण RCM: ₹${fmt(t.rcm)}</div><div class="pdfTotal">प्रत्यक्ष बचत: ₹${fmt(t.save)}</div><div class="pdfTotal">कन्सिस्टन्सी: ₹${fmt(cons)}</div><div class="pdfTotal">मासिक फायदा: ₹${fmt(monthly)}</div><div class="pdfTotal">वार्षिक फायदा: ₹${fmt(monthly*12)}</div><div class="pdfTotal">20 वर्षांचा फायदा: ₹${fmt(monthly*12*20)}</div><div class="pdfTotal">एकूण PV: ${fmt(t.pv)}</div>`;
+        $('pdfAiAnalysis').innerText = aiAnalysis();
+        const rep = $('pdfReport');
+        rep.classList.add('pdfOnly');
+        await new Promise(r => setTimeout(r, 500));
+        html2pdf().set({margin:[10,10,10,10],filename:`RCM-Smart-Savings-${n.replace(/\s+/g,'-')}.pdf`,image:{type:'jpeg',quality:1},html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',scrollX:0,scrollY:0,letterRendering:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(rep).save().then(()=>{ rep.classList.remove('pdfOnly'); }).catch(e=>{ rep.classList.remove('pdfOnly'); console.error(e); alert('PDF तयार करताना error आला. पुन्हा प्रयत्न करा.'); });
+      });
+
+      $('clearBtn').addEventListener('click', () => { if(confirm('सर्व लिस्ट साफ करायची का?')){ order = []; saveOrder(); update(); } });
+
+      if('speechSynthesis' in window) speechSynthesis.onvoiceschanged = () => {};
+      $('langSelect').value = currentLang;
+      setVoiceButton();
+      setLang();
+      clearTempOrderOnFreshVisit();
+      askVisitorName();
+      loadProducts();
+      updateVisits();
+    });
+  </script></body>
 </html>
